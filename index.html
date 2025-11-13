@@ -1103,6 +1103,34 @@
                     <circle cx="550" cy="245" r="12" fill="#16a085"/>
                     <text x="550" y="230" text-anchor="middle" font-size="12" fill="#333">LTC</text>
                     
+                    <!-- HMM: Low complexity, Good accuracy -->
+                    <circle cx="180" cy="330" r="12" fill="#95a5a6"/>
+                    <text x="180" y="315" text-anchor="middle" font-size="12" fill="#333">HMM</text>
+                    
+                    <!-- Hierarchical HMM: Low-Medium complexity, Good-Excellent accuracy -->
+                    <circle cx="220" cy="290" r="12" fill="#7f8c8d"/>
+                    <text x="220" y="275" text-anchor="middle" font-size="12" fill="#333">HHMM</text>
+                    
+                    <!-- DBN: Medium complexity, Good-Excellent accuracy -->
+                    <circle cx="480" cy="255" r="12" fill="#34495e"/>
+                    <text x="480" y="240" text-anchor="middle" font-size="12" fill="#333">DBN</text>
+                    
+                    <!-- MDP: Low-Medium complexity, Good accuracy -->
+                    <circle cx="300" cy="310" r="12" fill="#c0392b"/>
+                    <text x="300" y="295" text-anchor="middle" font-size="12" fill="#333">MDP</text>
+                    
+                    <!-- PO-MDP: Medium complexity, Good accuracy -->
+                    <circle cx="350" cy="300" r="12" fill="#a93226"/>
+                    <text x="350" y="285" text-anchor="middle" font-size="12" fill="#333">PO-MDP</text>
+                    
+                    <!-- MRF: Medium complexity, Good-Excellent accuracy -->
+                    <circle cx="520" cy="250" r="12" fill="#8e44ad"/>
+                    <text x="520" y="235" text-anchor="middle" font-size="12" fill="#333">MRF</text>
+                    
+                    <!-- Granger: Medium complexity, Good accuracy -->
+                    <circle cx="380" cy="280" r="12" fill="#27ae60"/>
+                    <text x="380" y="265" text-anchor="middle" font-size="12" fill="#333">Granger</text>
+                    
                     <!-- Transformer: High complexity, Excellent accuracy -->
                     <circle cx="700" cy="150" r="12" fill="#2ecc71"/>
                     <text x="700" y="135" text-anchor="middle" font-size="12" fill="#333">Transformer</text>
@@ -1112,20 +1140,34 @@
                     <text x="850" y="85" text-anchor="middle" font-size="12" fill="#333">3stage</text>
                     
                     <!-- Legend -->
-                    <rect x="750" y="50" width="200" height="140" fill="white" stroke="#ddd" stroke-width="1"/>
+                    <rect x="750" y="50" width="200" height="280" fill="white" stroke="#ddd" stroke-width="1"/>
                     <text x="850" y="70" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Legend</text>
                     <circle cx="770" cy="90" r="6" fill="#e74c3c"/>
-                    <text x="790" y="95" font-size="11" fill="#333">Feedforward NN</text>
+                    <text x="790" y="95" font-size="10" fill="#333">FFNN</text>
                     <circle cx="770" cy="110" r="6" fill="#3498db"/>
-                    <text x="790" y="115" font-size="11" fill="#333">CNN</text>
+                    <text x="790" y="115" font-size="10" fill="#333">CNN</text>
                     <circle cx="770" cy="130" r="6" fill="#9b59b6"/>
-                    <text x="790" y="135" font-size="11" fill="#333">LSTM</text>
+                    <text x="790" y="135" font-size="10" fill="#333">LSTM</text>
                     <circle cx="770" cy="150" r="6" fill="#f39c12"/>
-                    <text x="790" y="155" font-size="11" fill="#333">Hopfield</text>
+                    <text x="790" y="155" font-size="10" fill="#333">Hopfield</text>
                     <circle cx="770" cy="170" r="6" fill="#1abc9c"/>
-                    <text x="790" y="175" font-size="11" fill="#333">VAE</text>
+                    <text x="790" y="175" font-size="10" fill="#333">VAE</text>
                     <circle cx="770" cy="190" r="6" fill="#16a085"/>
-                    <text x="790" y="195" font-size="11" fill="#333">LTC</text>
+                    <text x="790" y="195" font-size="10" fill="#333">LTC</text>
+                    <circle cx="770" cy="210" r="6" fill="#95a5a6"/>
+                    <text x="790" y="215" font-size="10" fill="#333">HMM</text>
+                    <circle cx="770" cy="230" r="6" fill="#7f8c8d"/>
+                    <text x="790" y="235" font-size="10" fill="#333">HHMM</text>
+                    <circle cx="770" cy="250" r="6" fill="#34495e"/>
+                    <text x="790" y="255" font-size="10" fill="#333">DBN</text>
+                    <circle cx="770" cy="270" r="6" fill="#c0392b"/>
+                    <text x="790" y="275" font-size="10" fill="#333">MDP</text>
+                    <circle cx="770" cy="290" r="6" fill="#a93226"/>
+                    <text x="790" y="295" font-size="10" fill="#333">PO-MDP</text>
+                    <circle cx="770" cy="310" r="6" fill="#8e44ad"/>
+                    <text x="790" y="315" font-size="10" fill="#333">MRF</text>
+                    <circle cx="770" cy="330" r="6" fill="#27ae60"/>
+                    <text x="790" y="335" font-size="10" fill="#333">Granger</text>
                 </svg>
             </div>
 
@@ -1224,6 +1266,76 @@
                         <td>Good-Excellent</td>
                         <td>Moderate</td>
                     </tr>
+                    <tr>
+                        <td><strong>HMM</strong></td>
+                        <td>Probabilistic Sequence</td>
+                        <td>Raw signals (discretized)</td>
+                        <td>Hidden states</td>
+                        <td>Few (1Ks)</td>
+                        <td>Fast</td>
+                        <td>Good</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hierarchical HMM</strong></td>
+                        <td>Multi-level HMM</td>
+                        <td>Raw signals (discretized)</td>
+                        <td>Multi-scale hidden states</td>
+                        <td>Few (1.5Ks)</td>
+                        <td>Fast</td>
+                        <td>Good-Excellent</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DBN</strong></td>
+                        <td>Temporal Bayesian Network</td>
+                        <td>Raw signals</td>
+                        <td>Temporal dependencies</td>
+                        <td>Moderate (50Ks)</td>
+                        <td>Moderate</td>
+                        <td>Good-Excellent</td>
+                        <td>High (uncertainty)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MDP</strong></td>
+                        <td>Sequential Decision</td>
+                        <td>Raw signals</td>
+                        <td>Decision process</td>
+                        <td>Few (5Ks)</td>
+                        <td>Moderate</td>
+                        <td>Good</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PO-MDP</strong></td>
+                        <td>Partially Observable MDP</td>
+                        <td>Raw signals</td>
+                        <td>Hidden state decision</td>
+                        <td>Moderate (8Ks)</td>
+                        <td>Moderate</td>
+                        <td>Good</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MRF</strong></td>
+                        <td>Spatial-temporal</td>
+                        <td>Raw signals</td>
+                        <td>Dependency modeling</td>
+                        <td>Moderate (40Ks)</td>
+                        <td>Moderate</td>
+                        <td>Good-Excellent</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Granger</strong></td>
+                        <td>Causal Analysis</td>
+                        <td>Raw signals</td>
+                        <td>Causal relationships</td>
+                        <td>Moderate (30Ks)</td>
+                        <td>Moderate</td>
+                        <td>Good</td>
+                        <td>High (causal)</td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -1284,6 +1396,41 @@
                     <text x="650" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">LTC</text>
                     <text x="650" y="255" text-anchor="middle" font-size="10" fill="#666">Continuous-time</text>
                     
+                    <!-- HMM: Fast, Good accuracy -->
+                    <circle cx="200" cy="310" r="18" fill="#95a5a6" opacity="0.8"/>
+                    <text x="200" y="295" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">HMM</text>
+                    <text x="200" y="350" text-anchor="middle" font-size="10" fill="#666">Probabilistic</text>
+                    
+                    <!-- Hierarchical HMM: Fast, Good-Excellent accuracy -->
+                    <circle cx="280" cy="270" r="18" fill="#7f8c8d" opacity="0.8"/>
+                    <text x="280" y="255" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">HHMM</text>
+                    <text x="280" y="310" text-anchor="middle" font-size="10" fill="#666">Multi-level</text>
+                    
+                    <!-- DBN: Moderate, Good-Excellent accuracy -->
+                    <circle cx="580" cy="225" r="18" fill="#34495e" opacity="0.8"/>
+                    <text x="580" y="210" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">DBN</text>
+                    <text x="580" y="265" text-anchor="middle" font-size="10" fill="#666">Bayesian</text>
+                    
+                    <!-- MDP: Moderate, Good accuracy -->
+                    <circle cx="420" cy="280" r="18" fill="#c0392b" opacity="0.8"/>
+                    <text x="420" y="265" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">MDP</text>
+                    <text x="420" y="310" text-anchor="middle" font-size="10" fill="#666">Decision</text>
+                    
+                    <!-- PO-MDP: Moderate, Good accuracy -->
+                    <circle cx="470" cy="275" r="18" fill="#a93226" opacity="0.8"/>
+                    <text x="470" y="260" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">PO-MDP</text>
+                    <text x="470" y="305" text-anchor="middle" font-size="10" fill="#666">Hidden State</text>
+                    
+                    <!-- MRF: Moderate, Good-Excellent accuracy -->
+                    <circle cx="620" cy="220" r="18" fill="#8e44ad" opacity="0.8"/>
+                    <text x="620" y="205" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">MRF</text>
+                    <text x="620" y="260" text-anchor="middle" font-size="10" fill="#666">Spatial-temporal</text>
+                    
+                    <!-- Granger: Moderate, Good accuracy -->
+                    <circle cx="380" cy="270" r="18" fill="#27ae60" opacity="0.8"/>
+                    <text x="380" y="255" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Granger</text>
+                    <text x="380" y="300" text-anchor="middle" font-size="10" fill="#666">Causal</text>
+                    
                     <!-- Transformer: Moderate-Slow, Excellent accuracy -->
                     <circle cx="750" cy="120" r="18" fill="#2ecc71" opacity="0.8"/>
                     <text x="750" y="105" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Transformer</text>
@@ -1330,24 +1477,35 @@
                     <text x="490" y="140" text-anchor="middle" font-size="12" fill="#666">CNN</text>
                     
                     <!-- Recurrent -->
-                    <rect x="580" y="90" width="120" height="270" fill="#9b59b6" opacity="0.3" rx="5"/>
-                    <text x="640" y="110" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Recurrent</text>
-                    <text x="640" y="130" text-anchor="middle" font-size="12" fill="#666">LSTM</text>
-                    
-                    <!-- Energy-based -->
-                    <rect x="730" y="100" width="120" height="260" fill="#f39c12" opacity="0.3" rx="5"/>
-                    <text x="790" y="120" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Energy-based</text>
-                    <text x="790" y="140" text-anchor="middle" font-size="12" fill="#666">Hopfield</text>
-                    
-                    <!-- Generative -->
-                    <rect x="880" y="70" width="120" height="290" fill="#1abc9c" opacity="0.3" rx="5"/>
-                    <text x="940" y="90" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Generative</text>
-                    <text x="940" y="110" text-anchor="middle" font-size="12" fill="#666">VAE</text>
+                    <rect x="580" y="90" width="100" height="270" fill="#9b59b6" opacity="0.3" rx="5"/>
+                    <text x="630" y="110" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Recurrent</text>
+                    <text x="630" y="130" text-anchor="middle" font-size="12" fill="#666">LSTM</text>
                     
                     <!-- Continuous-time ODE -->
-                    <rect x="730" y="100" width="120" height="260" fill="#16a085" opacity="0.3" rx="5"/>
-                    <text x="790" y="120" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Continuous-time</text>
-                    <text x="790" y="140" text-anchor="middle" font-size="12" fill="#666">LTC</text>
+                    <rect x="700" y="100" width="100" height="260" fill="#16a085" opacity="0.3" rx="5"/>
+                    <text x="750" y="120" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Continuous-time</text>
+                    <text x="750" y="140" text-anchor="middle" font-size="12" fill="#666">LTC</text>
+                    
+                    <!-- Energy-based -->
+                    <rect x="820" y="100" width="100" height="260" fill="#f39c12" opacity="0.3" rx="5"/>
+                    <text x="870" y="120" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Energy-based</text>
+                    <text x="870" y="140" text-anchor="middle" font-size="12" fill="#666">Hopfield</text>
+                    
+                    <!-- Generative -->
+                    <rect x="940" y="70" width="100" height="290" fill="#1abc9c" opacity="0.3" rx="5"/>
+                    <text x="990" y="90" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Generative</text>
+                    <text x="990" y="110" text-anchor="middle" font-size="12" fill="#666">VAE</text>
+                    
+                    <!-- Probabilistic Models -->
+                    <rect x="50" y="200" width="150" height="160" fill="#95a5a6" opacity="0.3" rx="5"/>
+                    <text x="125" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Probabilistic</text>
+                    <text x="125" y="240" text-anchor="middle" font-size="11" fill="#666">HMM</text>
+                    <text x="125" y="255" text-anchor="middle" font-size="11" fill="#666">HHMM</text>
+                    <text x="125" y="270" text-anchor="middle" font-size="11" fill="#666">DBN</text>
+                    <text x="125" y="285" text-anchor="middle" font-size="11" fill="#666">MDP</text>
+                    <text x="125" y="300" text-anchor="middle" font-size="11" fill="#666">PO-MDP</text>
+                    <text x="125" y="315" text-anchor="middle" font-size="11" fill="#666">MRF</text>
+                    <text x="125" y="330" text-anchor="middle" font-size="11" fill="#666">Granger</text>
                     
                     <!-- Legend -->
                     <text x="500" y="380" text-anchor="middle" font-size="12" fill="#666">Height represents modeling capacity / complexity</text>
