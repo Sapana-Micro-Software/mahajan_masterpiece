@@ -8,6 +8,13 @@ Benchmark script comparing multiple ECG classification models:
 6. Hopfield Network (ETASR, 2013)
 7. Variational Autoencoder (VAE) - FactorECG (van de Leur et al., 2022)
 8. Liquid Time-Constant Network (LTC) - Hasani et al. (2020)
+9. Hidden Markov Model (HMM)
+10. Hierarchical Hidden Markov Model (Hierarchical HMM)
+11. Dynamic Bayesian Network (DBN)
+12. Markov Decision Process (MDP)
+13. Partially Observable MDP (PO-MDP)
+14. Markov Random Field (MRF)
+15. Granger Causality
 """
 
 import numpy as np                                                      # NumPy for array operations
@@ -34,6 +41,21 @@ from vae_ecg import (                                                  # VAE mod
 )
 from ltc_ecg import (                                                  # LTC model
     LTCEcgClassifier, train_ltc, evaluate_model as evaluate_ltc, ECGDataset as LTCECGDataset
+)
+from hmm_ecg import (                                                  # HMM models
+    train_hmm, evaluate_model as evaluate_hmm
+)
+from dbn_ecg import (                                                  # DBN model
+    train_dbn, evaluate_model as evaluate_dbn
+)
+from mdp_ecg import (                                                  # MDP models
+    train_mdp, evaluate_model as evaluate_mdp
+)
+from mrf_ecg import (                                                  # MRF model
+    train_mrf, evaluate_model as evaluate_mrf
+)
+from granger_ecg import (                                              # Granger Causality
+    train_granger, evaluate_model as evaluate_granger
 )
 from torch.utils.data import DataLoader                                 # Data loading
 import matplotlib.pyplot as plt                                         # Plotting
@@ -1050,10 +1072,431 @@ def benchmark_ltc(
     return benchmark_results
 
 
+def benchmark_hmm(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_val: np.ndarray,
+    y_val: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
+    device: str = 'cpu'
+) -> Dict:
+    """Benchmark Hidden Markov Model (HMM)."""
+    print("\n" + "="*60)
+    print("BENCHMARKING HIDDEN MARKOV MODEL (HMM)")
+    print("="*60)
+    
+    try:
+        start_time = time.time()
+        result = train_hmm(X_train, y_train, X_val, y_val, model_type='hmm', n_states=5, verbose=False)
+        train_time = time.time() - start_time
+        
+        start_time = time.time()
+        test_loss, test_acc, y_true, y_pred = evaluate_hmm(result, X_test, y_test, device=device)
+        inference_time = time.time() - start_time
+        
+        binary_predictions = (y_pred > 0).astype(int)
+        binary_labels = (y_true > 0).astype(int)
+        
+        accuracy = test_acc / 100.0
+        precision = precision_score(binary_labels, binary_predictions, zero_division=0)
+        recall = recall_score(binary_labels, binary_predictions, zero_division=0)
+        f1 = f1_score(binary_labels, binary_predictions, zero_division=0)
+        
+        benchmark_results = {
+            'model_name': 'Hidden Markov Model (HMM)',
+            'accuracy': float(accuracy),
+            'precision': float(precision),
+            'recall': float(recall),
+            'f1_score': float(f1),
+            'train_time': train_time,
+            'inference_time': inference_time,
+            'num_parameters': 1000,  # Approximate
+            'train_loss_history': [],
+            'train_acc_history': [],
+            'val_loss_history': [],
+            'val_acc_history': [],
+            'predictions': binary_predictions.tolist(),
+            'probabilities': binary_predictions.tolist(),
+            'true_labels': binary_labels.tolist()
+        }
+        
+        print(f"\nResults:")
+        print(f"  Accuracy:  {accuracy:.4f}")
+        print(f"  Precision: {precision:.4f}")
+        print(f"  Recall:    {recall:.4f}")
+        print(f"  F1 Score:  {f1:.4f}")
+        print(f"  Train Time: {train_time:.2f} seconds")
+        print(f"  Inference Time: {inference_time:.4f} seconds")
+        
+        return benchmark_results
+    except ImportError:
+        print("Warning: hmmlearn not available. Skipping HMM benchmark.")
+        return None
+
+
+def benchmark_hierarchical_hmm(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_val: np.ndarray,
+    y_val: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
+    device: str = 'cpu'
+) -> Dict:
+    """Benchmark Hierarchical Hidden Markov Model."""
+    print("\n" + "="*60)
+    print("BENCHMARKING HIERARCHICAL HIDDEN MARKOV MODEL")
+    print("="*60)
+    
+    try:
+        start_time = time.time()
+        result = train_hmm(X_train, y_train, X_val, y_val, model_type='hierarchical_hmm', n_states=5, verbose=False)
+        train_time = time.time() - start_time
+        
+        start_time = time.time()
+        test_loss, test_acc, y_true, y_pred = evaluate_hmm(result, X_test, y_test, device=device)
+        inference_time = time.time() - start_time
+        
+        binary_predictions = (y_pred > 0).astype(int)
+        binary_labels = (y_true > 0).astype(int)
+        
+        accuracy = test_acc / 100.0
+        precision = precision_score(binary_labels, binary_predictions, zero_division=0)
+        recall = recall_score(binary_labels, binary_predictions, zero_division=0)
+        f1 = f1_score(binary_labels, binary_predictions, zero_division=0)
+        
+        benchmark_results = {
+            'model_name': 'Hierarchical Hidden Markov Model',
+            'accuracy': float(accuracy),
+            'precision': float(precision),
+            'recall': float(recall),
+            'f1_score': float(f1),
+            'train_time': train_time,
+            'inference_time': inference_time,
+            'num_parameters': 1500,  # Approximate
+            'train_loss_history': [],
+            'train_acc_history': [],
+            'val_loss_history': [],
+            'val_acc_history': [],
+            'predictions': binary_predictions.tolist(),
+            'probabilities': binary_predictions.tolist(),
+            'true_labels': binary_labels.tolist()
+        }
+        
+        print(f"\nResults:")
+        print(f"  Accuracy:  {accuracy:.4f}")
+        print(f"  Precision: {precision:.4f}")
+        print(f"  Recall:    {recall:.4f}")
+        print(f"  F1 Score:  {f1:.4f}")
+        print(f"  Train Time: {train_time:.2f} seconds")
+        print(f"  Inference Time: {inference_time:.4f} seconds")
+        
+        return benchmark_results
+    except ImportError:
+        print("Warning: hmmlearn not available. Skipping Hierarchical HMM benchmark.")
+        return None
+
+
+def benchmark_dbn(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_val: np.ndarray,
+    y_val: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
+    device: str = 'cpu'
+) -> Dict:
+    """Benchmark Dynamic Bayesian Network (DBN)."""
+    print("\n" + "="*60)
+    print("BENCHMARKING DYNAMIC BAYESIAN NETWORK (DBN)")
+    print("="*60)
+    
+    start_time = time.time()
+    result = train_dbn(X_train, y_train, X_val, y_val, verbose=False)
+    train_time = time.time() - start_time
+    
+    start_time = time.time()
+    test_loss, test_acc, y_true, y_pred = evaluate_dbn(result, X_test, y_test, device=device)
+    inference_time = time.time() - start_time
+    
+    binary_predictions = (y_pred > 0).astype(int)
+    binary_labels = (y_true > 0).astype(int)
+    
+    accuracy = test_acc / 100.0
+    precision = precision_score(binary_labels, binary_predictions, zero_division=0)
+    recall = recall_score(binary_labels, binary_predictions, zero_division=0)
+    f1 = f1_score(binary_labels, binary_predictions, zero_division=0)
+    
+    benchmark_results = {
+        'model_name': 'Dynamic Bayesian Network (DBN)',
+        'accuracy': float(accuracy),
+        'precision': float(precision),
+        'recall': float(recall),
+        'f1_score': float(f1),
+        'train_time': train_time,
+        'inference_time': inference_time,
+        'num_parameters': 50000,  # Approximate
+        'train_loss_history': [],
+        'train_acc_history': [],
+        'val_loss_history': [],
+        'val_acc_history': [],
+        'predictions': binary_predictions.tolist(),
+        'probabilities': binary_predictions.tolist(),
+        'true_labels': binary_labels.tolist()
+    }
+    
+    print(f"\nResults:")
+    print(f"  Accuracy:  {accuracy:.4f}")
+    print(f"  Precision: {precision:.4f}")
+    print(f"  Recall:    {recall:.4f}")
+    print(f"  F1 Score:  {f1:.4f}")
+    print(f"  Train Time: {train_time:.2f} seconds")
+    print(f"  Inference Time: {inference_time:.4f} seconds")
+    
+    return benchmark_results
+
+
+def benchmark_mdp(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_val: np.ndarray,
+    y_val: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
+    device: str = 'cpu'
+) -> Dict:
+    """Benchmark Markov Decision Process (MDP)."""
+    print("\n" + "="*60)
+    print("BENCHMARKING MARKOV DECISION PROCESS (MDP)")
+    print("="*60)
+    
+    start_time = time.time()
+    result = train_mdp(X_train, y_train, X_val, y_val, model_type='mdp', verbose=False)
+    train_time = time.time() - start_time
+    
+    start_time = time.time()
+    test_loss, test_acc, y_true, y_pred = evaluate_mdp(result, X_test, y_test, device=device)
+    inference_time = time.time() - start_time
+    
+    binary_predictions = (y_pred > 0).astype(int)
+    binary_labels = (y_true > 0).astype(int)
+    
+    accuracy = test_acc / 100.0
+    precision = precision_score(binary_labels, binary_predictions, zero_division=0)
+    recall = recall_score(binary_labels, binary_predictions, zero_division=0)
+    f1 = f1_score(binary_labels, binary_predictions, zero_division=0)
+    
+    benchmark_results = {
+        'model_name': 'Markov Decision Process (MDP)',
+        'accuracy': float(accuracy),
+        'precision': float(precision),
+        'recall': float(recall),
+        'f1_score': float(f1),
+        'train_time': train_time,
+        'inference_time': inference_time,
+        'num_parameters': 5000,  # Approximate
+        'train_loss_history': [],
+        'train_acc_history': [],
+        'val_loss_history': [],
+        'val_acc_history': [],
+        'predictions': binary_predictions.tolist(),
+        'probabilities': binary_predictions.tolist(),
+        'true_labels': binary_labels.tolist()
+    }
+    
+    print(f"\nResults:")
+    print(f"  Accuracy:  {accuracy:.4f}")
+    print(f"  Precision: {precision:.4f}")
+    print(f"  Recall:    {recall:.4f}")
+    print(f"  F1 Score:  {f1:.4f}")
+    print(f"  Train Time: {train_time:.2f} seconds")
+    print(f"  Inference Time: {inference_time:.4f} seconds")
+    
+    return benchmark_results
+
+
+def benchmark_pomdp(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_val: np.ndarray,
+    y_val: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
+    device: str = 'cpu'
+) -> Dict:
+    """Benchmark Partially Observable MDP (PO-MDP)."""
+    print("\n" + "="*60)
+    print("BENCHMARKING PARTIALLY OBSERVABLE MDP (PO-MDP)")
+    print("="*60)
+    
+    start_time = time.time()
+    result = train_mdp(X_train, y_train, X_val, y_val, model_type='pomdp', verbose=False)
+    train_time = time.time() - start_time
+    
+    start_time = time.time()
+    test_loss, test_acc, y_true, y_pred = evaluate_mdp(result, X_test, y_test, device=device)
+    inference_time = time.time() - start_time
+    
+    binary_predictions = (y_pred > 0).astype(int)
+    binary_labels = (y_true > 0).astype(int)
+    
+    accuracy = test_acc / 100.0
+    precision = precision_score(binary_labels, binary_predictions, zero_division=0)
+    recall = recall_score(binary_labels, binary_predictions, zero_division=0)
+    f1 = f1_score(binary_labels, binary_predictions, zero_division=0)
+    
+    benchmark_results = {
+        'model_name': 'Partially Observable MDP (PO-MDP)',
+        'accuracy': float(accuracy),
+        'precision': float(precision),
+        'recall': float(recall),
+        'f1_score': float(f1),
+        'train_time': train_time,
+        'inference_time': inference_time,
+        'num_parameters': 8000,  # Approximate
+        'train_loss_history': [],
+        'train_acc_history': [],
+        'val_loss_history': [],
+        'val_acc_history': [],
+        'predictions': binary_predictions.tolist(),
+        'probabilities': binary_predictions.tolist(),
+        'true_labels': binary_labels.tolist()
+    }
+    
+    print(f"\nResults:")
+    print(f"  Accuracy:  {accuracy:.4f}")
+    print(f"  Precision: {precision:.4f}")
+    print(f"  Recall:    {recall:.4f}")
+    print(f"  F1 Score:  {f1:.4f}")
+    print(f"  Train Time: {train_time:.2f} seconds")
+    print(f"  Inference Time: {inference_time:.4f} seconds")
+    
+    return benchmark_results
+
+
+def benchmark_mrf(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_val: np.ndarray,
+    y_val: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
+    device: str = 'cpu'
+) -> Dict:
+    """Benchmark Markov Random Field (MRF)."""
+    print("\n" + "="*60)
+    print("BENCHMARKING MARKOV RANDOM FIELD (MRF)")
+    print("="*60)
+    
+    start_time = time.time()
+    result = train_mrf(X_train, y_train, X_val, y_val, verbose=False)
+    train_time = time.time() - start_time
+    
+    start_time = time.time()
+    test_loss, test_acc, y_true, y_pred = evaluate_mrf(result, X_test, y_test, device=device)
+    inference_time = time.time() - start_time
+    
+    binary_predictions = (y_pred > 0).astype(int)
+    binary_labels = (y_true > 0).astype(int)
+    
+    accuracy = test_acc / 100.0
+    precision = precision_score(binary_labels, binary_predictions, zero_division=0)
+    recall = recall_score(binary_labels, binary_predictions, zero_division=0)
+    f1 = f1_score(binary_labels, binary_predictions, zero_division=0)
+    
+    benchmark_results = {
+        'model_name': 'Markov Random Field (MRF)',
+        'accuracy': float(accuracy),
+        'precision': float(precision),
+        'recall': float(recall),
+        'f1_score': float(f1),
+        'train_time': train_time,
+        'inference_time': inference_time,
+        'num_parameters': 40000,  # Approximate
+        'train_loss_history': [],
+        'train_acc_history': [],
+        'val_loss_history': [],
+        'val_acc_history': [],
+        'predictions': binary_predictions.tolist(),
+        'probabilities': binary_predictions.tolist(),
+        'true_labels': binary_labels.tolist()
+    }
+    
+    print(f"\nResults:")
+    print(f"  Accuracy:  {accuracy:.4f}")
+    print(f"  Precision: {precision:.4f}")
+    print(f"  Recall:    {recall:.4f}")
+    print(f"  F1 Score:  {f1:.4f}")
+    print(f"  Train Time: {train_time:.2f} seconds")
+    print(f"  Inference Time: {inference_time:.4f} seconds")
+    
+    return benchmark_results
+
+
+def benchmark_granger(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_val: np.ndarray,
+    y_val: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
+    device: str = 'cpu'
+) -> Dict:
+    """Benchmark Granger Causality model."""
+    print("\n" + "="*60)
+    print("BENCHMARKING GRANGER CAUSALITY")
+    print("="*60)
+    
+    start_time = time.time()
+    result = train_granger(X_train, y_train, X_val, y_val, verbose=False)
+    train_time = time.time() - start_time
+    
+    start_time = time.time()
+    test_loss, test_acc, y_true, y_pred = evaluate_granger(result, X_test, y_test, device=device)
+    inference_time = time.time() - start_time
+    
+    binary_predictions = (y_pred > 0).astype(int)
+    binary_labels = (y_true > 0).astype(int)
+    
+    accuracy = test_acc / 100.0
+    precision = precision_score(binary_labels, binary_predictions, zero_division=0)
+    recall = recall_score(binary_labels, binary_predictions, zero_division=0)
+    f1 = f1_score(binary_labels, binary_predictions, zero_division=0)
+    
+    benchmark_results = {
+        'model_name': 'Granger Causality',
+        'accuracy': float(accuracy),
+        'precision': float(precision),
+        'recall': float(recall),
+        'f1_score': float(f1),
+        'train_time': train_time,
+        'inference_time': inference_time,
+        'num_parameters': 30000,  # Approximate
+        'train_loss_history': [],
+        'train_acc_history': [],
+        'val_loss_history': [],
+        'val_acc_history': [],
+        'predictions': binary_predictions.tolist(),
+        'probabilities': binary_predictions.tolist(),
+        'true_labels': binary_labels.tolist()
+    }
+    
+    print(f"\nResults:")
+    print(f"  Accuracy:  {accuracy:.4f}")
+    print(f"  Precision: {precision:.4f}")
+    print(f"  Recall:    {recall:.4f}")
+    print(f"  F1 Score:  {f1:.4f}")
+    print(f"  Train Time: {train_time:.2f} seconds")
+    print(f"  Inference Time: {inference_time:.4f} seconds")
+    
+    return benchmark_results
+
+
 def run_complete_benchmark():
     """Run complete benchmark comparison."""
     print("="*60)
-    print("COMPREHENSIVE BENCHMARK: 8 ECG CLASSIFICATION MODELS")
+    print("COMPREHENSIVE BENCHMARK: 15 ECG CLASSIFICATION MODELS")
     print("="*60)
     
     # Generate synthetic ECG data
@@ -1154,7 +1597,63 @@ def run_complete_benchmark():
         device=device
     )
     
-    # Save results to JSON
+    # Benchmark HMM
+    results_hmm = benchmark_hmm(
+        signals_train, labels_train,
+        signals_val, labels_val,
+        signals_test, labels_test,
+        device=device
+    )
+    
+    # Benchmark Hierarchical HMM
+    results_hierarchical_hmm = benchmark_hierarchical_hmm(
+        signals_train, labels_train,
+        signals_val, labels_val,
+        signals_test, labels_test,
+        device=device
+    )
+    
+    # Benchmark DBN
+    results_dbn = benchmark_dbn(
+        signals_train, labels_train,
+        signals_val, labels_val,
+        signals_test, labels_test,
+        device=device
+    )
+    
+    # Benchmark MDP
+    results_mdp = benchmark_mdp(
+        signals_train, labels_train,
+        signals_val, labels_val,
+        signals_test, labels_test,
+        device=device
+    )
+    
+    # Benchmark PO-MDP
+    results_pomdp = benchmark_pomdp(
+        signals_train, labels_train,
+        signals_val, labels_val,
+        signals_test, labels_test,
+        device=device
+    )
+    
+    # Benchmark MRF
+    results_mrf = benchmark_mrf(
+        signals_train, labels_train,
+        signals_val, labels_val,
+        signals_test, labels_test,
+        device=device
+    )
+    
+    # Benchmark Granger Causality
+    results_granger = benchmark_granger(
+        signals_train, labels_train,
+        signals_val, labels_val,
+        signals_test, labels_test,
+        device=device
+    )
+    
+    # Save results to JSON (filter out None results)
     all_results = {
         'feedforward_nn': results_ff,
         'transformer': results_transformer,
@@ -1166,6 +1665,22 @@ def run_complete_benchmark():
         'ltc': results_ltc
     }
     
+    # Add new models if they succeeded
+    if results_hmm is not None:
+        all_results['hmm'] = results_hmm
+    if results_hierarchical_hmm is not None:
+        all_results['hierarchical_hmm'] = results_hierarchical_hmm
+    if results_dbn is not None:
+        all_results['dbn'] = results_dbn
+    if results_mdp is not None:
+        all_results['mdp'] = results_mdp
+    if results_pomdp is not None:
+        all_results['pomdp'] = results_pomdp
+    if results_mrf is not None:
+        all_results['mrf'] = results_mrf
+    if results_granger is not None:
+        all_results['granger'] = results_granger
+    
     # Create comparison plots
     plot_comparison(all_results, 'benchmark_comparison.png')
     
@@ -1175,14 +1690,39 @@ def run_complete_benchmark():
     print("\n" + "="*60)
     print("BENCHMARK SUMMARY")
     print("="*60)
-    print(f"\n{'Metric':<20} {'FFNN':<10} {'Trans.':<10} {'3stage':<10} {'CNN':<10} {'LSTM':<10} {'Hopfield':<10} {'VAE':<10} {'LTC':<10}")
-    print("-" * 120)
-    print(f"{'Accuracy':<20} {results_ff['accuracy']:<10.4f} {results_transformer['accuracy']:<10.4f} {results_3stage['accuracy']:<10.4f} {results_cnn['accuracy']:<10.4f} {results_lstm['accuracy']:<10.4f} {results_hopfield['accuracy']:<10.4f} {results_vae['accuracy']:<10.4f} {results_ltc['accuracy']:<10.4f}")
-    print(f"{'Precision':<20} {results_ff['precision']:<10.4f} {results_transformer['precision']:<10.4f} {results_3stage['precision']:<10.4f} {results_cnn['precision']:<10.4f} {results_lstm['precision']:<10.4f} {results_hopfield['precision']:<10.4f} {results_vae['precision']:<10.4f} {results_ltc['precision']:<10.4f}")
-    print(f"{'Recall':<20} {results_ff['recall']:<10.4f} {results_transformer['recall']:<10.4f} {results_3stage['recall']:<10.4f} {results_cnn['recall']:<10.4f} {results_lstm['recall']:<10.4f} {results_hopfield['recall']:<10.4f} {results_vae['recall']:<10.4f} {results_ltc['recall']:<10.4f}")
-    print(f"{'F1 Score':<20} {results_ff['f1_score']:<10.4f} {results_transformer['f1_score']:<10.4f} {results_3stage['f1_score']:<10.4f} {results_cnn['f1_score']:<10.4f} {results_lstm['f1_score']:<10.4f} {results_hopfield['f1_score']:<10.4f} {results_vae['f1_score']:<10.4f} {results_ltc['f1_score']:<10.4f}")
-    print(f"{'Train Time (s)':<20} {results_ff['train_time']:<10.2f} {results_transformer['train_time']:<10.2f} {results_3stage['train_time']:<10.2f} {results_cnn['train_time']:<10.2f} {results_lstm['train_time']:<10.2f} {results_hopfield['train_time']:<10.2f} {results_vae['train_time']:<10.2f} {results_ltc['train_time']:<10.2f}")
-    print(f"{'Parameters':<20} {results_ff['num_parameters']:<10,} {results_transformer['num_parameters']:<10,} {results_3stage['num_parameters']:<10,} {results_cnn['num_parameters']:<10,} {results_lstm['num_parameters']:<10,} {results_hopfield['num_parameters']:<10,} {results_vae['num_parameters']:<10,} {results_ltc['num_parameters']:<10,}")
+    print(f"\n{'Model':<25} {'Accuracy':<12} {'Precision':<12} {'Recall':<12} {'F1':<12} {'Train(s)':<12}")
+    print("-" * 100)
+    
+    # Print all models
+    models_to_print = [
+        ('FFNN', results_ff),
+        ('Transformer', results_transformer),
+        ('3stageFormer', results_3stage),
+        ('CNN', results_cnn),
+        ('LSTM', results_lstm),
+        ('Hopfield', results_hopfield),
+        ('VAE', results_vae),
+        ('LTC', results_ltc),
+    ]
+    
+    if results_hmm is not None:
+        models_to_print.append(('HMM', results_hmm))
+    if results_hierarchical_hmm is not None:
+        models_to_print.append(('Hierarchical HMM', results_hierarchical_hmm))
+    if results_dbn is not None:
+        models_to_print.append(('DBN', results_dbn))
+    if results_mdp is not None:
+        models_to_print.append(('MDP', results_mdp))
+    if results_pomdp is not None:
+        models_to_print.append(('PO-MDP', results_pomdp))
+    if results_mrf is not None:
+        models_to_print.append(('MRF', results_mrf))
+    if results_granger is not None:
+        models_to_print.append(('Granger', results_granger))
+    
+    for name, result in models_to_print:
+        if result is not None:
+            print(f"{name:<25} {result['accuracy']:<12.4f} {result['precision']:<12.4f} {result['recall']:<12.4f} {result['f1_score']:<12.4f} {result['train_time']:<12.2f}")
     
     print("\nResults saved to benchmark_results.json")
     print("Comparison plot saved to benchmark_comparison.png")
