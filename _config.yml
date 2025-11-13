@@ -4,9 +4,9 @@ title: "Comparative Analysis of Neural Network Architectures for ECG Classificat
 description: "A Comprehensive Study of Seven Deep Learning Approaches"
 author: "Shyamal Suhana Chandra"
 affiliation: "Sapana Micro Software, Research Division"
-# For project page under shyamalschandra account:
-# URL will be: https://shyamalschandra.github.io/mahajan_masterpiece/
-url: "https://shyamalschandra.github.io"
+# For project page under Sapana-Micro-Software organization:
+# URL will be: https://sapanamicrosoftware.github.io/mahajan_masterpiece/
+url: "https://sapanamicrosoftware.github.io"
 baseurl: "/mahajan_masterpiece"
 
 # Alternative: If using custom domain or different setup, adjust accordingly:
@@ -53,7 +53,7 @@ github:
   - metadata
 
 # Social/Contact
-github_username: shyamalschandra
+github_username: Sapana-Micro-Software
 
 # Navigation
 navigation:
