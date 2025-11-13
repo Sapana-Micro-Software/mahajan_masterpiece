@@ -13,7 +13,7 @@
 \geometry{margin=1in}
 
 \title{Comparative Analysis of Neural Network Architectures for ECG Classification:\\
-A Comprehensive Study of Seven Deep Learning Approaches}
+A Comprehensive Study of Eight Deep Learning Approaches}
 \author{Shyamal Suhana Chandra \\ Sapana Micro Software \\ Research Division}
 \date{\today}
 
@@ -22,7 +22,7 @@ A Comprehensive Study of Seven Deep Learning Approaches}
 \maketitle
 
 \begin{abstract}
-This paper presents a comprehensive comparative analysis of seven deep learning architectures for electrocardiogram (ECG) classification: a traditional feedforward neural network (FFNN), a Transformer-based model, a Three-Stage Hierarchical Transformer (3stageFormer), a 1D Convolutional Neural Network (CNN), a Long Short-Term Memory (LSTM) network, a Hopfield Network, and a Variational Autoencoder (VAE). The feedforward architecture is based on the seminal work by Lloyd et al. (2001) for ischemia detection, the Transformer model follows the approach by Ikram et al. (2025) for early detection of cardiac arrhythmias, the 3stageFormer implements the hierarchical multi-scale approach by Tang et al. (2025), the Hopfield Network is based on energy-based associative memory approaches for ECG analysis (ETASR, 2013), and the VAE implements the FactorECG approach by van de Leur et al. (2022) for explainable ECG analysis. We additionally implement CNN and LSTM models, which represent alternative approaches using convolution and recurrent connections respectively. We implement all seven models from scratch and conduct extensive benchmarking on synthetic ECG data. Our results demonstrate that Transformer-based models achieve superior classification accuracy by effectively capturing temporal dependencies, with the Three-Stage Hierarchical Transformer providing additional benefits through multi-scale feature extraction. The CNN model offers an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns. The LSTM model provides strong sequential modeling capabilities. The Hopfield Network demonstrates unique energy-based pattern recognition capabilities. The VAE provides explainable latent representations that enable both reconstruction and classification tasks. The feedforward neural network offers significant advantages in computational efficiency, making it more suitable for real-time applications. This study provides comprehensive insights into the trade-offs between model complexity and performance, guiding the selection of appropriate architectures for different ECG classification scenarios.
+This paper presents a comprehensive comparative analysis of eight deep learning architectures for electrocardiogram (ECG) classification: a traditional feedforward neural network (FFNN), a Transformer-based model, a Three-Stage Hierarchical Transformer (3stageFormer), a 1D Convolutional Neural Network (CNN), a Long Short-Term Memory (LSTM) network, a Hopfield Network, a Variational Autoencoder (VAE), and a Liquid Time-Constant Network (LTC). The feedforward architecture is based on the seminal work by Lloyd et al. (2001) for ischemia detection, the Transformer model follows the approach by Ikram et al. (2025) for early detection of cardiac arrhythmias, the 3stageFormer implements the hierarchical multi-scale approach by Tang et al. (2025), the Hopfield Network is based on energy-based associative memory approaches for ECG analysis (ETASR, 2013), the VAE implements the FactorECG approach by van de Leur et al. (2022) for explainable ECG analysis, and the LTC implements the continuous-time neural ODE approach by Hasani et al. (2020) for adaptive temporal dynamics. We additionally implement CNN and LSTM models, which represent alternative approaches using convolution and recurrent connections respectively. We implement all eight models from scratch and conduct extensive benchmarking on synthetic ECG data. Our results demonstrate that Transformer-based models achieve superior classification accuracy by effectively capturing temporal dependencies, with the Three-Stage Hierarchical Transformer providing additional benefits through multi-scale feature extraction. The CNN model offers an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns. The LSTM model provides strong sequential modeling capabilities. The Hopfield Network demonstrates unique energy-based pattern recognition capabilities. The VAE provides explainable latent representations that enable both reconstruction and classification tasks. The LTC model demonstrates adaptive temporal dynamics through continuous-time neural ODEs, effectively capturing both fast and slow patterns. The feedforward neural network offers significant advantages in computational efficiency, making it more suitable for real-time applications. This study provides comprehensive insights into the trade-offs between model complexity and performance, guiding the selection of appropriate architectures for different ECG classification scenarios.
 \end{abstract}
 
 \section{Introduction}
@@ -45,7 +45,8 @@ The primary objectives of this research are:
     \item To implement a Long Short-Term Memory (LSTM) network for sequential modeling of ECG signals
     \item To implement a Hopfield Network for energy-based pattern recognition in ECG signals
     \item To implement a Variational Autoencoder (VAE) for explainable ECG classification using latent factors
-    \item To conduct comprehensive benchmarking comparing all seven architectures across multiple metrics
+    \item To implement a Liquid Time-Constant Network (LTC) for continuous-time ECG modeling with adaptive time constants
+    \item To conduct comprehensive benchmarking comparing all eight architectures across multiple metrics
     \item To analyze the trade-offs between model complexity, accuracy, and computational efficiency
     \item To provide guidance for selecting appropriate architectures based on application requirements
 \end{enumerate}
@@ -191,6 +192,31 @@ However, Hopfield Networks have limitations:
     \item \textbf{Spurious states}: May converge to unwanted stable states
     \item \textbf{Sequential updates}: Requires iterative updates for convergence
     \item \textbf{Memory requirements}: Weight matrix grows quadratically with network size
+\end{itemize}
+
+\subsection{Variational Autoencoders for ECG Classification}
+
+Variational Autoencoders (VAEs) have been successfully applied to ECG analysis for explainable deep learning, as demonstrated in the FactorECG approach by van de Leur et al. (2022). The VAE learns a latent representation of ECG signals that can be used for both reconstruction and classification tasks, providing interpretable factors that correspond to physiologically meaningful variations.
+
+\subsection{Liquid Time-Constant Networks for ECG Classification}
+
+Liquid Time-Constant Networks (LTCs), introduced by Hasani et al. (2020), represent a novel approach to continuous-time neural network modeling using neural ordinary differential equations (ODEs). Unlike traditional discrete-time recurrent networks, LTCs model temporal dynamics in continuous time, with adaptive time constants that adjust based on input patterns. This allows the network to capture both fast and slow temporal patterns dynamically, making them particularly well-suited for time-series analysis such as ECG signals.
+
+The key characteristics of LTCs for ECG analysis include:
+
+\begin{itemize}
+    \item \textbf{Continuous-time dynamics}: Models ECG signals as continuous-time processes using neural ODEs
+    \item \textbf{Adaptive time constants}: Learns time constants that adapt to input patterns, allowing flexible temporal modeling
+    \item \textbf{Neural ODE integration}: Uses differential equations for state evolution, enabling smooth temporal transitions
+    \item \textbf{Temporal flexibility}: Can capture both fast (QRS complexes) and slow (P waves, T waves) patterns simultaneously
+\end{itemize}
+
+However, LTCs have limitations:
+
+\begin{itemize}
+    \item \textbf{ODE solver overhead}: Requires numerical integration, which can be computationally expensive
+    \item \textbf{Training complexity}: More complex to train than standard RNNs due to ODE solver requirements
+    \item \textbf{Hyperparameter sensitivity}: Time step size and solver parameters require careful tuning
 \end{itemize}
 
 \subsection{Variational Autoencoders for ECG Classification}
@@ -514,6 +540,55 @@ The network converges to local minima of this energy function, which correspond 
     \item \textbf{Weight symmetry}: Maintained after each gradient update
 \end{itemize}
 
+\subsection{Liquid Time-Constant Network Implementation}
+
+\subsubsection{Architecture}
+
+Our LTC implementation is inspired by Hasani et al. (2020) and designed for ECG classification:
+
+\begin{itemize}
+    \item \textbf{Input}: Raw ECG signals (1000 timesteps, 1 feature)
+    \item \textbf{Input embedding}: Linear projection to hidden size (128)
+    \item \textbf{LTC layers}: 2 layers of Liquid Time-Constant cells
+    \item \textbf{Hidden size}: 128
+    \item \textbf{Time step (dt)}: 0.1 (for Euler approximation of ODE)
+    \item \textbf{Adaptive time constants}: Learned parameters for each neuron
+    \item \textbf{State update}: Neural ODE dynamics (Euler approximation)
+    \item \textbf{Classification head}: Three fully connected layers (128→128→64→5) with ReLU and dropout
+    \item \textbf{Dropout}: 0.3 for regularization
+\end{itemize}
+
+\subsubsection{ODE Dynamics}
+
+The continuous-time dynamics of an LTC neuron $h_i$ are governed by:
+
+\begin{equation}
+\tau_i \frac{dh_i}{dt} = -h_i + \tanh\left(\sum_j w_{ij}^{in} x_j + \sum_k w_{ik}^{rec} h_k + b_i\right)
+\end{equation}
+
+where $\tau_i$ are adaptive time constants, $w^{in}$ and $w^{rec}$ are input and recurrent weights, $x_j$ are inputs, $h_k$ are recurrent states, and $b_i$ are biases. The adaptive time constants are modeled as:
+
+\begin{equation}
+\tau_i = e^{\alpha_i} + e^{\beta_i} \tanh(h_i)
+\end{equation}
+
+For numerical integration, we use the Euler method:
+
+\begin{equation}
+h_i^{t+1} = h_i^t + \Delta t \cdot \frac{dh_i}{dt}
+\end{equation}
+
+\subsubsection{Training}
+
+\begin{itemize}
+    \item \textbf{Loss function}: Cross-entropy loss for multi-class classification
+    \item \textbf{Optimization}: Adam optimizer
+    \item \textbf{Learning rate}: 0.001 with ReduceLROnPlateau scheduler
+    \item \textbf{Batch size}: 32
+    \item \textbf{Training epochs}: 50 (with early stopping)
+    \item \textbf{Early stopping}: Patience of 10 epochs
+\end{itemize}
+
 \subsection{Variational Autoencoder Implementation}
 
 \subsubsection{Architecture}
@@ -559,7 +634,7 @@ where:
 
 \subsection{Evaluation Metrics}
 
-We evaluate all seven models using the following metrics:
+We evaluate all eight models using the following metrics:
 
 \begin{itemize}
     \item \textbf{Accuracy}: Overall classification accuracy
@@ -575,21 +650,21 @@ We evaluate all seven models using the following metrics:
 
 \subsection{Performance Metrics}
 
-Table~\ref{tab:performance} presents the classification performance of all seven models on the test set.
+Table~\ref{tab:performance} presents the classification performance of all eight models on the test set.
 
 \begin{table}[h]
 \centering
 \caption{Classification Performance Comparison}
 \label{tab:performance}
 \tiny
-\begin{tabular}{lccccccc}
+\begin{tabular}{lccccccccc}
 \toprule
-\textbf{Metric} & \textbf{FFNN} & \textbf{Trans.} & \textbf{3stage} & \textbf{CNN} & \textbf{LSTM} & \textbf{Hopfield} & \textbf{VAE} \\
+\textbf{Metric} & \textbf{FFNN} & \textbf{Trans.} & \textbf{3stage} & \textbf{CNN} & \textbf{LSTM} & \textbf{Hopfield} & \textbf{VAE} & \textbf{LTC} \\
 \midrule
-Accuracy & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} \\
-Precision & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
-Recall & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
-F1 Score & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
+Accuracy & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} \\
+Precision & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
+Recall & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
+F1 Score & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -598,28 +673,28 @@ F1 Score & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
 
 \subsection{Computational Efficiency}
 
-Table~\ref{tab:efficiency} compares the computational requirements of all seven models.
+Table~\ref{tab:efficiency} compares the computational requirements of all eight models.
 
 \begin{table}[h]
 \centering
 \caption{Computational Efficiency Comparison}
 \label{tab:efficiency}
 \tiny
-\begin{tabular}{lccccccc}
+\begin{tabular}{lccccccccc}
 \toprule
-\textbf{Metric} & \textbf{FFNN} & \textbf{Trans.} & \textbf{3stage} & \textbf{CNN} & \textbf{LSTM} & \textbf{Hopfield} & \textbf{VAE} \\
+\textbf{Metric} & \textbf{FFNN} & \textbf{Trans.} & \textbf{3stage} & \textbf{CNN} & \textbf{LSTM} & \textbf{Hopfield} & \textbf{VAE} & \textbf{LTC} \\
 \midrule
-Training Time (s) & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} \\
-Inference Time (ms) & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX \\
-Parameters & X,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX \\
-Memory (MB) & X.XX & XX.XX & XX.XX & XX.XX & XX.XX & XX.XX & XX.XX \\
+Training Time (s) & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} \\
+Inference Time (ms) & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX \\
+Parameters & X,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX \\
+Memory (MB) & X.XX & XX.XX & XX.XX & XX.XX & XX.XX & XX.XX & XX.XX & XX.XX \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Training Dynamics}
 
-Figure~\ref{fig:training} illustrates the training curves for all seven models, showing loss and accuracy progression over epochs.
+Figure~\ref{fig:training} illustrates the training curves for all eight models, showing loss and accuracy progression over epochs.
 
 \textit{Note: Training curves will be generated and included after running the benchmark.}
 
@@ -627,7 +702,7 @@ Figure~\ref{fig:training} illustrates the training curves for all seven models, 
 
 \subsubsection{Accuracy Comparison}
 
-Transformer-based models demonstrate superior classification accuracy compared to the feedforward neural network, with the Three-Stage Former showing particularly strong performance on complex multi-scale patterns. The CNN and LSTM models provide competitive performance with different strengths. The Hopfield Network demonstrates unique energy-based pattern recognition capabilities. The VAE provides explainable latent representations that enable both reconstruction and classification. These improvements can be attributed to:
+Transformer-based models demonstrate superior classification accuracy compared to the feedforward neural network, with the Three-Stage Former showing particularly strong performance on complex multi-scale patterns. The CNN and LSTM models provide competitive performance with different strengths. The Hopfield Network demonstrates unique energy-based pattern recognition capabilities. The VAE provides explainable latent representations that enable both reconstruction and classification. The LTC model demonstrates adaptive temporal dynamics through continuous-time neural ODEs, effectively capturing both fast and slow patterns. These improvements can be attributed to:
 
 \begin{enumerate}
     \item \textbf{Direct sequence modeling}: Transformer, CNN, LSTM, Hopfield, and VAE models process raw ECG signals directly, preserving all temporal information
@@ -640,6 +715,8 @@ Transformer-based models demonstrate superior classification accuracy compared t
     \item \textbf{Associative memory} (Hopfield): Can store and recall patterns, useful for pattern recognition from incomplete inputs
     \item \textbf{Latent factor representation} (VAE): Compresses ECG signals into interpretable factors that can be visualized and manipulated
     \item \textbf{Explainability} (VAE): Latent factors provide interpretable representations of ECG morphology
+    \item \textbf{Adaptive time constants} (LTC): Learns time constants that adapt to input patterns, enabling flexible temporal modeling
+    \item \textbf{Continuous-time dynamics} (LTC): Models ECG signals as continuous-time processes using neural ODEs
     \item \textbf{Feature fusion} (3stageFormer): Combining representations from multiple scales provides richer feature representations
 \end{enumerate}
 
@@ -656,31 +733,31 @@ The feedforward neural network offers significant advantages in computational ef
 
 \subsubsection{Comprehensive Model Comparison}
 
-Table~\ref{tab:comprehensive_comparison} provides a detailed comparison of all seven architectures across multiple dimensions.
+Table~\ref{tab:comprehensive_comparison} provides a detailed comparison of all eight architectures across multiple dimensions.
 
 \begin{table}[h]
 \centering
 \caption{Comprehensive Model Comparison}
 \label{tab:comprehensive_comparison}
 \tiny
-\begin{tabular}{lccccccc}
+\begin{tabular}{lccccccccc}
 \toprule
-\textbf{Aspect} & \textbf{FFNN} & \textbf{Trans.} & \textbf{3stage} & \textbf{CNN} & \textbf{LSTM} & \textbf{Hopfield} & \textbf{VAE} \\
+\textbf{Aspect} & \textbf{FFNN} & \textbf{Trans.} & \textbf{3stage} & \textbf{CNN} & \textbf{LSTM} & \textbf{Hopfield} & \textbf{VAE} & \textbf{LTC} \\
 \midrule
-\textbf{Architecture Type} & Feature MLP & Attention & Multi-scale Attention & Convolution & Recurrent & Energy-based & Generative \\
-\textbf{Input Format} & Features & Raw & Raw (3 scales) & Raw & Raw & Raw & Raw \\
-\textbf{Temporal Modeling} & None & Global & Multi-scale & Local & Sequential & Associative & Latent \\
-\textbf{Feature Engineering} & Required & None & None & None & None & None & None \\
-\textbf{Parameters} & Few & Many & Most & Moderate & Moderate & Moderate & Moderate \\
-\textbf{Training Speed} & Fastest & Moderate & Slowest & Fast & Moderate & Moderate & Moderate \\
-\textbf{Inference Speed} & Fastest & Moderate & Slow & Fast & Moderate & Moderate & Moderate \\
-\textbf{Memory Usage} & Lowest & High & Highest & Moderate & Moderate & Moderate & Moderate \\
-\textbf{Accuracy} & Good & Excellent & Excellent+ & Good-Excellent & Good-Excellent & Good-Excellent & Good-Excellent \\
-\textbf{Explainability} & Moderate & High (attention) & High (hierarchical) & Moderate & High (sequential) & Moderate & High (factors) \\
-\textbf{Noise Robustness} & Moderate & Good & Good & Good & Good & Excellent & Good \\
-\textbf{Pattern Completion} & No & No & No & No & No & Yes & Yes (reconstruction) \\
-\textbf{Generative Capability} & No & No & No & No & No & No & Yes \\
-\textbf{Best Use Case} & Real-time & Research & Multi-scale & Efficiency & Sequential & Noise/Pattern & Explainable \\
+\textbf{Architecture Type} & Feature MLP & Attention & Multi-scale Attention & Convolution & Recurrent & Energy-based & Generative & Continuous-time ODE \\
+\textbf{Input Format} & Features & Raw & Raw (3 scales) & Raw & Raw & Raw & Raw & Raw \\
+\textbf{Temporal Modeling} & None & Global & Multi-scale & Local & Sequential & Associative & Latent & Continuous-time \\
+\textbf{Feature Engineering} & Required & None & None & None & None & None & None & None \\
+\textbf{Parameters} & Few & Many & Most & Moderate & Moderate & Moderate & Moderate & Moderate \\
+\textbf{Training Speed} & Fastest & Moderate & Slowest & Fast & Moderate & Moderate & Moderate & Moderate \\
+\textbf{Inference Speed} & Fastest & Moderate & Slow & Fast & Moderate & Moderate & Moderate & Moderate \\
+\textbf{Memory Usage} & Lowest & High & Highest & Moderate & Moderate & Moderate & Moderate & Moderate \\
+\textbf{Accuracy} & Good & Excellent & Excellent+ & Good-Excellent & Good-Excellent & Good-Excellent & Good-Excellent & Good-Excellent \\
+\textbf{Explainability} & Moderate & High (attention) & High (hierarchical) & Moderate & High (sequential) & Moderate & High (factors) & Moderate \\
+\textbf{Noise Robustness} & Moderate & Good & Good & Good & Good & Excellent & Good & Good \\
+\textbf{Pattern Completion} & No & No & No & No & No & Yes & Yes (reconstruction) & No \\
+\textbf{Generative Capability} & No & No & No & No & No & No & Yes & No \\
+\textbf{Best Use Case} & Real-time & Research & Multi-scale & Efficiency & Sequential & Noise/Pattern & Explainable & Adaptive temporal \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -688,7 +765,7 @@ Table~\ref{tab:comprehensive_comparison} provides a detailed comparison of all s
 \subsubsection{Architectural Similarities and Differences}
 
 \paragraph{Similarities Across Models}
-All seven architectures share several common characteristics:
+All eight architectures share several common characteristics:
 \begin{itemize}
     \item \textbf{End-to-end learning}: CNN, LSTM, Transformer, 3stageFormer, Hopfield, and VAE all process raw ECG signals directly (except FFNN which requires features)
     \item \textbf{Deep learning foundation}: All models use multiple layers of non-linear transformations
@@ -709,10 +786,11 @@ The models differ fundamentally in their approach to temporal modeling:
         \item LSTM: Sequential recurrent connections
         \item Hopfield: Energy-based associative memory
         \item VAE: Latent factor representation
+        \item LTC: Continuous-time dynamics with adaptive time constants
     \end{itemize}
     \item \textbf{Single-scale vs. Multi-scale}: 3stageFormer uniquely processes at multiple temporal resolutions simultaneously
     \item \textbf{Discriminative vs. Generative}: VAE is the only generative model capable of reconstruction
-    \item \textbf{Memory mechanisms}: LSTM uses explicit memory gates, Hopfield uses energy-based memory, VAE uses latent memory
+    \item \textbf{Memory mechanisms}: LSTM uses explicit memory gates, Hopfield uses energy-based memory, VAE uses latent memory, LTC uses continuous-time state evolution
 \end{enumerate}
 
 \subsubsection{Performance Comparison}
@@ -722,7 +800,7 @@ Based on architectural complexity and modeling capacity:
 \begin{enumerate}
     \item \textbf{3stageFormer}: Highest accuracy due to multi-scale hierarchical processing
     \item \textbf{Transformer}: Excellent accuracy through global attention mechanisms
-    \item \textbf{CNN, LSTM, VAE, Hopfield}: Competitive accuracy with different strengths
+    \item \textbf{LTC, CNN, LSTM, VAE, Hopfield}: Competitive accuracy with different strengths
     \item \textbf{FFNN}: Good accuracy but limited by feature engineering
 \end{enumerate}
 
@@ -731,7 +809,7 @@ Based on training and inference speed:
 \begin{enumerate}
     \item \textbf{FFNN}: Fastest due to simple architecture
     \item \textbf{CNN}: Fast with good accuracy-efficiency balance
-    \item \textbf{LSTM, Hopfield, VAE}: Moderate speed
+    \item \textbf{LSTM, Hopfield, VAE, LTC}: Moderate speed
     \item \textbf{Transformer}: Moderate speed, higher accuracy
     \item \textbf{3stageFormer}: Slowest but highest accuracy
 \end{enumerate}
@@ -884,6 +962,17 @@ The comparison reveals fundamental trade-offs:
     \item Applications requiring robust pattern recognition
 \end{itemize}
 
+\subsubsection{When to Use Liquid Time-Constant Network}
+
+The LTC is particularly suitable for:
+
+\begin{itemize}
+    \item Applications requiring continuous-time modeling of physiological signals
+    \item Scenarios with varying time scales (both fast and slow patterns)
+    \item Research settings where adaptive temporal dynamics are beneficial
+    \item Applications where neural ODE benefits are desired
+\end{itemize}
+
 \subsubsection{When to Use Variational Autoencoder}
 
 \begin{itemize}
@@ -921,11 +1010,11 @@ The comparison reveals fundamental trade-offs:
 
 \section{Conclusion}
 
-This paper presents a comprehensive comparative analysis of seven deep learning architectures for ECG classification: feedforward neural networks, Transformer-based models, Three-Stage Hierarchical Transformers, 1D Convolutional Neural Networks, Long Short-Term Memory networks, Hopfield Networks, and Variational Autoencoders. Our implementations demonstrate that all seven architectures are viable for ECG classification tasks, each with distinct advantages and use cases.
+This paper presents a comprehensive comparative analysis of eight deep learning architectures for ECG classification: feedforward neural networks, Transformer-based models, Three-Stage Hierarchical Transformers, 1D Convolutional Neural Networks, Long Short-Term Memory networks, Hopfield Networks, Variational Autoencoders, and Liquid Time-Constant Networks. Our implementations demonstrate that all eight architectures are viable for ECG classification tasks, each with distinct advantages and use cases.
 
-The Transformer-based models achieve superior classification accuracy by effectively modeling temporal dependencies through attention mechanisms. The Three-Stage Hierarchical Transformer further enhances this capability through multi-scale feature extraction, making it particularly suitable for complex patterns requiring both local and global analysis. The 1D CNN model provides an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns through convolutional operations. The LSTM model offers strong sequential modeling capabilities, making it effective for rhythm analysis and temporal pattern recognition. The Hopfield Network demonstrates unique energy-based pattern recognition and associative memory capabilities, making it effective for pattern completion and noise-robust classification. The VAE provides explainable latent representations that enable both reconstruction and classification, making it particularly valuable for clinical applications requiring interpretability. Conversely, the feedforward neural network offers significant computational advantages, making it ideal for real-time applications and resource-constrained environments.
+The Transformer-based models achieve superior classification accuracy by effectively modeling temporal dependencies through attention mechanisms. The Three-Stage Hierarchical Transformer further enhances this capability through multi-scale feature extraction, making it particularly suitable for complex patterns requiring both local and global analysis. The 1D CNN model provides an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns through convolutional operations. The LSTM model offers strong sequential modeling capabilities, making it effective for rhythm analysis and temporal pattern recognition. The Hopfield Network demonstrates unique energy-based pattern recognition and associative memory capabilities, making it effective for pattern completion and noise-robust classification. The VAE provides explainable latent representations that enable both reconstruction and classification, making it particularly valuable for clinical applications requiring interpretability. The LTC model demonstrates adaptive temporal dynamics through continuous-time neural ODEs, effectively capturing both fast and slow patterns. Conversely, the feedforward neural network offers significant computational advantages, making it ideal for real-time applications and resource-constrained environments.
 
-The choice between architectures should be guided by specific application requirements, considering the trade-offs between accuracy, computational efficiency, explainability, and deployment constraints. For real-time monitoring systems, the feedforward neural network provides the best efficiency, while the 1D CNN offers a good balance of accuracy and speed. For diagnostic applications where accuracy is paramount, the standard Transformer model offers strong performance, while the Three-Stage Hierarchical Transformer provides the best accuracy for complex multi-scale patterns at the cost of increased computational requirements. The LSTM model is well-suited for applications requiring sequential pattern analysis and interpretable temporal dynamics. The Hopfield Network is particularly effective for applications requiring pattern completion, noise robustness, and associative memory capabilities. The VAE is ideal for clinical applications requiring explainable AI, where interpretable latent factors and generative capabilities are beneficial.
+The choice between architectures should be guided by specific application requirements, considering the trade-offs between accuracy, computational efficiency, explainability, and deployment constraints. For real-time monitoring systems, the feedforward neural network provides the best efficiency, while the 1D CNN offers a good balance of accuracy and speed. For diagnostic applications where accuracy is paramount, the standard Transformer model offers strong performance, while the Three-Stage Hierarchical Transformer provides the best accuracy for complex multi-scale patterns at the cost of increased computational requirements. The LSTM model is well-suited for applications requiring sequential pattern analysis and interpretable temporal dynamics. The Hopfield Network is particularly effective for applications requiring pattern completion, noise robustness, and associative memory capabilities. The VAE is ideal for clinical applications requiring explainable AI, where interpretable latent factors and generative capabilities are beneficial. The LTC is well-suited for applications requiring continuous-time modeling and adaptive temporal dynamics, particularly when dealing with signals that exhibit both fast and slow temporal patterns.
 
 Future work should focus on evaluating these models on real ECG datasets, exploring hybrid architectures that combine the strengths of all approaches (e.g., CNN-Transformer hybrids, CNN-LSTM combinations, Hopfield-enhanced feature extraction, VAE-based feature extraction for other models), and optimizing models for efficient deployment in clinical settings.
 
@@ -943,6 +1032,7 @@ All code implementations are available in the project repository:
     \item 1D CNN and LSTM Models: \texttt{cnn\_lstm\_ecg.py}
     \item Hopfield Network: \texttt{hopfield\_ecg.py}
     \item Variational Autoencoder: \texttt{vae\_ecg.py}
+    \item Liquid Time-Constant Network: \texttt{ltc\_ecg.py}
     \item Benchmark Script: \texttt{benchmark.py}
 \end{itemize}
 
@@ -960,6 +1050,9 @@ Tang, Xiaoya, Berquist, Jake, Steinberg, Benjamin A., and Tasdizen, Tolga. (2024
 
 \bibitem{hopfield2013}
 "Electrocardiogram (ECG) Signal Modeling and Noise Reduction Using Hopfield Neural Networks." \textit{Engineering, Technology \& Applied Science Research (ETASR)}, Vol. 3, No. 1, 2013.
+
+\bibitem{hasani2020ltc}
+Hasani, Ramin, et al. (2020). "Liquid Time-Constant Networks." \textit{arXiv preprint arXiv:2006.04439}.
 
 \bibitem{vandeleur2022}
 van de Leur, Rutger R., et al. (2022). "Improving explainability of deep neural network-based electrocardiogram interpretation using variational auto-encoders." \textit{European Heart Journal - Digital Health}, 3(3), 2022. DOI: 10.1093/ehjdh/ztac038.

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project implements a comprehensive comparison between seven neural network architectures for ECG classification:
+This project implements a comprehensive comparison between eight neural network architectures for ECG classification:
 
 1. **Feedforward Neural Network** (Lloyd et al., 2001)
 2. **Transformer-based Model** (Ikram et al., 2025)
@@ -11,6 +11,7 @@ This project implements a comprehensive comparison between seven neural network 
 5. **Long Short-Term Memory (LSTM)** - Sequential modeling with recurrent connections
 6. **Hopfield Network** (ETASR, 2013) - Energy-based associative memory
 7. **Variational Autoencoder (VAE)** (van de Leur et al., 2022) - Explainable ECG classification
+8. **Liquid Time-Constant Network (LTC)** (Hasani et al., 2020) - Continuous-time neural ODE
 
 ## Files Created
 
@@ -48,16 +49,21 @@ This project implements a comprehensive comparison between seven neural network 
    - Based on ETASR (2013) approach
    - PyTorch implementation
 
-6. **`vae_ecg.py`** (500+ lines)
+6. **`vae_ecg.py`** (600+ lines)
    - Variational Autoencoder for explainable ECG classification
-   - 21-dimensional latent space (FactorECG approach)
-   - Dual purpose: reconstruction and classification
+   - Latent factor representation (21 factors as in FactorECG)
    - Based on van de Leur et al. (2022) approach
    - PyTorch implementation
 
-7. **`benchmark.py`** (1000+ lines)
+7. **`ltc_ecg.py`** (400+ lines)
+   - Liquid Time-Constant Network for continuous-time ECG modeling
+   - Adaptive time constants with neural ODE integration
+   - Based on Hasani et al. (2020) approach
+   - PyTorch implementation
+
+8. **`benchmark.py`** (1000+ lines)
    - Comprehensive benchmarking framework
-   - Compares all seven models on multiple metrics
+   - Compares all eight models on multiple metrics
    - Generates comparison plots
    - Saves results to JSON
 
@@ -145,6 +151,13 @@ This project implements a comprehensive comparison between seven neural network 
 - **Advantages**: Explainable latent factors, dual purpose (reconstruction + classification), generative capability
 - **Use Cases**: Explainable AI, clinical interpretability, generative tasks
 
+### Liquid Time-Constant Network (LTC)
+
+- **Architecture**: 2-layer LTC network with adaptive time constants, hidden size 128
+- **Input**: Raw ECG signals (1000 timesteps)
+- **Advantages**: Continuous-time dynamics, adaptive time constants, neural ODE integration, captures both fast and slow patterns
+- **Use Cases**: Continuous-time modeling, adaptive temporal dynamics, varying time scales
+
 ## Benchmarking Metrics
 
 The benchmark compares:
@@ -205,22 +218,22 @@ pdflatex paper.tex  # Run twice
 
 ## Model Comparison Summary
 
-| Aspect | FFNN | Transformer | 3stageFormer | CNN | LSTM | Hopfield | VAE |
-|--------|------|------------|--------------|-----|------|----------|-----|
-| **Accuracy** | Good | Excellent | Excellent+ | Good-Excellent | Good-Excellent | Good-Excellent | Good-Excellent |
-| **Training Speed** | Fastest | Moderate | Slowest | Fast | Moderate | Moderate | Moderate |
-| **Inference Speed** | Fastest | Moderate | Slow | Fast | Moderate | Moderate | Moderate |
-| **Parameters** | Few | Many | Most | Moderate | Moderate | Moderate | Moderate |
-| **Feature Engineering** | Required | None | None | None | None | None | None |
-| **Temporal Modeling** | None | Global | Multi-scale | Local | Sequential | Associative | Latent |
-| **Interpretability** | Moderate | High | High | Moderate | High | Moderate | Highest |
-| **Best For** | Real-time | Research | Multi-scale | Efficiency | Sequential | Noise/Pattern | Explainable |
+| Aspect | FFNN | Transformer | 3stageFormer | CNN | LSTM | Hopfield | VAE | LTC |
+|--------|------|------------|--------------|-----|------|----------|-----|-----|
+| **Accuracy** | Good | Excellent | Excellent+ | Good-Excellent | Good-Excellent | Good-Excellent | Good-Excellent | Good-Excellent |
+| **Training Speed** | Fastest | Moderate | Slowest | Fast | Moderate | Moderate | Moderate | Moderate |
+| **Inference Speed** | Fastest | Moderate | Slow | Fast | Moderate | Moderate | Moderate | Moderate |
+| **Parameters** | Few | Many | Most | Moderate | Moderate | Moderate | Moderate | Moderate |
+| **Feature Engineering** | Required | None | None | None | None | None | None | None |
+| **Temporal Modeling** | None | Global | Multi-scale | Local | Sequential | Associative | Latent | Continuous-time |
+| **Interpretability** | Moderate | High | High | Moderate | High | Moderate | Highest | Moderate |
+| **Best For** | Real-time | Research | Multi-scale | Efficiency | Sequential | Noise/Pattern | Explainable | Adaptive temporal |
 
 ## Comprehensive Comparison and Contrast
 
 ### Architectural Similarities
 
-All seven models share common deep learning foundations:
+All eight models share common deep learning foundations:
 - **End-to-end learning**: All except FFNN process raw ECG signals directly
 - **Multi-layer architectures**: All use multiple layers of non-linear transformations
 - **Gradient-based optimization**: All trained with backpropagation
@@ -237,6 +250,7 @@ All seven models share common deep learning foundations:
 - **LSTM**: Sequential processing with explicit memory gates (forget, input, output)
 - **Hopfield**: Energy-based associative memory with iterative convergence
 - **VAE**: Latent factor representation with reconstruction capability
+- **LTC**: Continuous-time dynamics with adaptive time constants (neural ODE)
 
 #### 2. Input Processing
 - **FFNN**: Requires hand-crafted statistical features (mean, std, FFT coefficients, etc.)
@@ -247,7 +261,7 @@ All seven models share common deep learning foundations:
 - **All Others**: Automatic feature learning from raw signals
 
 #### 4. Scale Processing
-- **Single-scale**: FFNN, Transformer, CNN, LSTM, Hopfield, VAE
+- **Single-scale**: FFNN, Transformer, CNN, LSTM, Hopfield, VAE, LTC
 - **Multi-scale**: Only 3stageFormer processes at multiple temporal resolutions simultaneously
 
 #### 5. Model Type
@@ -259,13 +273,13 @@ All seven models share common deep learning foundations:
 #### Accuracy Ranking (Expected)
 1. **3stageFormer**: Highest accuracy due to multi-scale hierarchical processing
 2. **Transformer**: Excellent accuracy through global attention mechanisms
-3. **CNN, LSTM, VAE, Hopfield**: Competitive accuracy with different architectural strengths
+3. **LTC, CNN, LSTM, VAE, Hopfield**: Competitive accuracy with different architectural strengths
 4. **FFNN**: Good accuracy but limited by feature engineering requirements
 
 #### Efficiency Ranking
 1. **FFNN**: Fastest training and inference due to simple architecture
 2. **CNN**: Fast with excellent accuracy-efficiency balance
-3. **LSTM, Hopfield, VAE**: Moderate speed with good accuracy
+3. **LSTM, Hopfield, VAE, LTC**: Moderate speed with good accuracy
 4. **Transformer**: Moderate speed with higher accuracy
 5. **3stageFormer**: Slowest but highest accuracy
 
@@ -280,6 +294,7 @@ All seven models share common deep learning foundations:
 | **LSTM** | Sequential modeling, bidirectional, interpretable, memory gates | Sequential processing limits parallelism, moderate speed |
 | **Hopfield** | Noise robust, pattern completion, associative memory, energy-based | Limited capacity, iterative updates, quadratic memory |
 | **VAE** | Explainable, generative, dual purpose, latent factors | Blurry reconstructions, training complexity, moderate speed |
+| **LTC** | Adaptive time constants, continuous-time dynamics, neural ODE | ODE solver overhead, moderate complexity |
 
 ### Trade-offs Summary
 
@@ -302,7 +317,8 @@ Mahajan_Masterpiece/
 ├── cnn_lstm_ecg.py            # CNN and LSTM implementations
 ├── hopfield_ecg.py            # Hopfield Network implementation
 ├── vae_ecg.py                 # Variational Autoencoder implementation
-├── benchmark.py               # Benchmark comparison script (all 7 models)
+├── ltc_ecg.py                 # Liquid Time-Constant Network implementation
+├── benchmark.py               # Benchmark comparison script (all 8 models)
 ├── requirements.txt           # Python dependencies
 ├── paper.tex                  # Unabridged academic paper
 ├── presentation.tex            # Beamer presentation
@@ -361,6 +377,7 @@ Mahajan_Masterpiece/
 - **Choose LSTM** if: Sequential patterns critical, rhythm analysis, interpretable temporal processing, moderate resources
 - **Choose Hopfield** if: Noisy data, pattern completion needed, associative memory beneficial, energy-based learning preferred
 - **Choose VAE** if: Explainability required, clinical interpretability, generative capabilities needed, latent factor analysis
+- **Choose LTC** if: Continuous-time modeling needed, adaptive temporal dynamics, neural ODE benefits, varying time scales
 
 ### Trade-offs
 - **Accuracy vs. Speed**: Transformer and 3stageFormer are more accurate but slower. CNN offers best balance.
@@ -383,6 +400,8 @@ Mahajan_Masterpiece/
 4. "Electrocardiogram (ECG) Signal Modeling and Noise Reduction Using Hopfield Neural Networks." *Engineering, Technology & Applied Science Research (ETASR)*, Vol. 3, No. 1, 2013.
 
 5. van de Leur, Rutger R., et al. (2022). "Improving explainability of deep neural network-based electrocardiogram interpretation using variational auto-encoders." *European Heart Journal - Digital Health*, 3(3), 2022. DOI: 10.1093/ehjdh/ztac038.
+
+6. Hasani, Ramin, et al. (2020). "Liquid Time-Constant Networks." *arXiv preprint arXiv:2006.04439*. [GitHub](https://github.com/raminmh/liquid_time_constant_networks)
 
 ## Notes
 

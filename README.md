@@ -1,6 +1,6 @@
 # ECG Classification Models: A Comparative Study
 
-This repository implements and compares seven deep learning architectures for ECG classification:
+This repository implements and compares eight deep learning architectures for ECG classification:
 
 1. **Feedforward Neural Network** (Lloyd et al., 2001) - A feedforward neural network from scratch using NumPy
 2. **Transformer-based Model** (Ikram et al., 2025) - Transformer architecture for ECG classification
@@ -9,6 +9,7 @@ This repository implements and compares seven deep learning architectures for EC
 5. **Long Short-Term Memory (LSTM)** - Sequential modeling with recurrent connections
 6. **Hopfield Network** (ETASR, 2013) - Energy-based associative memory for pattern recognition
 7. **Variational Autoencoder (VAE)** (van de Leur et al., 2022) - Explainable ECG classification using latent factors
+8. **Liquid Time-Constant Network (LTC)** (Hasani et al., 2020) - Continuous-time neural ODE with adaptive time constants
 
 The feedforward neural network implementation is designed for ECG analysis and heart disease prediction tasks, based on research published in *Circulation* (2001) on detecting ischemia in electrocardiograms using artificial neural networks.
 
@@ -55,6 +56,12 @@ The feedforward neural network implementation is designed for ECG analysis and h
 - **Dual purpose**: Can be used for both reconstruction and classification
 - **Generative capability**: Can generate new ECG signals by sampling from latent space
 - **Clinical interpretability**: Latent factors can be associated with physiologically meaningful processes
+
+### Liquid Time-Constant Network (LTC)
+- **Continuous-time dynamics**: Models ECG signals as continuous-time processes using neural ODEs
+- **Adaptive time constants**: Learns time constants that adapt to input patterns
+- **Temporal flexibility**: Captures both fast and slow temporal patterns
+- **Neural ODE integration**: Uses differential equations for state evolution
 
 ## Installation
 
@@ -136,9 +143,14 @@ python hopfield_ecg.py
 python vae_ecg.py
 ```
 
+#### Liquid Time-Constant Network (LTC)
+```bash
+python ltc_ecg.py
+```
+
 ### Running Complete Benchmark
 
-To compare all seven models:
+To compare all eight models:
 
 ```bash
 python benchmark.py
@@ -146,7 +158,7 @@ python benchmark.py
 
 This will:
 1. Generate a synthetic ECG dataset
-2. Train all seven models
+2. Train all eight models
 3. Evaluate performance
 4. Generate comparison plots
 5. Save results to `benchmark_results.json`
@@ -219,12 +231,13 @@ This implementation is educational and demonstrates neural network fundamentals.
 | LSTM | Recurrent | Raw signals | Moderate (10Ks-100Ks) | Moderate | Sequential patterns, rhythm analysis |
 | Hopfield Network | Energy-based Associative Memory | Raw signals | Moderate (10Ks-100Ks) | Moderate | Pattern completion, noise robustness |
 | VAE | Variational Autoencoder | Raw signals | Moderate (10Ks-100Ks) | Moderate | Explainable AI, interpretable factors |
+| LTC | Continuous-time Neural ODE | Raw signals | Moderate (10Ks-100Ks) | Moderate | Adaptive temporal dynamics, continuous-time modeling |
 
 ## Detailed Comparison and Contrast
 
 ### Architectural Similarities
 
-All seven models share common deep learning foundations:
+All eight models share common deep learning foundations:
 - **End-to-end learning**: All except FFNN process raw ECG signals directly
 - **Multi-layer architectures**: All use multiple layers of non-linear transformations
 - **Gradient-based optimization**: All trained with backpropagation
@@ -241,6 +254,7 @@ All seven models share common deep learning foundations:
 - **LSTM**: Sequential processing with explicit memory gates
 - **Hopfield**: Energy-based associative memory
 - **VAE**: Latent factor representation with reconstruction
+- **LTC**: Continuous-time dynamics with adaptive time constants (neural ODE)
 
 #### 2. **Input Processing**
 - **FFNN**: Requires hand-crafted statistical features (mean, std, FFT, etc.)
@@ -251,7 +265,7 @@ All seven models share common deep learning foundations:
 - **All Others**: Automatic feature learning from raw signals
 
 #### 4. **Scale Processing**
-- **Single-scale**: FFNN, Transformer, CNN, LSTM, Hopfield, VAE
+- **Single-scale**: FFNN, Transformer, CNN, LSTM, Hopfield, VAE, LTC
 - **Multi-scale**: Only 3stageFormer processes at multiple temporal resolutions
 
 #### 5. **Model Type**
@@ -263,13 +277,13 @@ All seven models share common deep learning foundations:
 #### Accuracy Ranking (Expected)
 1. **3stageFormer**: Highest accuracy (multi-scale hierarchical processing)
 2. **Transformer**: Excellent accuracy (global attention)
-3. **CNN, LSTM, VAE, Hopfield**: Competitive accuracy with different strengths
+3. **LTC, CNN, LSTM, VAE, Hopfield**: Competitive accuracy with different strengths
 4. **FFNN**: Good accuracy (limited by feature engineering)
 
 #### Efficiency Ranking
 1. **FFNN**: Fastest training and inference
 2. **CNN**: Fast with good accuracy-efficiency balance
-3. **LSTM, Hopfield, VAE**: Moderate speed
+3. **LSTM, Hopfield, VAE, LTC**: Moderate speed
 4. **Transformer**: Moderate speed, higher accuracy
 5. **3stageFormer**: Slowest but highest accuracy
 
@@ -284,6 +298,7 @@ All seven models share common deep learning foundations:
 | **LSTM** | Sequential modeling, interpretable | Sequential processing, moderate speed |
 | **Hopfield** | Noise robust, pattern completion | Limited capacity, iterative updates |
 | **VAE** | Explainable, generative, dual purpose | Blurry reconstructions, training complexity |
+| **LTC** | Adaptive time constants, continuous-time dynamics | ODE solver overhead, moderate complexity |
 
 ### When to Choose Which Model?
 
@@ -294,6 +309,7 @@ All seven models share common deep learning foundations:
 - **Choose LSTM** if: Sequential patterns critical, rhythm analysis, interpretable processing
 - **Choose Hopfield** if: Noisy data, pattern completion needed, associative memory beneficial
 - **Choose VAE** if: Explainability required, clinical interpretability, generative capabilities needed
+- **Choose LTC** if: Continuous-time modeling needed, adaptive temporal dynamics, neural ODE benefits
 
 ### Trade-offs Summary
 
@@ -316,6 +332,8 @@ All seven models share common deep learning foundations:
 - "Electrocardiogram (ECG) Signal Modeling and Noise Reduction Using Hopfield Neural Networks." *Engineering, Technology & Applied Science Research (ETASR)*, Vol. 3, No. 1, 2013.
 
 - van de Leur, Rutger R., et al. (2022). "Improving explainability of deep neural network-based electrocardiogram interpretation using variational auto-encoders." *European Heart Journal - Digital Health*, 3(3), 2022. DOI: 10.1093/ehjdh/ztac038.
+
+- Hasani, Ramin, et al. (2020). "Liquid Time-Constant Networks." *arXiv preprint arXiv:2006.04439*. [GitHub](https://github.com/raminmh/liquid_time_constant_networks)
 
 ## License
 

@@ -269,7 +269,7 @@
     <header>
         <div class="container">
             <h1>Comparative Analysis of Neural Network Architectures for ECG Classification</h1>
-            <p class="subtitle">A Comprehensive Study of Seven Deep Learning Approaches</p>
+            <p class="subtitle">A Comprehensive Study of Eight Deep Learning Approaches</p>
             
             <div class="authors">
                 <strong>Shyamal Suhana Chandra</strong>
@@ -295,12 +295,12 @@
         <section id="abstract">
             <h2>Abstract</h2>
             <div class="abstract">
-                This project presents a comprehensive comparative analysis of seven deep learning architectures for electrocardiogram (ECG) classification: a traditional feedforward neural network (FFNN), a Transformer-based model, a Three-Stage Hierarchical Transformer (3stageFormer), a 1D Convolutional Neural Network (CNN), a Long Short-Term Memory (LSTM) network, a Hopfield Network, and a Variational Autoencoder (VAE). The feedforward architecture is based on the seminal work by Lloyd et al. (2001) for ischemia detection, the Transformer model follows the approach by Ikram et al. (2025) for early detection of cardiac arrhythmias, the 3stageFormer implements the hierarchical multi-scale approach by Tang et al. (2025), the Hopfield Network is based on energy-based associative memory approaches for ECG analysis (ETASR, 2013), and the VAE implements the FactorECG approach by van de Leur et al. (2022) for explainable ECG analysis. We additionally implement CNN and LSTM models, which represent alternative approaches using convolution and recurrent connections respectively. We implement all seven models from scratch and conduct extensive benchmarking on synthetic ECG data. Our results demonstrate that Transformer-based models achieve superior classification accuracy by effectively capturing temporal dependencies, with the Three-Stage Hierarchical Transformer providing additional benefits through multi-scale feature extraction. The CNN model offers an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns. The LSTM model provides strong sequential modeling capabilities. The Hopfield Network demonstrates unique energy-based pattern recognition capabilities. The VAE provides explainable latent representations that enable both reconstruction and classification tasks. The feedforward neural network offers significant advantages in computational efficiency, making it more suitable for real-time applications. This study provides comprehensive insights into the trade-offs between model complexity and performance, guiding the selection of appropriate architectures for different ECG classification scenarios.
+                This project presents a comprehensive comparative analysis of eight deep learning architectures for electrocardiogram (ECG) classification: a traditional feedforward neural network (FFNN), a Transformer-based model, a Three-Stage Hierarchical Transformer (3stageFormer), a 1D Convolutional Neural Network (CNN), a Long Short-Term Memory (LSTM) network, a Hopfield Network, a Variational Autoencoder (VAE), and a Liquid Time-Constant Network (LTC). The feedforward architecture is based on the seminal work by Lloyd et al. (2001) for ischemia detection, the Transformer model follows the approach by Ikram et al. (2025) for early detection of cardiac arrhythmias, the 3stageFormer implements the hierarchical multi-scale approach by Tang et al. (2025), the Hopfield Network is based on energy-based associative memory approaches for ECG analysis (ETASR, 2013), the VAE implements the FactorECG approach by van de Leur et al. (2022) for explainable ECG analysis, and the LTC implements the continuous-time neural ODE approach by Hasani et al. (2020) for adaptive temporal dynamics. We additionally implement CNN and LSTM models, which represent alternative approaches using convolution and recurrent connections respectively. We implement all eight models from scratch and conduct extensive benchmarking on synthetic ECG data. Our results demonstrate that Transformer-based models achieve superior classification accuracy by effectively capturing temporal dependencies, with the Three-Stage Hierarchical Transformer providing additional benefits through multi-scale feature extraction. The CNN model offers an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns. The LSTM model provides strong sequential modeling capabilities. The Hopfield Network demonstrates unique energy-based pattern recognition capabilities. The VAE provides explainable latent representations that enable both reconstruction and classification tasks. The LTC model demonstrates adaptive temporal dynamics through continuous-time neural ODEs, effectively capturing both fast and slow patterns. The feedforward neural network offers significant advantages in computational efficiency, making it more suitable for real-time applications. This study provides comprehensive insights into the trade-offs between model complexity and performance, guiding the selection of appropriate architectures for different ECG classification scenarios.
             </div>
         </section>
 
         <section id="models">
-            <h2>Seven Deep Learning Architectures</h2>
+            <h2>Eight Deep Learning Architectures</h2>
             <div class="model-grid">
                 <div class="model-card">
                     <h4>1. Feedforward NN</h4>
@@ -365,6 +365,15 @@
                         <li><span class="metric-label">Best For:</span> Explainable AI</li>
                     </ul>
                 </div>
+                <div class="model-card">
+                    <h4>8. LTC</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Continuous-time Neural ODE</li>
+                        <li><span class="metric-label">Input:</span> Raw signals</li>
+                        <li><span class="metric-label">Speed:</span> Moderate</li>
+                        <li><span class="metric-label">Best For:</span> Adaptive temporal dynamics</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
@@ -419,6 +428,10 @@
                     <circle cx="500" cy="240" r="12" fill="#1abc9c"/>
                     <text x="500" y="225" text-anchor="middle" font-size="12" fill="#333">VAE</text>
                     
+                    <!-- LTC: Medium complexity, Good-Excellent accuracy -->
+                    <circle cx="550" cy="245" r="12" fill="#16a085"/>
+                    <text x="550" y="230" text-anchor="middle" font-size="12" fill="#333">LTC</text>
+                    
                     <!-- Transformer: High complexity, Excellent accuracy -->
                     <circle cx="700" cy="150" r="12" fill="#2ecc71"/>
                     <text x="700" y="135" text-anchor="middle" font-size="12" fill="#333">Transformer</text>
@@ -428,7 +441,7 @@
                     <text x="850" y="85" text-anchor="middle" font-size="12" fill="#333">3stage</text>
                     
                     <!-- Legend -->
-                    <rect x="750" y="50" width="200" height="120" fill="white" stroke="#ddd" stroke-width="1"/>
+                    <rect x="750" y="50" width="200" height="140" fill="white" stroke="#ddd" stroke-width="1"/>
                     <text x="850" y="70" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Legend</text>
                     <circle cx="770" cy="90" r="6" fill="#e74c3c"/>
                     <text x="790" y="95" font-size="11" fill="#333">Feedforward NN</text>
@@ -440,6 +453,8 @@
                     <text x="790" y="155" font-size="11" fill="#333">Hopfield</text>
                     <circle cx="770" cy="170" r="6" fill="#1abc9c"/>
                     <text x="790" y="175" font-size="11" fill="#333">VAE</text>
+                    <circle cx="770" cy="190" r="6" fill="#16a085"/>
+                    <text x="790" y="195" font-size="11" fill="#333">LTC</text>
                 </svg>
             </div>
 
@@ -528,6 +543,16 @@
                         <td>Good-Excellent</td>
                         <td>Highest (factors)</td>
                     </tr>
+                    <tr>
+                        <td><strong>LTC</strong></td>
+                        <td>Continuous-time Neural ODE</td>
+                        <td>Raw signals</td>
+                        <td>Continuous-time</td>
+                        <td>Moderate (10Ks-100Ks)</td>
+                        <td>Moderate</td>
+                        <td>Good-Excellent</td>
+                        <td>Moderate</td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -582,6 +607,11 @@
                     <circle cx="600" cy="210" r="18" fill="#1abc9c" opacity="0.8"/>
                     <text x="600" y="195" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">VAE</text>
                     <text x="600" y="250" text-anchor="middle" font-size="10" fill="#666">Explainable</text>
+                    
+                    <!-- LTC: Moderate, Good-Excellent accuracy -->
+                    <circle cx="650" cy="215" r="18" fill="#16a085" opacity="0.8"/>
+                    <text x="650" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">LTC</text>
+                    <text x="650" y="255" text-anchor="middle" font-size="10" fill="#666">Continuous-time</text>
                     
                     <!-- Transformer: Moderate-Slow, Excellent accuracy -->
                     <circle cx="750" cy="120" r="18" fill="#2ecc71" opacity="0.8"/>
@@ -643,6 +673,11 @@
                     <text x="940" y="90" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Generative</text>
                     <text x="940" y="110" text-anchor="middle" font-size="12" fill="#666">VAE</text>
                     
+                    <!-- Continuous-time ODE -->
+                    <rect x="730" y="100" width="120" height="260" fill="#16a085" opacity="0.3" rx="5"/>
+                    <text x="790" y="120" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Continuous-time</text>
+                    <text x="790" y="140" text-anchor="middle" font-size="12" fill="#666">LTC</text>
+                    
                     <!-- Legend -->
                     <text x="500" y="380" text-anchor="middle" font-size="12" fill="#666">Height represents modeling capacity / complexity</text>
                 </svg>
@@ -676,6 +711,10 @@
                     <h4>🔄 Sequential Modeling</h4>
                     <p>LSTM network provides bidirectional sequential processing with explicit memory gates for rhythm analysis and temporal pattern recognition.</p>
                 </div>
+                <div class="feature-item">
+                    <h4>⏱️ Continuous-Time Dynamics</h4>
+                    <p>Liquid Time-Constant Network (LTC) models ECG signals as continuous-time processes using neural ODEs with adaptive time constants, capturing both fast and slow temporal patterns.</p>
+                </div>
             </div>
         </section>
 
@@ -684,7 +723,7 @@
             <div class="feature-list">
                 <div class="feature-item">
                     <h4>Accuracy Performance</h4>
-                    <p><strong>3stageFormer</strong> achieves highest accuracy through multi-scale hierarchical processing. <strong>Transformer</strong> provides excellent accuracy with global attention. <strong>CNN, LSTM, VAE, and Hopfield</strong> offer competitive accuracy with different architectural strengths.</p>
+                    <p><strong>3stageFormer</strong> achieves highest accuracy through multi-scale hierarchical processing. <strong>Transformer</strong> provides excellent accuracy with global attention. <strong>CNN, LSTM, VAE, Hopfield, and LTC</strong> offer competitive accuracy with different architectural strengths.</p>
                 </div>
                 <div class="feature-item">
                     <h4>Computational Efficiency</h4>
@@ -727,7 +766,10 @@ python cnn_lstm_ecg.py
 python hopfield_ecg.py
 
 # Variational Autoencoder
-python vae_ecg.py</code></pre>
+python vae_ecg.py
+
+# Liquid Time-Constant Network
+python ltc_ecg.py</code></pre>
             </div>
         </section>
 
@@ -736,11 +778,11 @@ python vae_ecg.py</code></pre>
             <div class="citation">
                 <p>If you use this code or findings, please cite:</p>
                 <pre style="margin-top: 15px; padding: 15px; background: white; border-left: 4px solid #667eea;">@article{chandra2025ecg,
-  title={Comparative Analysis of Neural Network Architectures for ECG Classification: A Comprehensive Study of Seven Deep Learning Approaches},
+  title={Comparative Analysis of Neural Network Architectures for ECG Classification: A Comprehensive Study of Eight Deep Learning Approaches},
   author={Chandra, Shyamal Suhana},
   journal={Sapana Micro Software Research},
   year={2025},
-  note={Implementation and benchmarking of FFNN, Transformer, 3stageFormer, CNN, LSTM, Hopfield, and VAE architectures}
+  note={Implementation and benchmarking of FFNN, Transformer, 3stageFormer, CNN, LSTM, Hopfield, VAE, and LTC architectures}
 }</pre>
             </div>
             
@@ -753,6 +795,7 @@ python vae_ecg.py</code></pre>
                     <li><strong>3stageFormer:</strong> Tang, Xiaoya, et al. (2024). "Hierarchical Transformer for Electrocardiogram Diagnosis." <em>arXiv preprint arXiv:2411.00755</em>.</li>
                     <li><strong>Hopfield Network:</strong> "Electrocardiogram (ECG) Signal Modeling and Noise Reduction Using Hopfield Neural Networks." <em>Engineering, Technology & Applied Science Research (ETASR)</em>, Vol. 3, No. 1, 2013.</li>
                     <li><strong>VAE (FactorECG):</strong> van de Leur, Rutger R., et al. (2022). "Improving explainability of deep neural network-based electrocardiogram interpretation using variational auto-encoders." <em>European Heart Journal - Digital Health</em>, 3(3), 2022. DOI: 10.1093/ehjdh/ztac038.</li>
+                    <li><strong>LTC:</strong> Hasani, Ramin, et al. (2020). "Liquid Time-Constant Networks." <em>arXiv preprint arXiv:2006.04439</em>. <a href="https://github.com/raminmh/liquid_time_constant_networks" target="_blank">https://github.com/raminmh/liquid_time_constant_networks</a></li>
                 </ul>
             </div>
         </section>
@@ -765,6 +808,7 @@ python vae_ecg.py</code></pre>
                 <li>Tang, Xiaoya, Berquist, Jake, Steinberg, Benjamin A., and Tasdizen, Tolga. (2024). "Hierarchical Transformer for Electrocardiogram Diagnosis." <em>arXiv preprint arXiv:2411.00755</em>.</li>
                 <li>"Electrocardiogram (ECG) Signal Modeling and Noise Reduction Using Hopfield Neural Networks." <em>Engineering, Technology & Applied Science Research (ETASR)</em>, Vol. 3, No. 1, 2013. <a href="https://etasr.com/index.php/ETASR/article/view/243/156" target="_blank">https://etasr.com/index.php/ETASR/article/view/243/156</a></li>
                 <li>van de Leur, Rutger R., et al. (2022). "Improving explainability of deep neural network-based electrocardiogram interpretation using variational auto-encoders." <em>European Heart Journal - Digital Health</em>, 3(3), 2022. DOI: 10.1093/ehjdh/ztac038. <a href="https://github.com/UMCUtrecht-ECGxAI/ecgxai" target="_blank">https://github.com/UMCUtrecht-ECGxAI/ecgxai</a></li>
+                <li>Hasani, Ramin, et al. (2020). "Liquid Time-Constant Networks." <em>arXiv preprint arXiv:2006.04439</em>. <a href="https://github.com/raminmh/liquid_time_constant_networks" target="_blank">https://github.com/raminmh/liquid_time_constant_networks</a></li>
                 <li>Liang, Junbang, et al. (2025). "Video Generators are Robot Policies." <em>arXiv preprint arXiv:2508.00795</em>. <a href="https://videopolicy.cs.columbia.edu/" target="_blank">https://videopolicy.cs.columbia.edu/</a></li>
             </ul>
         </section>

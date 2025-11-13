@@ -7,6 +7,7 @@ Benchmark script comparing multiple ECG classification models:
 5. Long Short-Term Memory (LSTM)
 6. Hopfield Network (ETASR, 2013)
 7. Variational Autoencoder (VAE) - FactorECG (van de Leur et al., 2022)
+8. Liquid Time-Constant Network (LTC) - Hasani et al. (2020)
 """
 
 import numpy as np                                                      # NumPy for array operations
@@ -30,6 +31,9 @@ from hopfield_ecg import (                                             # Hopfiel
 )
 from vae_ecg import (                                                  # VAE model
     VAEEcgClassifier, train_vae, evaluate_model as evaluate_vae
+)
+from ltc_ecg import (                                                  # LTC model
+    LTCEcgClassifier, train_ltc, evaluate_model as evaluate_ltc, ECGDataset as LTCECGDataset
 )
 from torch.utils.data import DataLoader                                 # Data loading
 import matplotlib.pyplot as plt                                         # Plotting
@@ -935,10 +939,121 @@ def benchmark_vae(
     return benchmark_results
 
 
+def benchmark_ltc(
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_val: np.ndarray,
+    y_val: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
+    device: str = 'cpu'
+) -> Dict:
+    """
+    Benchmark Liquid Time-Constant Network (LTC) model.
+    
+    Parameters:
+    -----------
+    X_train, y_train : np.ndarray
+        Training data
+    X_val, y_val : np.ndarray
+        Validation data
+    X_test, y_test : np.ndarray
+        Test data
+    device : str
+        Device to use
+    
+    Returns:
+    --------
+    Dict
+        Benchmark results
+    """
+    print("\n" + "="*60)
+    print("BENCHMARKING LIQUID TIME-CONSTANT NETWORK (LTC)")
+    print("="*60)
+    
+    # Create datasets
+    train_dataset = LTCECGDataset(X_train, y_train, seq_len=1000)
+    val_dataset = LTCECGDataset(X_val, y_val, seq_len=1000)
+    test_dataset = LTCECGDataset(X_test, y_test, seq_len=1000)
+    
+    # Create data loaders
+    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
+    test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+    
+    # Initialize model
+    model = LTCEcgClassifier(
+        input_size=1,
+        hidden_size=128,
+        num_layers=2,
+        num_classes=5,
+        dropout=0.3,
+        dt=0.1
+    )
+    
+    # Count parameters
+    num_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    
+    # Train model
+    start_time = time.time()
+    history = train_ltc(
+        model, train_loader, val_loader,
+        num_epochs=50,
+        learning_rate=0.001,
+        device=device,
+        patience=10
+    )
+    train_time = time.time() - start_time
+    
+    # Evaluate on test set
+    start_time = time.time()
+    test_loss, test_acc, y_true, y_pred = evaluate_ltc(model, test_loader, device=device)
+    inference_time = time.time() - start_time
+    
+    # Convert multi-class to binary for comparison
+    binary_predictions = (y_pred > 0).astype(int)
+    binary_labels = (y_true > 0).astype(int)
+    
+    # Calculate metrics
+    accuracy = test_acc / 100.0  # Convert from percentage
+    precision = precision_score(binary_labels, binary_predictions, zero_division=0)
+    recall = recall_score(binary_labels, binary_predictions, zero_division=0)
+    f1 = f1_score(binary_labels, binary_predictions, zero_division=0)
+    
+    benchmark_results = {
+        'model_name': 'Liquid Time-Constant Network (LTC)',
+        'accuracy': float(accuracy),
+        'precision': float(precision),
+        'recall': float(recall),
+        'f1_score': float(f1),
+        'train_time': train_time,
+        'inference_time': inference_time,
+        'num_parameters': int(num_params),
+        'train_loss_history': [float(x) for x in history['train_loss']],
+        'train_acc_history': [float(x) for x in history['train_acc']],
+        'val_loss_history': [float(x) for x in history.get('val_loss', [])],
+        'val_acc_history': [float(x) for x in history.get('val_acc', [])],
+        'predictions': binary_predictions.tolist(),
+        'probabilities': binary_predictions.tolist(),
+        'true_labels': binary_labels.tolist()
+    }
+    
+    print(f"\nResults:")
+    print(f"  Accuracy:  {accuracy:.4f}")
+    print(f"  Precision: {precision:.4f}")
+    print(f"  Recall:    {recall:.4f}")
+    print(f"  F1 Score:  {f1:.4f}")
+    print(f"  Train Time: {train_time:.2f} seconds")
+    print(f"  Inference Time: {inference_time:.4f} seconds")
+    print(f"  Parameters: {num_params:,}")
+    
+    return benchmark_results
+
+
 def run_complete_benchmark():
     """Run complete benchmark comparison."""
     print("="*60)
-    print("COMPREHENSIVE BENCHMARK: 7 ECG CLASSIFICATION MODELS")
+    print("COMPREHENSIVE BENCHMARK: 8 ECG CLASSIFICATION MODELS")
     print("="*60)
     
     # Generate synthetic ECG data
@@ -1031,6 +1146,14 @@ def run_complete_benchmark():
         device=device
     )
     
+    # Benchmark LTC
+    results_ltc = benchmark_ltc(
+        signals_train, labels_train,
+        signals_val, labels_val,
+        signals_test, labels_test,
+        device=device
+    )
+    
     # Save results to JSON
     all_results = {
         'feedforward_nn': results_ff,
@@ -1039,7 +1162,8 @@ def run_complete_benchmark():
         'cnn_1d': results_cnn,
         'lstm': results_lstm,
         'hopfield': results_hopfield,
-        'vae': results_vae
+        'vae': results_vae,
+        'ltc': results_ltc
     }
     
     # Create comparison plots
@@ -1051,14 +1175,14 @@ def run_complete_benchmark():
     print("\n" + "="*60)
     print("BENCHMARK SUMMARY")
     print("="*60)
-    print(f"\n{'Metric':<20} {'FFNN':<10} {'Trans.':<10} {'3stage':<10} {'CNN':<10} {'LSTM':<10} {'Hopfield':<10} {'VAE':<10}")
-    print("-" * 110)
-    print(f"{'Accuracy':<20} {results_ff['accuracy']:<10.4f} {results_transformer['accuracy']:<10.4f} {results_3stage['accuracy']:<10.4f} {results_cnn['accuracy']:<10.4f} {results_lstm['accuracy']:<10.4f} {results_hopfield['accuracy']:<10.4f} {results_vae['accuracy']:<10.4f}")
-    print(f"{'Precision':<20} {results_ff['precision']:<10.4f} {results_transformer['precision']:<10.4f} {results_3stage['precision']:<10.4f} {results_cnn['precision']:<10.4f} {results_lstm['precision']:<10.4f} {results_hopfield['precision']:<10.4f} {results_vae['precision']:<10.4f}")
-    print(f"{'Recall':<20} {results_ff['recall']:<10.4f} {results_transformer['recall']:<10.4f} {results_3stage['recall']:<10.4f} {results_cnn['recall']:<10.4f} {results_lstm['recall']:<10.4f} {results_hopfield['recall']:<10.4f} {results_vae['recall']:<10.4f}")
-    print(f"{'F1 Score':<20} {results_ff['f1_score']:<10.4f} {results_transformer['f1_score']:<10.4f} {results_3stage['f1_score']:<10.4f} {results_cnn['f1_score']:<10.4f} {results_lstm['f1_score']:<10.4f} {results_hopfield['f1_score']:<10.4f} {results_vae['f1_score']:<10.4f}")
-    print(f"{'Train Time (s)':<20} {results_ff['train_time']:<10.2f} {results_transformer['train_time']:<10.2f} {results_3stage['train_time']:<10.2f} {results_cnn['train_time']:<10.2f} {results_lstm['train_time']:<10.2f} {results_hopfield['train_time']:<10.2f} {results_vae['train_time']:<10.2f}")
-    print(f"{'Parameters':<20} {results_ff['num_parameters']:<10,} {results_transformer['num_parameters']:<10,} {results_3stage['num_parameters']:<10,} {results_cnn['num_parameters']:<10,} {results_lstm['num_parameters']:<10,} {results_hopfield['num_parameters']:<10,} {results_vae['num_parameters']:<10,}")
+    print(f"\n{'Metric':<20} {'FFNN':<10} {'Trans.':<10} {'3stage':<10} {'CNN':<10} {'LSTM':<10} {'Hopfield':<10} {'VAE':<10} {'LTC':<10}")
+    print("-" * 120)
+    print(f"{'Accuracy':<20} {results_ff['accuracy']:<10.4f} {results_transformer['accuracy']:<10.4f} {results_3stage['accuracy']:<10.4f} {results_cnn['accuracy']:<10.4f} {results_lstm['accuracy']:<10.4f} {results_hopfield['accuracy']:<10.4f} {results_vae['accuracy']:<10.4f} {results_ltc['accuracy']:<10.4f}")
+    print(f"{'Precision':<20} {results_ff['precision']:<10.4f} {results_transformer['precision']:<10.4f} {results_3stage['precision']:<10.4f} {results_cnn['precision']:<10.4f} {results_lstm['precision']:<10.4f} {results_hopfield['precision']:<10.4f} {results_vae['precision']:<10.4f} {results_ltc['precision']:<10.4f}")
+    print(f"{'Recall':<20} {results_ff['recall']:<10.4f} {results_transformer['recall']:<10.4f} {results_3stage['recall']:<10.4f} {results_cnn['recall']:<10.4f} {results_lstm['recall']:<10.4f} {results_hopfield['recall']:<10.4f} {results_vae['recall']:<10.4f} {results_ltc['recall']:<10.4f}")
+    print(f"{'F1 Score':<20} {results_ff['f1_score']:<10.4f} {results_transformer['f1_score']:<10.4f} {results_3stage['f1_score']:<10.4f} {results_cnn['f1_score']:<10.4f} {results_lstm['f1_score']:<10.4f} {results_hopfield['f1_score']:<10.4f} {results_vae['f1_score']:<10.4f} {results_ltc['f1_score']:<10.4f}")
+    print(f"{'Train Time (s)':<20} {results_ff['train_time']:<10.2f} {results_transformer['train_time']:<10.2f} {results_3stage['train_time']:<10.2f} {results_cnn['train_time']:<10.2f} {results_lstm['train_time']:<10.2f} {results_hopfield['train_time']:<10.2f} {results_vae['train_time']:<10.2f} {results_ltc['train_time']:<10.2f}")
+    print(f"{'Parameters':<20} {results_ff['num_parameters']:<10,} {results_transformer['num_parameters']:<10,} {results_3stage['num_parameters']:<10,} {results_cnn['num_parameters']:<10,} {results_lstm['num_parameters']:<10,} {results_hopfield['num_parameters']:<10,} {results_vae['num_parameters']:<10,} {results_ltc['num_parameters']:<10,}")
     
     print("\nResults saved to benchmark_results.json")
     print("Comparison plot saved to benchmark_comparison.png")

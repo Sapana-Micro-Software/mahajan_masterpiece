@@ -1,10 +1,10 @@
 # Benchmark and Comparison Guide
 
-This guide explains how to run the comprehensive benchmark comparing seven deep learning architectures for ECG classification.
+This guide explains how to run the comprehensive benchmark comparing eight deep learning architectures for ECG classification.
 
 ## Overview
 
-This project implements and compares seven deep learning architectures for ECG classification:
+This project implements and compares eight deep learning architectures for ECG classification:
 
 1. **Feedforward Neural Network** (based on Lloyd et al., 2001)
 2. **Transformer-based Model** (based on Ikram et al., 2025)
@@ -13,6 +13,7 @@ This project implements and compares seven deep learning architectures for ECG c
 5. **Long Short-Term Memory (LSTM)** - Sequential modeling with recurrent connections
 6. **Hopfield Network** (based on ETASR, 2013) - Energy-based associative memory
 7. **Variational Autoencoder (VAE)** (based on van de Leur et al., 2022) - Explainable ECG classification
+8. **Liquid Time-Constant Network (LTC)** (based on Hasani et al., 2020) - Continuous-time neural ODE
 
 ## Installation
 
@@ -58,7 +59,7 @@ python benchmark.py
 
 This will:
 1. Generate synthetic ECG dataset (3000 samples)
-2. Train all seven models
+2. Train all eight models
 3. Evaluate performance
 4. Generate comparison plots
 5. Save results to `benchmark_results.json`
@@ -66,7 +67,7 @@ This will:
 ### Expected Output
 
 The script will display:
-- Training progress for all seven models
+- Training progress for all eight models
 - Performance metrics (accuracy, precision, recall, F1 score)
 - Computational metrics (training time, inference time, parameters)
 - Summary comparison table
@@ -109,6 +110,12 @@ python hopfield_ecg.py
 
 ```python
 python vae_ecg.py
+```
+
+#### Test Liquid Time-Constant Network (LTC)
+
+```python
+python ltc_ecg.py
 ```
 
 ## Understanding the Results
@@ -193,16 +200,16 @@ You can manually update the LaTeX files or create a script to automatically popu
 
 ### Comparison Summary
 
-| Aspect | FFNN | Transformer | 3stageFormer | 1D CNN | LSTM | Hopfield | VAE |
-|--------|------|------------|--------------|--------|------|----------|-----|
-| **Architecture** | Feature MLP | Single-scale Transformer | Multi-scale Transformer | Convolutional | Recurrent | Energy-based | Variational Autoencoder |
-| **Input Processing** | Statistical features | Raw signals | Raw signals (3 resolutions) | Raw signals | Raw signals | Raw signals | Raw signals |
-| **Temporal Modeling** | None | Excellent (global) | Excellent (multi-scale) | Good (local) | Good (sequential) | Good (associative) | Good (latent factors) |
-| **Parameters** | Few (100s-1Ks) | Many (100Ks) | Many (100Ks+) | Moderate (10Ks-100Ks) | Moderate (10Ks-100Ks) | Moderate (10Ks-100Ks) | Moderate (10Ks-100Ks) |
-| **Training Speed** | Fastest | Moderate | Slowest | Fast | Moderate | Moderate | Moderate |
-| **Inference Speed** | Fastest | Moderate | Moderate-Slow | Fast | Moderate | Moderate | Moderate |
-| **Accuracy** | Good | Excellent | Excellent+ | Good-Excellent | Good-Excellent | Good-Excellent | Good-Excellent |
-| **Best For** | Real-time, edge | High-accuracy, research | Multi-scale patterns | Local patterns, efficiency | Sequential patterns | Pattern completion, noise robustness | Explainable AI, interpretable factors |
+| Aspect | FFNN | Transformer | 3stageFormer | 1D CNN | LSTM | Hopfield | VAE | LTC |
+|--------|------|------------|--------------|--------|------|----------|-----|-----|
+| **Architecture** | Feature MLP | Single-scale Transformer | Multi-scale Transformer | Convolutional | Recurrent | Energy-based | Variational Autoencoder | Continuous-time Neural ODE |
+| **Input Processing** | Statistical features | Raw signals | Raw signals (3 resolutions) | Raw signals | Raw signals | Raw signals | Raw signals | Raw signals |
+| **Temporal Modeling** | None | Excellent (global) | Excellent (multi-scale) | Good (local) | Good (sequential) | Good (associative) | Good (latent factors) | Excellent (adaptive continuous-time) |
+| **Parameters** | Few (100s-1Ks) | Many (100Ks) | Many (100Ks+) | Moderate (10Ks-100Ks) | Moderate (10Ks-100Ks) | Moderate (10Ks-100Ks) | Moderate (10Ks-100Ks) | Moderate (10Ks-100Ks) |
+| **Training Speed** | Fastest | Moderate | Slowest | Fast | Moderate | Moderate | Moderate | Moderate |
+| **Inference Speed** | Fastest | Moderate | Moderate-Slow | Fast | Moderate | Moderate | Moderate | Moderate |
+| **Accuracy** | Good | Excellent | Excellent+ | Good-Excellent | Good-Excellent | Good-Excellent | Good-Excellent | Good-Excellent |
+| **Best For** | Real-time, edge | High-accuracy, research | Multi-scale patterns | Local patterns, efficiency | Sequential patterns | Pattern completion, noise robustness | Explainable AI, interpretable factors | Adaptive temporal dynamics, continuous-time modeling |
 
 ### Transformer Model
 
@@ -283,11 +290,26 @@ You can manually update the LaTeX files or create a script to automatically popu
 - **Optimizer**: AdamW with learning rate scheduling
 - **Key Innovation**: Explainable latent factors enable both reconstruction and classification, providing clinical interpretability
 
+### Liquid Time-Constant Network (LTC)
+
+- **Input**: Raw ECG signals (1000 timesteps)
+- **Architecture**: 
+  - Liquid Time-Constant cells with adaptive time constants
+  - 2-layer LTC network
+  - Hidden size: 128
+  - Time step (dt): 0.1
+  - Time constant network: Learns adaptive time constants based on input
+  - State update network: Implements continuous-time dynamics
+  - Classification head with dropout
+- **Loss**: Cross-entropy
+- **Optimizer**: Adam with learning rate scheduling
+- **Key Innovation**: Continuous-time neural ODE with adaptive time constants allows the network to model both fast and slow temporal patterns dynamically
+
 ## Comprehensive Comparison and Contrast
 
 ### Architectural Similarities
 
-All seven models share common deep learning foundations:
+All eight models share common deep learning foundations:
 
 - **End-to-end learning**: All except FFNN process raw ECG signals directly (1000 timesteps)
 - **Multi-layer architectures**: All use multiple layers of non-linear transformations
@@ -299,6 +321,7 @@ All seven models share common deep learning foundations:
 ### Key Architectural Differences
 
 #### 1. Temporal Modeling Approaches
+- **LTC**: Continuous-time dynamics with adaptive time constants (neural ODE)
 
 | Model | Temporal Approach | Mechanism |
 |-------|------------------|-----------|
@@ -399,6 +422,7 @@ All seven models share common deep learning foundations:
 - **Choose LSTM** if: Sequential patterns critical, rhythm analysis, interpretable temporal processing, moderate resources
 - **Choose Hopfield** if: Noisy data, pattern completion needed, associative memory beneficial, energy-based learning preferred
 - **Choose VAE** if: Explainability required, clinical interpretability, generative capabilities needed, latent factor analysis
+- **Choose LTC** if: Continuous-time modeling needed, adaptive temporal dynamics, neural ODE benefits, varying time scales
 
 ## Troubleshooting
 
@@ -501,6 +525,13 @@ If you use this code, please cite:
   number={3},
   year={2022},
   doi={10.1093/ehjdh/ztac038}
+}
+
+@article{hasani2020ltc,
+  title={Liquid Time-Constant Networks},
+  author={Hasani, Ramin and Lechner, Mathias and Amini, Alexander and Rus, Daniela and Grosu, Radu},
+  journal={arXiv preprint arXiv:2006.04439},
+  year={2020}
 }
 ```
 

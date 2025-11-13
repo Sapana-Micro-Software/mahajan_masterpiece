@@ -14,7 +14,7 @@
 \usepackage{xcolor}
 
 \title[ECG Classification Comparison]{Comparative Analysis of Neural Network Architectures\\for ECG Classification}
-\subtitle{A Comprehensive Study of Seven Deep Learning Approaches}
+\subtitle{A Comprehensive Study of Eight Deep Learning Approaches}
 \author{Shyamal Suhana Chandra \\ Sapana Micro Software \\ Research Division}
 \date{\today}
 
@@ -46,6 +46,7 @@
     \item Implement \textbf{LSTM} for sequential modeling
     \item Implement \textbf{Hopfield Network} for energy-based pattern recognition
     \item Implement \textbf{Variational Autoencoder (VAE)} for explainable ECG classification
+    \item Implement \textbf{Liquid Time-Constant Network (LTC)} for continuous-time ECG modeling
     \item Conduct comprehensive \textbf{benchmarking} on synthetic ECG data
     \item Compare \textbf{performance metrics}, computational efficiency, and scalability
 \end{enumerate}
@@ -206,7 +207,7 @@
     \item Latent space: 21 factors
     \item Decoder: 64→128→256→1000
     \item Classification head
-    \item Beta-VAE (β=0.001)
+    \item Beta-VAE ($\beta=0.001$)
 \end{itemize}
 \end{column}
 \begin{column}{0.5\textwidth}
@@ -216,6 +217,32 @@
     \item Dual purpose (reconstruction + classification)
     \item Generative capability
     \item Clinical interpretability
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Liquid Time-Constant Network (LTC) - Hasani et al., 2020}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Architecture:}
+\begin{itemize}
+    \item 2-layer LTC network
+    \item Hidden size: 128
+    \item Adaptive time constants
+    \item Neural ODE dynamics
+    \item Euler integration (dt=0.1)
+    \item Classification head
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Advantages:}
+\begin{itemize}
+    \item Continuous-time modeling
+    \item Adaptive temporal dynamics
+    \item Captures fast \& slow patterns
+    \item Neural ODE integration
+    \item Flexible time scales
 \end{itemize}
 \end{column}
 \end{columns}
@@ -289,11 +316,19 @@
     \item LR: 0.001
 \end{itemize}
 \end{column}
-\begin{column}{0.14\textwidth}
+\begin{column}{0.12\textwidth}
 \textbf{VAE:}
 \begin{itemize}
     \item Input: Raw (1000)
     \item 21 factors
+    \item LR: 0.001
+\end{itemize}
+\end{column}
+\begin{column}{0.12\textwidth}
+\textbf{LTC:}
+\begin{itemize}
+    \item Input: Raw (1000)
+    \item 2 layers, ODE
     \item LR: 0.001
 \end{itemize}
 \end{column}
@@ -306,14 +341,14 @@
 \begin{table}[h]
 \centering
 \tiny
-\begin{tabular}{lccccccc}
+\begin{tabular}{lccccccccc}
 \toprule
-\textbf{Metric} & \textbf{FFNN} & \textbf{Trans.} & \textbf{3stage} & \textbf{CNN} & \textbf{LSTM} & \textbf{Hopfield} & \textbf{VAE} \\
+\textbf{Metric} & \textbf{FFNN} & \textbf{Trans.} & \textbf{3stage} & \textbf{CNN} & \textbf{LSTM} & \textbf{Hopfield} & \textbf{VAE} & \textbf{LTC} \\
 \midrule
-Accuracy & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} \\
-Precision & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
-Recall & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
-F1 Score & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
+Accuracy & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} & \textbf{0.XXXX} \\
+Precision & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
+Recall & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
+F1 Score & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
 \bottomrule
 \end{tabular}
 \caption{Classification performance metrics}
@@ -327,6 +362,7 @@ F1 Score & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
     \item LSTM excels at sequential pattern recognition
     \item Hopfield Network demonstrates energy-based pattern recognition
     \item VAE provides explainable latent factors for clinical interpretability
+    \item LTC demonstrates adaptive temporal dynamics through continuous-time modeling
 \end{itemize}
 \end{frame}
 
@@ -334,13 +370,13 @@ F1 Score & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX & 0.XXXX \\
 \begin{table}[h]
 \centering
 \tiny
-\begin{tabular}{lccccccc}
+\begin{tabular}{lccccccccc}
 \toprule
-\textbf{Metric} & \textbf{FFNN} & \textbf{Trans.} & \textbf{3stage} & \textbf{CNN} & \textbf{LSTM} & \textbf{Hopfield} & \textbf{VAE} \\
+\textbf{Metric} & \textbf{FFNN} & \textbf{Trans.} & \textbf{3stage} & \textbf{CNN} & \textbf{LSTM} & \textbf{Hopfield} & \textbf{VAE} & \textbf{LTC} \\
 \midrule
-Train Time (s) & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} \\
-Inference (ms) & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX \\
-Parameters & X,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX \\
+Train Time (s) & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} & \textbf{XX.XX} \\
+Inference (ms) & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX & X.XXXX \\
+Parameters & X,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX \\
 \bottomrule
 \end{tabular}
 \caption{Computational requirements comparison}
@@ -352,6 +388,7 @@ Parameters & X,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX \
     \item LSTM: Moderate speed, sequential processing
     \item Hopfield: Moderate speed, energy-based updates
     \item VAE: Moderate speed, explainable factors
+    \item LTC: Moderate speed, continuous-time dynamics
     \item Transformer: Moderate speed, excellent accuracy
     \item 3stageFormer: Slowest but best accuracy
 \end{itemize}
@@ -427,12 +464,21 @@ Parameters & X,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX \
     \item[-] Iterative updates
 \end{itemize}
 \end{column}
-\begin{column}{0.14\textwidth}
+\begin{column}{0.12\textwidth}
 \textbf{VAE:}
 \begin{itemize}
     \item[+] Explainable
     \item[+] Dual purpose
     \item[-] Blurry recon.
+    \item[-] Training complexity
+\end{itemize}
+\end{column}
+\begin{column}{0.12\textwidth}
+\textbf{LTC:}
+\begin{itemize}
+    \item[+] Continuous-time
+    \item[+] Adaptive temporal
+    \item[-] ODE solver overhead
     \item[-] Training complexity
 \end{itemize}
 \end{column}
@@ -449,6 +495,7 @@ Parameters & X,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX \
     \item \textbf{LSTM}: Sequential patterns, rhythm analysis, interpretable
     \item \textbf{Hopfield}: Pattern completion, noise reduction, associative memory
     \item \textbf{VAE}: Explainable AI, clinical interpretability, generative tasks
+    \item \textbf{LTC}: Continuous-time modeling, adaptive temporal dynamics, varying time scales
 \end{itemize}
 \end{frame}
 
@@ -456,15 +503,15 @@ Parameters & X,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX \
 \tiny
 \begin{table}[h]
 \centering
-\begin{tabular}{lccccccc}
+\begin{tabular}{lccccccccc}
 \toprule
-\textbf{Aspect} & \textbf{FFNN} & \textbf{Trans.} & \textbf{3stage} & \textbf{CNN} & \textbf{LSTM} & \textbf{Hopfield} & \textbf{VAE} \\
+\textbf{Aspect} & \textbf{FFNN} & \textbf{Trans.} & \textbf{3stage} & \textbf{CNN} & \textbf{LSTM} & \textbf{Hopfield} & \textbf{VAE} & \textbf{LTC} \\
 \midrule
-\textbf{Input} & Features & Raw & Raw & Raw & Raw & Raw & Raw \\
-\textbf{Modeling} & None & Global & Multi-scale & Local & Sequential & Energy & Latent \\
-\textbf{Speed} & Fastest & Moderate & Slowest & Fast & Moderate & Moderate & Moderate \\
-\textbf{Accuracy} & Good & Excellent & Best & Good+ & Good+ & Good+ & Good+ \\
-\textbf{Explain.} & Moderate & High & High & Moderate & High & Moderate & Highest \\
+\textbf{Input} & Features & Raw & Raw & Raw & Raw & Raw & Raw & Raw \\
+\textbf{Modeling} & None & Global & Multi-scale & Local & Sequential & Energy & Latent & Continuous-time \\
+\textbf{Speed} & Fastest & Moderate & Slowest & Fast & Moderate & Moderate & Moderate & Moderate \\
+\textbf{Accuracy} & Good & Excellent & Best & Good+ & Good+ & Good+ & Good+ & Good+ \\
+\textbf{Explain.} & Moderate & High & High & Moderate & High & Moderate & Highest & Moderate \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -490,10 +537,11 @@ Parameters & X,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX \
 
 \textbf{Key Architectural Differences:}
 \begin{enumerate}
-    \item \textbf{Attention} (Transformer/3stageFormer) vs. \textbf{Convolution} (CNN) vs. \textbf{Recurrence} (LSTM)
+    \item \textbf{Attention} (Transformer/3stageFormer) vs. \textbf{Convolution} (CNN) vs. \textbf{Recurrence} (LSTM) vs. \textbf{Continuous-time ODE} (LTC)
     \item \textbf{Energy-based} (Hopfield) vs. \textbf{Latent factors} (VAE)
     \item \textbf{Single-scale} (most) vs. \textbf{Multi-scale} (3stageFormer)
     \item \textbf{Discriminative} (most) vs. \textbf{Generative} (VAE)
+    \item \textbf{Discrete-time} (most) vs. \textbf{Continuous-time} (LTC)
 \end{enumerate}
 \end{frame}
 
@@ -517,13 +565,14 @@ Parameters & X,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX \
 
 \begin{frame}{Key Findings}
 \begin{enumerate}
-    \item All seven architectures achieve \textbf{good performance} on ECG classification
+    \item All eight architectures achieve \textbf{good performance} on ECG classification
     \item Transformer models show \textbf{superior accuracy} but require more computation
     \item 3stageFormer provides \textbf{best accuracy} on multi-scale patterns
     \item CNN offers \textbf{excellent balance} between accuracy and efficiency
     \item LSTM provides \textbf{strong sequential modeling} capabilities
     \item Hopfield Network demonstrates \textbf{unique energy-based} pattern recognition
     \item VAE provides \textbf{explainable latent factors} for clinical interpretability
+    \item LTC demonstrates \textbf{adaptive temporal dynamics} through continuous-time modeling
     \item Feedforward NN offers \textbf{best efficiency} for real-time applications
     \item Choice depends on \textbf{application requirements}
 \end{enumerate}
@@ -537,9 +586,10 @@ Parameters & X,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX \
     \item Optimize for \textbf{edge devices}
     \item Extend to \textbf{multi-lead ECG}
     \item Explore \textbf{adaptive pooling} strategies
-    \item Compare \textbf{ensemble methods} combining all seven models
+    \item Compare \textbf{ensemble methods} combining all eight models
     \item Investigate \textbf{Hopfield Network} for signal denoising applications
     \item Explore \textbf{VAE latent factor} visualization and clinical interpretation
+    \item Investigate \textbf{LTC adaptive time constants} for varying temporal patterns
 \end{itemize}
 \end{frame}
 
@@ -551,6 +601,7 @@ Parameters & X,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX & XXX,XXX \
     \item Tang, Xiaoya, et al. (2024). "Hierarchical Transformer for Electrocardiogram Diagnosis." \textit{arXiv preprint arXiv:2411.00755}.
     \item "Electrocardiogram (ECG) Signal Modeling and Noise Reduction Using Hopfield Neural Networks." \textit{Engineering, Technology \& Applied Science Research (ETASR)}, Vol. 3, No. 1, 2013.
     \item van de Leur, Rutger R., et al. (2022). "Improving explainability of deep neural network-based electrocardiogram interpretation using variational auto-encoders." \textit{European Heart Journal - Digital Health}, 3(3), 2022.
+    \item Hasani, Ramin, et al. (2020). "Liquid Time-Constant Networks." \textit{arXiv preprint arXiv:2006.04439}.
     \item Vaswani, A., et al. (2017). "Attention is all you need." \textit{Advances in neural information processing systems}, 30.
     \item Goldberger, A. L., et al. (2000). "PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals." \textit{Circulation}, 101(23), e215-e220.
 \end{enumerate}
