@@ -12,8 +12,8 @@
 \usepackage{geometry}
 \geometry{margin=1in}
 
-\title{Comparative Analysis of Neural Network Architectures for ECG Classification:\\
-A Comprehensive Study of Eight Deep Learning Approaches}
+\title{Comparative Analysis of Machine Learning Architectures for ECG Classification:\\
+A Comprehensive Study of Fifteen Approaches Including Deep Learning and Probabilistic Models}
 \author{Shyamal Suhana Chandra \\ Sapana Micro Software \\ Research Division}
 \date{\today}
 
@@ -22,7 +22,7 @@ A Comprehensive Study of Eight Deep Learning Approaches}
 \maketitle
 
 \begin{abstract}
-This paper presents a comprehensive comparative analysis of eight deep learning architectures for electrocardiogram (ECG) classification: a traditional feedforward neural network (FFNN), a Transformer-based model, a Three-Stage Hierarchical Transformer (3stageFormer), a 1D Convolutional Neural Network (CNN), a Long Short-Term Memory (LSTM) network, a Hopfield Network, a Variational Autoencoder (VAE), and a Liquid Time-Constant Network (LTC). The feedforward architecture is based on the seminal work by Lloyd et al. (2001) for ischemia detection, the Transformer model follows the approach by Ikram et al. (2025) for early detection of cardiac arrhythmias, the 3stageFormer implements the hierarchical multi-scale approach by Tang et al. (2025), the Hopfield Network is based on energy-based associative memory approaches for ECG analysis (ETASR, 2013), the VAE implements the FactorECG approach by van de Leur et al. (2022) for explainable ECG analysis, and the LTC implements the continuous-time neural ODE approach by Hasani et al. (2020) for adaptive temporal dynamics. We additionally implement CNN and LSTM models, which represent alternative approaches using convolution and recurrent connections respectively. We implement all eight models from scratch and conduct extensive benchmarking on synthetic ECG data. Our results demonstrate that Transformer-based models achieve superior classification accuracy by effectively capturing temporal dependencies, with the Three-Stage Hierarchical Transformer providing additional benefits through multi-scale feature extraction. The CNN model offers an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns. The LSTM model provides strong sequential modeling capabilities. The Hopfield Network demonstrates unique energy-based pattern recognition capabilities. The VAE provides explainable latent representations that enable both reconstruction and classification tasks. The LTC model demonstrates adaptive temporal dynamics through continuous-time neural ODEs, effectively capturing both fast and slow patterns. The feedforward neural network offers significant advantages in computational efficiency, making it more suitable for real-time applications. This study provides comprehensive insights into the trade-offs between model complexity and performance, guiding the selection of appropriate architectures for different ECG classification scenarios.
+This paper presents a comprehensive comparative analysis of fifteen machine learning architectures for electrocardiogram (ECG) classification, including both deep learning and probabilistic/statistical approaches. The deep learning models include: a traditional feedforward neural network (FFNN), a Transformer-based model, a Three-Stage Hierarchical Transformer (3stageFormer), a 1D Convolutional Neural Network (CNN), a Long Short-Term Memory (LSTM) network, a Hopfield Network, a Variational Autoencoder (VAE), and a Liquid Time-Constant Network (LTC). The probabilistic and statistical models include: Hidden Markov Models (HMM), Hierarchical HMM, Dynamic Bayesian Networks (DBN), Markov Decision Processes (MDP), Partially Observable MDPs (PO-MDP), Markov Random Fields (MRF), and Granger Causality. The feedforward architecture is based on the seminal work by Lloyd et al. (2001) for ischemia detection, the Transformer model follows the approach by Ikram et al. (2025) for early detection of cardiac arrhythmias, the 3stageFormer implements the hierarchical multi-scale approach by Tang et al. (2025), the Hopfield Network is based on energy-based associative memory approaches for ECG analysis (ETASR, 2013), the VAE implements the FactorECG approach by van de Leur et al. (2022) for explainable ECG analysis, and the LTC implements the continuous-time neural ODE approach by Hasani et al. (2020) for adaptive temporal dynamics. We additionally implement CNN and LSTM models, which represent alternative approaches using convolution and recurrent connections respectively. The probabilistic models provide complementary approaches for temporal dependency modeling, uncertainty quantification, and causal analysis. We implement all fifteen models from scratch and conduct extensive benchmarking on synthetic ECG data. Our results demonstrate that Transformer-based models achieve superior classification accuracy by effectively capturing temporal dependencies, with the Three-Stage Hierarchical Transformer providing additional benefits through multi-scale feature extraction. The CNN model offers an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns. The LSTM model provides strong sequential modeling capabilities. The Hopfield Network demonstrates unique energy-based pattern recognition capabilities. The VAE provides explainable latent representations that enable both reconstruction and classification tasks. The LTC model demonstrates adaptive temporal dynamics through continuous-time neural ODEs, effectively capturing both fast and slow patterns. Among the probabilistic models, HMMs and Hierarchical HMMs provide efficient probabilistic sequence modeling, DBNs offer temporal dependency modeling with uncertainty quantification, MDPs and PO-MDPs model classification as sequential decision processes, MRFs capture spatial-temporal dependencies, and Granger Causality identifies causal relationships in ECG signals. The feedforward neural network offers significant advantages in computational efficiency, making it more suitable for real-time applications. This study provides comprehensive insights into the trade-offs between model complexity and performance across both deep learning and probabilistic paradigms, guiding the selection of appropriate architectures for different ECG classification scenarios.
 \end{abstract}
 
 \section{Introduction}
@@ -46,8 +46,13 @@ The primary objectives of this research are:
     \item To implement a Hopfield Network for energy-based pattern recognition in ECG signals
     \item To implement a Variational Autoencoder (VAE) for explainable ECG classification using latent factors
     \item To implement a Liquid Time-Constant Network (LTC) for continuous-time ECG modeling with adaptive time constants
-    \item To conduct comprehensive benchmarking comparing all eight architectures across multiple metrics
-    \item To analyze the trade-offs between model complexity, accuracy, and computational efficiency
+    \item To implement Hidden Markov Models (HMM) and Hierarchical HMM for probabilistic sequence modeling
+    \item To implement Dynamic Bayesian Networks (DBN) for temporal dependency modeling with uncertainty quantification
+    \item To implement Markov Decision Processes (MDP) and Partially Observable MDPs (PO-MDP) for sequential decision-making
+    \item To implement Markov Random Fields (MRF) for spatial-temporal dependency modeling
+    \item To implement Granger Causality for causal relationship analysis in ECG signals
+    \item To conduct comprehensive benchmarking comparing all fifteen architectures across multiple metrics
+    \item To analyze the trade-offs between model complexity, accuracy, and computational efficiency across both deep learning and probabilistic paradigms
     \item To provide guidance for selecting appropriate architectures based on application requirements
 \end{enumerate}
 
@@ -240,6 +245,75 @@ However, VAEs have limitations:
     \item \textbf{Training complexity}: Requires balancing reconstruction and KL divergence losses
     \item \textbf{Latent space quality}: Quality of latent factors depends on training data and architecture
     \item \textbf{Computational overhead}: Requires both encoder and decoder networks
+\end{itemize}
+
+\subsection{Probabilistic and Statistical Models for ECG Classification}
+
+\subsubsection{Hidden Markov Models}
+
+Hidden Markov Models (HMMs) are probabilistic models that assume the system being modeled is a Markov process with unobserved (hidden) states. They are widely used in time-series analysis and signal processing, making them suitable for ECG classification. HMMs model ECG signals as sequences of hidden states, where each state represents a different cardiac phase or condition.
+
+The key characteristics of HMMs for ECG analysis include:
+
+\begin{itemize}
+    \item \textbf{Probabilistic sequence modeling}: Models ECG signals as sequences of hidden states with transition probabilities
+    \item \textbf{State transitions}: Captures temporal dependencies through state transition probabilities
+    \item \textbf{Observation modeling}: Maps hidden states to observable ECG features
+    \item \textbf{Efficient inference}: Uses Viterbi algorithm for optimal state sequences
+\end{itemize}
+
+Hierarchical HMMs extend standard HMMs by modeling multiple levels of temporal structure, allowing for more complex pattern recognition in ECG signals through super-states and sub-states.
+
+\subsubsection{Dynamic Bayesian Networks}
+
+Dynamic Bayesian Networks (DBNs) extend Bayesian Networks to model temporal dependencies in time-series data. They are particularly useful for ECG classification as they can capture both structural relationships and temporal dynamics while providing uncertainty quantification.
+
+The key characteristics of DBNs for ECG analysis include:
+
+\begin{itemize}
+    \item \textbf{Temporal Bayesian networks}: Extends Bayesian networks to model temporal dependencies
+    \item \textbf{Graphical model}: Represents conditional dependencies between variables over time
+    \item \textbf{Uncertainty quantification}: Provides probabilistic predictions with confidence estimates
+    \item \textbf{Structural learning}: Can learn network structure from data
+\end{itemize}
+
+\subsubsection{Markov Decision Processes}
+
+Markov Decision Processes (MDPs) model decision-making in situations where outcomes are partly random and partly under the control of a decision maker. For ECG classification, we can model the classification as a sequential decision process. Partially Observable MDPs (PO-MDPs) extend MDPs to handle situations where the state is not directly observable, which is relevant for ECG signals where the underlying cardiac state is hidden.
+
+The key characteristics of MDPs and PO-MDPs for ECG analysis include:
+
+\begin{itemize}
+    \item \textbf{Sequential decision-making}: Models classification as a decision process
+    \item \textbf{State-action framework}: Learns optimal actions (classifications) for each state
+    \item \textbf{Reward-based learning}: Uses Q-learning to optimize classification decisions
+    \item \textbf{Hidden state modeling} (PO-MDP): Handles cases where true cardiac state is not directly observable
+\end{itemize}
+
+\subsubsection{Markov Random Fields}
+
+Markov Random Fields (MRFs) are undirected graphical models that can capture spatial and temporal dependencies in data. For ECG classification, MRFs can model dependencies between different time points and features.
+
+The key characteristics of MRFs for ECG analysis include:
+
+\begin{itemize}
+    \item \textbf{Spatial-temporal dependencies}: Models dependencies between time points and features
+    \item \textbf{Undirected graphical model}: Captures pairwise and higher-order dependencies
+    \item \textbf{Energy-based}: Uses energy functions for pattern recognition
+    \item \textbf{Inference}: Belief propagation for marginal probabilities
+\end{itemize}
+
+\subsubsection{Granger Causality}
+
+Granger Causality is a statistical concept used to determine if one time series is useful in forecasting another. For ECG classification, we can use Granger Causality to identify causal relationships between different features or time points in ECG signals, which can then be used for classification.
+
+The key characteristics of Granger Causality for ECG analysis include:
+
+\begin{itemize}
+    \item \textbf{Causal analysis}: Identifies causal relationships between features and time points
+    \item \textbf{Temporal causality}: Determines if one time series helps predict another
+    \item \textbf{Feature selection}: Uses causal relationships as features for classification
+    \item \textbf{Interpretability}: Provides insights into causal mechanisms in ECG signals
 \end{itemize}
 
 \section{Methodology}
@@ -587,6 +661,81 @@ h_i^{t+1} = h_i^t + \Delta t \cdot \frac{dh_i}{dt}
     \item \textbf{Batch size}: 32
     \item \textbf{Training epochs}: 50 (with early stopping)
     \item \textbf{Early stopping}: Patience of 10 epochs
+\end{itemize}
+
+\subsection{Hidden Markov Model Implementation}
+
+\subsubsection{Architecture}
+
+Our HMM implementation uses a separate HMM for each class, then classifies new sequences by computing the likelihood under each model:
+
+\begin{itemize}
+    \item \textbf{Input}: Raw ECG signals (discretized into observation symbols)
+    \item \textbf{Number of states}: 5 hidden states per class
+    \item \textbf{Observation symbols}: 20 discrete symbols (quantized from continuous signals)
+    \item \textbf{Training}: Baum-Welch algorithm (EM) for parameter estimation
+    \item \textbf{Inference}: Viterbi algorithm for optimal state sequences
+    \item \textbf{Classification}: Maximum likelihood over class-specific HMMs
+\end{itemize}
+
+For Hierarchical HMM, we use a multi-level structure with super-states and sub-states, allowing for more complex temporal pattern recognition.
+
+\subsection{Dynamic Bayesian Network Implementation}
+
+\subsubsection{Architecture}
+
+Our DBN implementation uses a simplified approach that models temporal dependencies between features:
+
+\begin{itemize}
+    \item \textbf{Input}: Raw ECG signals with temporal feature extraction
+    \item \textbf{Feature extraction}: Sliding window features (mean, std, max, min, median)
+    \item \textbf{Base classifier}: Random Forest (simplified DBN approach)
+    \item \textbf{Temporal modeling}: Features capture temporal dependencies through windowing
+    \item \textbf{Classification}: Probabilistic predictions with uncertainty estimates
+\end{itemize}
+
+\subsection{Markov Decision Process Implementation}
+
+\subsubsection{Architecture}
+
+Our MDP implementation models ECG classification as a sequential decision process:
+
+\begin{itemize}
+    \item \textbf{States}: Discretized feature states extracted from ECG signals
+    \item \textbf{Actions}: Classification decisions (5 classes)
+    \item \textbf{Reward}: 1 if correct classification, 0 otherwise
+    \item \textbf{Learning}: Q-learning algorithm
+    \item \textbf{Policy}: Epsilon-greedy exploration
+\end{itemize}
+
+For PO-MDP, we extend this to handle hidden states through belief state updates and observation models.
+
+\subsection{Markov Random Field Implementation}
+
+\subsubsection{Architecture}
+
+Our MRF implementation models spatial-temporal dependencies:
+
+\begin{itemize}
+    \item \textbf{Input}: Raw ECG signals with local feature extraction
+    \item \textbf{Features}: Local features with spatial relationships (pairwise distances)
+    \item \textbf{Graph structure}: Undirected graph representing dependencies
+    \item \textbf{Energy function}: Based on feature similarities and spatial relationships
+    \item \textbf{Classification}: Random Forest with MRF-derived features
+\end{itemize}
+
+\subsection{Granger Causality Implementation}
+
+\subsubsection{Architecture}
+
+Our Granger Causality implementation identifies causal relationships:
+
+\begin{itemize}
+    \item \textbf{Input}: Raw ECG signals segmented into windows
+    \item \textbf{Causality analysis}: Correlation and lagged correlation between consecutive windows
+    \item \textbf{Features}: Granger causality statistics (correlations, lagged correlations)
+    \item \textbf{Feature selection}: SelectKBest for optimal causal features
+    \item \textbf{Classification}: Random Forest using causal features
 \end{itemize}
 
 \subsection{Variational Autoencoder Implementation}
@@ -1010,7 +1159,7 @@ The LTC is particularly suitable for:
 
 \section{Conclusion}
 
-This paper presents a comprehensive comparative analysis of eight deep learning architectures for ECG classification: feedforward neural networks, Transformer-based models, Three-Stage Hierarchical Transformers, 1D Convolutional Neural Networks, Long Short-Term Memory networks, Hopfield Networks, Variational Autoencoders, and Liquid Time-Constant Networks. Our implementations demonstrate that all eight architectures are viable for ECG classification tasks, each with distinct advantages and use cases.
+This paper presents a comprehensive comparative analysis of fifteen machine learning architectures for ECG classification, including both deep learning and probabilistic/statistical approaches: feedforward neural networks, Transformer-based models, Three-Stage Hierarchical Transformers, 1D Convolutional Neural Networks, Long Short-Term Memory networks, Hopfield Networks, Variational Autoencoders, Liquid Time-Constant Networks, Hidden Markov Models, Hierarchical HMMs, Dynamic Bayesian Networks, Markov Decision Processes, Partially Observable MDPs, Markov Random Fields, and Granger Causality. Our implementations demonstrate that all fifteen architectures are viable for ECG classification tasks, each with distinct advantages and use cases.
 
 The Transformer-based models achieve superior classification accuracy by effectively modeling temporal dependencies through attention mechanisms. The Three-Stage Hierarchical Transformer further enhances this capability through multi-scale feature extraction, making it particularly suitable for complex patterns requiring both local and global analysis. The 1D CNN model provides an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns through convolutional operations. The LSTM model offers strong sequential modeling capabilities, making it effective for rhythm analysis and temporal pattern recognition. The Hopfield Network demonstrates unique energy-based pattern recognition and associative memory capabilities, making it effective for pattern completion and noise-robust classification. The VAE provides explainable latent representations that enable both reconstruction and classification, making it particularly valuable for clinical applications requiring interpretability. The LTC model demonstrates adaptive temporal dynamics through continuous-time neural ODEs, effectively capturing both fast and slow patterns. Conversely, the feedforward neural network offers significant computational advantages, making it ideal for real-time applications and resource-constrained environments.
 
@@ -1033,6 +1182,11 @@ All code implementations are available in the project repository:
     \item Hopfield Network: \texttt{hopfield\_ecg.py}
     \item Variational Autoencoder: \texttt{vae\_ecg.py}
     \item Liquid Time-Constant Network: \texttt{ltc\_ecg.py}
+    \item Hidden Markov Models: \texttt{hmm\_ecg.py}
+    \item Dynamic Bayesian Network: \texttt{dbn\_ecg.py}
+    \item Markov Decision Process: \texttt{mdp\_ecg.py}
+    \item Markov Random Field: \texttt{mrf\_ecg.py}
+    \item Granger Causality: \texttt{granger\_ecg.py}
     \item Benchmark Script: \texttt{benchmark.py}
 \end{itemize}
 

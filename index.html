@@ -877,7 +877,7 @@
     <header>
         <div class="container">
             <h1>Comparative Analysis of Neural Network Architectures for ECG Classification</h1>
-            <p class="subtitle">A Comprehensive Study of Eight Deep Learning Approaches</p>
+            <p class="subtitle">A Comprehensive Study of Fifteen Approaches Including Deep Learning and Probabilistic Models</p>
             
             <div class="authors">
                 <strong>Shyamal Suhana Chandra</strong>
@@ -903,12 +903,12 @@
         <section id="abstract">
             <h2>Abstract</h2>
             <div class="abstract">
-                This project presents a comprehensive comparative analysis of eight deep learning architectures for electrocardiogram (ECG) classification: a traditional feedforward neural network (FFNN), a Transformer-based model, a Three-Stage Hierarchical Transformer (3stageFormer), a 1D Convolutional Neural Network (CNN), a Long Short-Term Memory (LSTM) network, a Hopfield Network, a Variational Autoencoder (VAE), and a Liquid Time-Constant Network (LTC). The feedforward architecture is based on the seminal work by Lloyd et al. (2001) for ischemia detection, the Transformer model follows the approach by Ikram et al. (2025) for early detection of cardiac arrhythmias, the 3stageFormer implements the hierarchical multi-scale approach by Tang et al. (2025), the Hopfield Network is based on energy-based associative memory approaches for ECG analysis (ETASR, 2013), the VAE implements the FactorECG approach by van de Leur et al. (2022) for explainable ECG analysis, and the LTC implements the continuous-time neural ODE approach by Hasani et al. (2020) for adaptive temporal dynamics. We additionally implement CNN and LSTM models, which represent alternative approaches using convolution and recurrent connections respectively. We implement all eight models from scratch and conduct extensive benchmarking on synthetic ECG data. Our results demonstrate that Transformer-based models achieve superior classification accuracy by effectively capturing temporal dependencies, with the Three-Stage Hierarchical Transformer providing additional benefits through multi-scale feature extraction. The CNN model offers an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns. The LSTM model provides strong sequential modeling capabilities. The Hopfield Network demonstrates unique energy-based pattern recognition capabilities. The VAE provides explainable latent representations that enable both reconstruction and classification tasks. The LTC model demonstrates adaptive temporal dynamics through continuous-time neural ODEs, effectively capturing both fast and slow patterns. The feedforward neural network offers significant advantages in computational efficiency, making it more suitable for real-time applications. This study provides comprehensive insights into the trade-offs between model complexity and performance, guiding the selection of appropriate architectures for different ECG classification scenarios.
+                This project presents a comprehensive comparative analysis of fifteen machine learning architectures for electrocardiogram (ECG) classification, including both deep learning and probabilistic/statistical approaches. The deep learning models include: a traditional feedforward neural network (FFNN), a Transformer-based model, a Three-Stage Hierarchical Transformer (3stageFormer), a 1D Convolutional Neural Network (CNN), a Long Short-Term Memory (LSTM) network, a Hopfield Network, a Variational Autoencoder (VAE), and a Liquid Time-Constant Network (LTC). The probabilistic and statistical models include: Hidden Markov Models (HMM), Hierarchical HMM, Dynamic Bayesian Networks (DBN), Markov Decision Processes (MDP), Partially Observable MDPs (PO-MDP), Markov Random Fields (MRF), and Granger Causality. The feedforward architecture is based on the seminal work by Lloyd et al. (2001) for ischemia detection, the Transformer model follows the approach by Ikram et al. (2025) for early detection of cardiac arrhythmias, the 3stageFormer implements the hierarchical multi-scale approach by Tang et al. (2025), the Hopfield Network is based on energy-based associative memory approaches for ECG analysis (ETASR, 2013), the VAE implements the FactorECG approach by van de Leur et al. (2022) for explainable ECG analysis, and the LTC implements the continuous-time neural ODE approach by Hasani et al. (2020) for adaptive temporal dynamics. We additionally implement CNN and LSTM models, which represent alternative approaches using convolution and recurrent connections respectively. We implement all fifteen models from scratch and conduct extensive benchmarking on synthetic ECG data. Our results demonstrate that Transformer-based models achieve superior classification accuracy by effectively capturing temporal dependencies, with the Three-Stage Hierarchical Transformer providing additional benefits through multi-scale feature extraction. The CNN model offers an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns. The LSTM model provides strong sequential modeling capabilities. The Hopfield Network demonstrates unique energy-based pattern recognition capabilities. The VAE provides explainable latent representations that enable both reconstruction and classification tasks. The LTC model demonstrates adaptive temporal dynamics through continuous-time neural ODEs, effectively capturing both fast and slow patterns. The feedforward neural network offers significant advantages in computational efficiency, making it more suitable for real-time applications. This study provides comprehensive insights into the trade-offs between model complexity and performance, guiding the selection of appropriate architectures for different ECG classification scenarios.
             </div>
         </section>
 
         <section id="models">
-            <h2>Eight Deep Learning Architectures</h2>
+            <h2>Fifteen Machine Learning Architectures</h2>
             <div class="model-grid">
                 <div class="model-card">
                     <h4>1. Feedforward NN</h4>
@@ -980,6 +980,69 @@
                         <li><span class="metric-label">Input:</span> Raw signals</li>
                         <li><span class="metric-label">Speed:</span> Moderate</li>
                         <li><span class="metric-label">Best For:</span> Adaptive temporal dynamics</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>9. HMM</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Probabilistic Sequence</li>
+                        <li><span class="metric-label">Input:</span> Raw signals (discretized)</li>
+                        <li><span class="metric-label">Speed:</span> Fast</li>
+                        <li><span class="metric-label">Best For:</span> Probabilistic modeling</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>10. Hierarchical HMM</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Multi-level HMM</li>
+                        <li><span class="metric-label">Input:</span> Raw signals (discretized)</li>
+                        <li><span class="metric-label">Speed:</span> Fast</li>
+                        <li><span class="metric-label">Best For:</span> Multi-scale patterns</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>11. DBN</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Temporal Bayesian Network</li>
+                        <li><span class="metric-label">Input:</span> Raw signals</li>
+                        <li><span class="metric-label">Speed:</span> Moderate</li>
+                        <li><span class="metric-label">Best For:</span> Uncertainty quantification</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>12. MDP</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Sequential Decision</li>
+                        <li><span class="metric-label">Input:</span> Raw signals</li>
+                        <li><span class="metric-label">Speed:</span> Moderate</li>
+                        <li><span class="metric-label">Best For:</span> Decision-making</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>13. PO-MDP</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Partially Observable MDP</li>
+                        <li><span class="metric-label">Input:</span> Raw signals</li>
+                        <li><span class="metric-label">Speed:</span> Moderate</li>
+                        <li><span class="metric-label">Best For:</span> Hidden state modeling</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>14. MRF</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Spatial-temporal</li>
+                        <li><span class="metric-label">Input:</span> Raw signals</li>
+                        <li><span class="metric-label">Speed:</span> Moderate</li>
+                        <li><span class="metric-label">Best For:</span> Dependency modeling</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>15. Granger</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Causal Analysis</li>
+                        <li><span class="metric-label">Input:</span> Raw signals</li>
+                        <li><span class="metric-label">Speed:</span> Moderate</li>
+                        <li><span class="metric-label">Best For:</span> Causal relationships</li>
                     </ul>
                 </div>
             </div>
@@ -1297,7 +1360,7 @@
             <div class="feature-list">
                 <div class="feature-item">
                     <h4>🎯 Comprehensive Benchmarking</h4>
-                    <p>Systematic comparison of eight distinct deep learning architectures on standardized metrics including accuracy, precision, recall, F1-score, training time, and inference time.</p>
+                    <p>Systematic comparison of fifteen distinct machine learning architectures on standardized metrics including accuracy, precision, recall, F1-score, training time, and inference time.</p>
                 </div>
                 <div class="feature-item">
                     <h4>📊 Multi-Scale Processing</h4>
@@ -1377,7 +1440,22 @@ python hopfield_ecg.py
 python vae_ecg.py
 
 # Liquid Time-Constant Network
-python ltc_ecg.py</code></pre>
+python ltc_ecg.py
+
+# Hidden Markov Model
+python hmm_ecg.py
+
+# Dynamic Bayesian Network
+python dbn_ecg.py
+
+# Markov Decision Process / PO-MDP
+python mdp_ecg.py
+
+# Markov Random Field
+python mrf_ecg.py
+
+# Granger Causality
+python granger_ecg.py</code></pre>
             </div>
         </section>
 
@@ -1390,7 +1468,7 @@ python ltc_ecg.py</code></pre>
   author={Chandra, Shyamal Suhana},
   journal={Sapana Micro Software Research},
   year={2025},
-  note={Implementation and benchmarking of FFNN, Transformer, 3stageFormer, CNN, LSTM, Hopfield, VAE, and LTC architectures}
+  note={Implementation and benchmarking of FFNN, Transformer, 3stageFormer, CNN, LSTM, Hopfield, VAE, LTC, HMM, Hierarchical HMM, DBN, MDP, PO-MDP, MRF, and Granger Causality architectures}
 }</pre>
             </div>
             

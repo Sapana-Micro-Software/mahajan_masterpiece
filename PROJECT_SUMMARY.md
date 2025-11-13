@@ -2,8 +2,9 @@
 
 ## Overview
 
-This project implements a comprehensive comparison between eight neural network architectures for ECG classification:
+This project implements a comprehensive comparison between fifteen machine learning architectures for ECG classification, including both deep learning and probabilistic/statistical approaches:
 
+**Deep Learning Models:**
 1. **Feedforward Neural Network** (Lloyd et al., 2001)
 2. **Transformer-based Model** (Ikram et al., 2025)
 3. **Three-Stage Hierarchical Transformer (3stageFormer)** (Tang et al., 2025)
@@ -12,6 +13,15 @@ This project implements a comprehensive comparison between eight neural network 
 6. **Hopfield Network** (ETASR, 2013) - Energy-based associative memory
 7. **Variational Autoencoder (VAE)** (van de Leur et al., 2022) - Explainable ECG classification
 8. **Liquid Time-Constant Network (LTC)** (Hasani et al., 2020) - Continuous-time neural ODE
+
+**Probabilistic and Statistical Models:**
+9. **Hidden Markov Model (HMM)** - Probabilistic sequence modeling
+10. **Hierarchical Hidden Markov Model (Hierarchical HMM)** - Multi-level temporal structure
+11. **Dynamic Bayesian Network (DBN)** - Temporal dependency modeling
+12. **Markov Decision Process (MDP)** - Sequential decision-making
+13. **Partially Observable MDP (PO-MDP)** - MDP with hidden states
+14. **Markov Random Field (MRF)** - Spatial-temporal dependencies
+15. **Granger Causality** - Causal relationship analysis
 
 ## Files Created
 
@@ -61,9 +71,35 @@ This project implements a comprehensive comparison between eight neural network 
    - Based on Hasani et al. (2020) approach
    - PyTorch implementation
 
-8. **`benchmark.py`** (1000+ lines)
+8. **`hmm_ecg.py`** (400+ lines)
+   - Hidden Markov Model and Hierarchical HMM for ECG classification
+   - Probabilistic sequence modeling with hidden states
+   - Baum-Welch algorithm for training
+   - Viterbi algorithm for inference
+
+9. **`dbn_ecg.py`** (300+ lines)
+   - Dynamic Bayesian Network for temporal dependency modeling
+   - Temporal feature extraction
+   - Uncertainty quantification
+
+10. **`mdp_ecg.py`** (400+ lines)
+   - Markov Decision Process and Partially Observable MDP
+   - Sequential decision-making framework
+   - Q-learning for policy optimization
+
+11. **`mrf_ecg.py`** (300+ lines)
+   - Markov Random Field for spatial-temporal dependencies
+   - Energy-based pattern recognition
+   - Undirected graphical model
+
+12. **`granger_ecg.py`** (300+ lines)
+   - Granger Causality for causal relationship analysis
+   - Temporal causality detection
+   - Feature selection based on causal relationships
+
+13. **`benchmark.py`** (1000+ lines)
    - Comprehensive benchmarking framework
-   - Compares all eight models on multiple metrics
+   - Compares all fifteen models on multiple metrics
    - Generates comparison plots
    - Saves results to JSON
 
@@ -233,7 +269,7 @@ pdflatex paper.tex  # Run twice
 
 ### Architectural Similarities
 
-All eight models share common deep learning foundations:
+All fifteen models share common deep learning foundations:
 - **End-to-end learning**: All except FFNN process raw ECG signals directly
 - **Multi-layer architectures**: All use multiple layers of non-linear transformations
 - **Gradient-based optimization**: All trained with backpropagation
@@ -318,7 +354,12 @@ Mahajan_Masterpiece/
 ├── hopfield_ecg.py            # Hopfield Network implementation
 ├── vae_ecg.py                 # Variational Autoencoder implementation
 ├── ltc_ecg.py                 # Liquid Time-Constant Network implementation
-├── benchmark.py               # Benchmark comparison script (all 8 models)
+├── hmm_ecg.py                 # Hidden Markov Model and Hierarchical HMM
+├── dbn_ecg.py                 # Dynamic Bayesian Network
+├── mdp_ecg.py                 # Markov Decision Process and PO-MDP
+├── mrf_ecg.py                 # Markov Random Field
+├── granger_ecg.py             # Granger Causality
+├── benchmark.py               # Benchmark comparison script (all 15 models)
 ├── requirements.txt           # Python dependencies
 ├── paper.tex                  # Unabridged academic paper
 ├── presentation.tex            # Beamer presentation

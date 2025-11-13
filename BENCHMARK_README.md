@@ -1,11 +1,12 @@
 # Benchmark and Comparison Guide
 
-This guide explains how to run the comprehensive benchmark comparing eight deep learning architectures for ECG classification.
+This guide explains how to run the comprehensive benchmark comparing fifteen machine learning architectures for ECG classification, including both deep learning and probabilistic/statistical approaches.
 
 ## Overview
 
-This project implements and compares eight deep learning architectures for ECG classification:
+This project implements and compares fifteen machine learning architectures for ECG classification:
 
+**Deep Learning Models:**
 1. **Feedforward Neural Network** (based on Lloyd et al., 2001)
 2. **Transformer-based Model** (based on Ikram et al., 2025)
 3. **Three-Stage Hierarchical Transformer (3stageFormer)** (based on Tang et al., 2025)
@@ -14,6 +15,15 @@ This project implements and compares eight deep learning architectures for ECG c
 6. **Hopfield Network** (based on ETASR, 2013) - Energy-based associative memory
 7. **Variational Autoencoder (VAE)** (based on van de Leur et al., 2022) - Explainable ECG classification
 8. **Liquid Time-Constant Network (LTC)** (based on Hasani et al., 2020) - Continuous-time neural ODE
+
+**Probabilistic and Statistical Models:**
+9. **Hidden Markov Model (HMM)** - Probabilistic sequence modeling
+10. **Hierarchical Hidden Markov Model (Hierarchical HMM)** - Multi-level temporal structure
+11. **Dynamic Bayesian Network (DBN)** - Temporal dependency modeling
+12. **Markov Decision Process (MDP)** - Sequential decision-making
+13. **Partially Observable MDP (PO-MDP)** - MDP with hidden states
+14. **Markov Random Field (MRF)** - Spatial-temporal dependencies
+15. **Granger Causality** - Causal relationship analysis
 
 ## Installation
 
@@ -59,7 +69,7 @@ python benchmark.py
 
 This will:
 1. Generate synthetic ECG dataset (3000 samples)
-2. Train all eight models
+2. Train all fifteen models
 3. Evaluate performance
 4. Generate comparison plots
 5. Save results to `benchmark_results.json`
@@ -67,7 +77,7 @@ This will:
 ### Expected Output
 
 The script will display:
-- Training progress for all eight models
+- Training progress for all fifteen models
 - Performance metrics (accuracy, precision, recall, F1 score)
 - Computational metrics (training time, inference time, parameters)
 - Summary comparison table
@@ -116,6 +126,21 @@ python vae_ecg.py
 
 ```python
 python ltc_ecg.py
+
+# Test Hidden Markov Model (HMM)
+python hmm_ecg.py
+
+# Test Dynamic Bayesian Network (DBN)
+python dbn_ecg.py
+
+# Test Markov Decision Process (MDP) / PO-MDP
+python mdp_ecg.py
+
+# Test Markov Random Field (MRF)
+python mrf_ecg.py
+
+# Test Granger Causality
+python granger_ecg.py
 ```
 
 ## Understanding the Results

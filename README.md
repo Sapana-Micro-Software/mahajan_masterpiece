@@ -1,7 +1,8 @@
-# ECG Classification Models: A Comparative Study
+# ECG Classification Models: A Comprehensive Comparative Study
 
-This repository implements and compares eight deep learning architectures for ECG classification:
+This repository implements and compares fifteen machine learning architectures for ECG classification, including both deep learning and probabilistic/statistical approaches:
 
+**Deep Learning Models:**
 1. **Feedforward Neural Network** (Lloyd et al., 2001) - A feedforward neural network from scratch using NumPy
 2. **Transformer-based Model** (Ikram et al., 2025) - Transformer architecture for ECG classification
 3. **Three-Stage Hierarchical Transformer (3stageFormer)** (Tang et al., 2025) - Multi-scale hierarchical transformer
@@ -10,6 +11,15 @@ This repository implements and compares eight deep learning architectures for EC
 6. **Hopfield Network** (ETASR, 2013) - Energy-based associative memory for pattern recognition
 7. **Variational Autoencoder (VAE)** (van de Leur et al., 2022) - Explainable ECG classification using latent factors
 8. **Liquid Time-Constant Network (LTC)** (Hasani et al., 2020) - Continuous-time neural ODE with adaptive time constants
+
+**Probabilistic and Statistical Models:**
+9. **Hidden Markov Model (HMM)** - Probabilistic sequence modeling with hidden states
+10. **Hierarchical Hidden Markov Model (Hierarchical HMM)** - Multi-level temporal structure modeling
+11. **Dynamic Bayesian Network (DBN)** - Temporal dependency modeling with Bayesian networks
+12. **Markov Decision Process (MDP)** - Sequential decision-making framework for classification
+13. **Partially Observable MDP (PO-MDP)** - MDP with hidden state information
+14. **Markov Random Field (MRF)** - Spatial-temporal dependency modeling
+15. **Granger Causality** - Causal relationship analysis for time series classification
 
 The feedforward neural network implementation is designed for ECG analysis and heart disease prediction tasks, based on research published in *Circulation* (2001) on detecting ischemia in electrocardiograms using artificial neural networks.
 
@@ -62,6 +72,48 @@ The feedforward neural network implementation is designed for ECG analysis and h
 - **Adaptive time constants**: Learns time constants that adapt to input patterns
 - **Temporal flexibility**: Captures both fast and slow temporal patterns
 - **Neural ODE integration**: Uses differential equations for state evolution
+
+### Hidden Markov Model (HMM)
+- **Probabilistic sequence modeling**: Models ECG signals as sequences of hidden states
+- **State transitions**: Captures temporal dependencies through state transition probabilities
+- **Observation modeling**: Maps hidden states to observable ECG features
+- **Efficient inference**: Uses Viterbi algorithm for optimal state sequences
+
+### Hierarchical Hidden Markov Model (Hierarchical HMM)
+- **Multi-level structure**: Models ECG at multiple temporal scales
+- **Hierarchical states**: Super-states and sub-states for complex pattern recognition
+- **Multi-scale analysis**: Captures both short-term and long-term patterns
+- **Enhanced modeling**: More expressive than standard HMMs
+
+### Dynamic Bayesian Network (DBN)
+- **Temporal Bayesian networks**: Extends Bayesian networks to model temporal dependencies
+- **Graphical model**: Represents conditional dependencies between variables over time
+- **Uncertainty quantification**: Provides probabilistic predictions with confidence estimates
+- **Structural learning**: Can learn network structure from data
+
+### Markov Decision Process (MDP)
+- **Sequential decision-making**: Models classification as a decision process
+- **State-action framework**: Learns optimal actions (classifications) for each state
+- **Reward-based learning**: Uses Q-learning to optimize classification decisions
+- **Policy optimization**: Learns optimal classification policies
+
+### Partially Observable MDP (PO-MDP)
+- **Hidden state modeling**: Handles cases where true cardiac state is not directly observable
+- **Belief states**: Maintains probability distributions over hidden states
+- **Observation model**: Maps observations to hidden states
+- **Robust classification**: Effective when state information is incomplete
+
+### Markov Random Field (MRF)
+- **Spatial-temporal dependencies**: Models dependencies between time points and features
+- **Undirected graphical model**: Captures pairwise and higher-order dependencies
+- **Energy-based**: Uses energy functions for pattern recognition
+- **Inference**: Belief propagation for marginal probabilities
+
+### Granger Causality
+- **Causal analysis**: Identifies causal relationships between features and time points
+- **Temporal causality**: Determines if one time series helps predict another
+- **Feature selection**: Uses causal relationships as features for classification
+- **Interpretability**: Provides insights into causal mechanisms in ECG signals
 
 ## Installation
 
@@ -148,9 +200,34 @@ python vae_ecg.py
 python ltc_ecg.py
 ```
 
+#### Hidden Markov Model (HMM)
+```bash
+python hmm_ecg.py
+```
+
+#### Dynamic Bayesian Network (DBN)
+```bash
+python dbn_ecg.py
+```
+
+#### Markov Decision Process (MDP) / Partially Observable MDP (PO-MDP)
+```bash
+python mdp_ecg.py
+```
+
+#### Markov Random Field (MRF)
+```bash
+python mrf_ecg.py
+```
+
+#### Granger Causality
+```bash
+python granger_ecg.py
+```
+
 ### Running Complete Benchmark
 
-To compare all eight models:
+To compare all fifteen models:
 
 ```bash
 python benchmark.py
@@ -158,7 +235,7 @@ python benchmark.py
 
 This will:
 1. Generate a synthetic ECG dataset
-2. Train all eight models
+2. Train all fifteen models
 3. Evaluate performance
 4. Generate comparison plots
 5. Save results to `benchmark_results.json`
@@ -232,6 +309,13 @@ This implementation is educational and demonstrates neural network fundamentals.
 | Hopfield Network | Energy-based Associative Memory | Raw signals | Moderate (10Ks-100Ks) | Moderate | Pattern completion, noise robustness |
 | VAE | Variational Autoencoder | Raw signals | Moderate (10Ks-100Ks) | Moderate | Explainable AI, interpretable factors |
 | LTC | Continuous-time Neural ODE | Raw signals | Moderate (10Ks-100Ks) | Moderate | Adaptive temporal dynamics, continuous-time modeling |
+| HMM | Hidden Markov Model | Raw signals (discretized) | Few (1Ks) | Fast | Probabilistic sequence modeling |
+| Hierarchical HMM | Multi-level HMM | Raw signals (discretized) | Few (1.5Ks) | Fast | Multi-scale temporal patterns |
+| DBN | Dynamic Bayesian Network | Raw signals | Moderate (50Ks) | Moderate | Temporal dependencies, uncertainty |
+| MDP | Markov Decision Process | Raw signals | Few (5Ks) | Moderate | Sequential decision-making |
+| PO-MDP | Partially Observable MDP | Raw signals | Moderate (8Ks) | Moderate | Hidden state modeling |
+| MRF | Markov Random Field | Raw signals | Moderate (40Ks) | Moderate | Spatial-temporal dependencies |
+| Granger Causality | Causal Analysis | Raw signals | Moderate (30Ks) | Moderate | Causal relationship discovery |
 
 ## Detailed Comparison and Contrast
 
