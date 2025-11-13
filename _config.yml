@@ -6,6 +6,7 @@ author: "Shyamal Suhana Chandra"
 affiliation: "Sapana Micro Software, Research Division"
 # For project page under Sapana-Micro-Software organization:
 # URL will be: https://sapanamicrosoftware.github.io/mahajan_masterpiece/
+# Note: If organization name has hyphens, GitHub Pages URL may be sapana-micro-software.github.io
 url: "https://sapanamicrosoftware.github.io"
 baseurl: "/mahajan_masterpiece"
 
