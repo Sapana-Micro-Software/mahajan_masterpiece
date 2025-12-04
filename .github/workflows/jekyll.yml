@@ -1,32 +1,53 @@
-name: Jekyll site CI
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
       - master
-  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.1
-        bundler-cache: true
-    
-    - name: Build with Jekyll
-      run: bundle exec jekyll build
-      env:
-        JEKYLL_ENV: production
-    
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: site
-        path: _site
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      
+      - name: Prepare static files
+        run: |
+          mkdir -p _site
+          # Copy HTML files
+          cp index.html _site/ || true
+          cp 404.html _site/ || true
+          # Copy markdown files for documentation
+          cp *.md _site/ 2>/dev/null || true
+          # Copy other static assets if needed
+          cp -r _includes _site/ 2>/dev/null || true
+          cp -r _layouts _site/ 2>/dev/null || true
+          # Ensure .nojekyll is present
+          touch _site/.nojekyll
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
