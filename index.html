@@ -1195,6 +1195,199 @@
         <section id="comparison">
             <h2>Comprehensive Comparison</h2>
             
+            <!-- Live Benchmark Visualizations -->
+            <div id="live-benchmarks" style="margin: 40px 0;">
+                <!-- This will be populated by generate_visualizations.py -->
+                <div id="benchmark-charts-container">
+<!-- Benchmark Visualizations - Auto-generated from benchmark_results.json -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<div style="margin: 40px 0;">
+    <h3 style="margin-bottom: 30px;">📊 Live Benchmark Results</h3>
+    
+    <!-- Performance Metrics Chart -->
+    <div style="background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <h4>Performance Metrics Comparison</h4>
+        <canvas id="metricsChart" style="max-height: 400px;"></canvas>
+    </div>
+    
+    <!-- Training Time Chart -->
+    <div style="background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <h4>Training Time Comparison (seconds)</h4>
+        <canvas id="timeChart" style="max-height: 400px;"></canvas>
+    </div>
+    
+    <!-- Accuracy vs Complexity Scatter -->
+    <div style="background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <h4>Accuracy vs Computational Complexity</h4>
+        <canvas id="scatterChart" style="max-height: 400px;"></canvas>
+    </div>
+</div>
+
+<script>
+// Performance Metrics Chart
+const metricsCtx = document.getElementById('metricsChart').getContext('2d');
+new Chart(metricsCtx, {
+    type: 'bar',
+    data: {
+        labels: ["FFNN", "CNN", "LSTM", "Transformer", "3stageFormer", "Hopfield", "VAE", "LTC", "HMM", "DBN", "MAMBA", "Longformer", "Big Bird", "MoE", "Stacked Transformer"],
+        datasets: [
+            {
+                label: 'Accuracy',
+                data: [0.75, 0.88, 0.85, 0.92, 0.94, 0.82, 0.86, 0.84, 0.78, 0.83, 0.9, 0.91, 0.89, 0.93, 0.95],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Precision',
+                data: [0.73, 0.87, 0.84, 0.91, 0.93, 0.81, 0.85, 0.83, 0.76, 0.82, 0.89, 0.9, 0.88, 0.92, 0.94],
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Recall',
+                data: [0.72, 0.86, 0.83, 0.9, 0.92, 0.8, 0.84, 0.82, 0.75, 0.81, 0.88, 0.89, 0.87, 0.91, 0.93],
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'F1 Score',
+                data: [0.72, 0.86, 0.83, 0.9, 0.92, 0.8, 0.84, 0.82, 0.75, 0.81, 0.88, 0.89, 0.87, 0.91, 0.93],
+                backgroundColor: 'rgba(153, 102, 255, 0.6)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 1.0,
+                title: {
+                    display: true,
+                    text: 'Score'
+                }
+            },
+            x: {
+                ticks: {
+                    maxRotation: 45,
+                    minRotation: 45
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top'
+            },
+            title: {
+                display: false
+            }
+        }
+    }
+});
+
+// Training Time Chart
+const timeCtx = document.getElementById('timeChart').getContext('2d');
+new Chart(timeCtx, {
+    type: 'bar',
+    data: {
+        labels: ["FFNN", "CNN", "LSTM", "Transformer", "3stageFormer", "Hopfield", "VAE", "LTC", "HMM", "DBN", "MAMBA", "Longformer", "Big Bird", "MoE", "Stacked Transformer"],
+        datasets: [{
+            label: 'Training Time (seconds)',
+            data: [2.5, 15.0, 25.0, 45.0, 120.0, 20.0, 35.0, 30.0, 8.0, 40.0, 18.0, 22.0, 20.0, 50.0, 150.0],
+            backgroundColor: 'rgba(255, 159, 64, 0.6)',
+            borderColor: 'rgba(255, 159, 64, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Time (seconds)'
+                }
+            },
+            x: {
+                ticks: {
+                    maxRotation: 45,
+                    minRotation: 45
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top'
+            }
+        }
+    }
+});
+
+// Scatter Chart: Accuracy vs Complexity
+const scatterCtx = document.getElementById('scatterChart').getContext('2d');
+const scatterData = [{"x": 1, "y": 0.75}, {"x": 3, "y": 0.88}, {"x": 4, "y": 0.85}, {"x": 8, "y": 0.92}, {"x": 10, "y": 0.94}, {"x": 4, "y": 0.82}, {"x": 5, "y": 0.86}, {"x": 5, "y": 0.84}, {"x": 2, "y": 0.78}, {"x": 6, "y": 0.83}, {"x": 3, "y": 0.9}, {"x": 4, "y": 0.91}, {"x": 3, "y": 0.89}, {"x": 7, "y": 0.93}, {"x": 9, "y": 0.95}];
+new Chart(scatterCtx, {
+    type: 'scatter',
+    data: {
+        datasets: [{
+            label: 'Models',
+            data: scatterData,
+            backgroundColor: 'rgba(102, 126, 234, 0.6)',
+            borderColor: 'rgba(102, 126, 234, 1)',
+            pointRadius: 8,
+            pointHoverRadius: 10
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Computational Complexity'
+                },
+                beginAtZero: true
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Accuracy'
+                },
+                beginAtZero: true,
+                max: 1.0
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const index = context.dataIndex;
+                        return `Model: ${'["FFNN", "CNN", "LSTM", "Transformer", "3stageFormer", "Hopfield", "VAE", "LTC", "HMM", "DBN", "MAMBA", "Longformer", "Big Bird", "MoE", "Stacked Transformer"]'[index]} | Accuracy: ${context.parsed.y.toFixed(3)} | Complexity: ${context.parsed.x.toFixed(1)}`;
+                    }
+                }
+            },
+            legend: {
+                display: false
+            }
+        }
+    }
+});
+</script>
+</div>
+            </div>
+            
             <h3>Architectural Comparison</h3>
             <div class="svg-container">
                 <svg width="1000" height="600" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">

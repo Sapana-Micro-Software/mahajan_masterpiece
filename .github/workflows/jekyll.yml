@@ -6,6 +6,10 @@ on:
       - main
       - master
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Update Benchmark Visualizations"]
+    types:
+      - completed
 
 permissions:
   contents: read
@@ -29,17 +33,35 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
+      - name: Generate benchmark visualizations
+        run: |
+          python3 -m pip install --upgrade pip || true
+          pip3 install numpy matplotlib seaborn scikit-learn || true
+          python3 generate_visualizations.py || echo "Visualization generation failed, using defaults"
+        continue-on-error: true
+      
+      - name: Update index.html with charts
+        run: |
+          python3 update_index_with_charts.py || echo "Index update failed"
+        continue-on-error: true
+      
       - name: Prepare static files
         run: |
           mkdir -p _site
+          mkdir -p _site/_includes
           # Copy HTML files
           cp index.html _site/ || true
           cp 404.html _site/ || true
           # Copy markdown files for documentation
           cp *.md _site/ 2>/dev/null || true
+          # Copy generated visualizations
+          cp _includes/*.html _site/_includes/ 2>/dev/null || true
           # Copy other static assets if needed
           cp -r _includes _site/ 2>/dev/null || true
           cp -r _layouts _site/ 2>/dev/null || true
+          # Copy benchmark results if available
+          cp benchmark_results.json _site/ 2>/dev/null || true
+          cp benchmark_comparison.png _site/ 2>/dev/null || true
           # Ensure .nojekyll is present
           touch _site/.nojekyll
       

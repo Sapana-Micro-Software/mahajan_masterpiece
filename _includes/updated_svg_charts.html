@@ -1,0 +1,70 @@
+
+<!-- Updated SVG Charts with Benchmark Data -->
+<div class="svg-container">
+    <svg width="1000" height="600" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background -->
+        <rect width="1000" height="600" fill="#f8f9fa"/>
+        
+        <!-- Title -->
+        <text x="500" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#333">Model Comparison: Architecture vs. Performance (Live Data)</text>
+        
+        <!-- Axes -->
+        <line x1="100" y1="500" x2="900" y2="500" stroke="#333" stroke-width="2"/>
+        <line x1="100" y1="500" x2="100" y2="50" stroke="#333" stroke-width="2"/>
+        
+        <!-- Axis labels -->
+        <text x="500" y="550" text-anchor="middle" font-size="14" fill="#666">Computational Complexity</text>
+        <text x="30" y="275" text-anchor="middle" font-size="14" fill="#666" transform="rotate(-90 30 275)">Classification Accuracy</text>
+        
+        <!-- Grid lines -->
+        <line x1="200" y1="50" x2="200" y2="500" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5"/>
+        <line x1="400" y1="50" x2="400" y2="500" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5"/>
+        <line x1="600" y1="50" x2="600" y2="500" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5"/>
+        <line x1="800" y1="50" x2="800" y2="500" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5"/>
+        <line x1="100" y1="400" x2="900" y2="400" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5"/>
+        <line x1="100" y1="300" x2="900" y2="300" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5"/>
+        <line x1="100" y1="200" x2="900" y2="200" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5"/>
+        <line x1="100" y1="100" x2="900" y2="100" stroke="#ddd" stroke-width="1" stroke-dasharray="5,5"/>
+
+        <!-- FFNN: Complexity 1.0, Accuracy 0.75 -->
+        <circle cx="180" cy="162" r="12" fill="#e74c3c"/>
+        <text x="180" y="148" text-anchor="middle" font-size="12" fill="#333">FFNN</text>
+
+        <!-- CNN: Complexity 3.0, Accuracy 0.88 -->
+        <circle cx="340" cy="104" r="12" fill="#3498db"/>
+        <text x="340" y="89" text-anchor="middle" font-size="12" fill="#333">CNN</text>
+
+        <!-- LSTM: Complexity 4.0, Accuracy 0.85 -->
+        <circle cx="420" cy="118" r="12" fill="#9b59b6"/>
+        <text x="420" y="102" text-anchor="middle" font-size="12" fill="#333">LSTM</text>
+
+        <!-- Transformer: Complexity 8.0, Accuracy 0.92 -->
+        <circle cx="740" cy="86" r="12" fill="#2ecc71"/>
+        <text x="740" y="71" text-anchor="middle" font-size="12" fill="#333">Transfor</text>
+
+        <!-- 3stageFormer: Complexity 10.0, Accuracy 0.94 -->
+        <circle cx="900" cy="77" r="12" fill="#e67e22"/>
+        <text x="900" y="62" text-anchor="middle" font-size="12" fill="#333">3stageFo</text>
+
+        <!-- MAMBA: Complexity 3.0, Accuracy 0.90 -->
+        <circle cx="340" cy="95" r="12" fill="#16a085"/>
+        <text x="340" y="80" text-anchor="middle" font-size="12" fill="#333">MAMBA</text>
+
+        <!-- Longformer: Complexity 4.0, Accuracy 0.91 -->
+        <circle cx="420" cy="90" r="12" fill="#3498db"/>
+        <text x="420" y="76" text-anchor="middle" font-size="12" fill="#333">Longform</text>
+
+        <!-- Big Bird: Complexity 3.0, Accuracy 0.89 -->
+        <circle cx="340" cy="100" r="12" fill="#3498db"/>
+        <text x="340" y="84" text-anchor="middle" font-size="12" fill="#333">Big Bird</text>
+
+        <!-- MoE: Complexity 7.0, Accuracy 0.93 -->
+        <circle cx="660" cy="82" r="12" fill="#2ecc71"/>
+        <text x="660" y="66" text-anchor="middle" font-size="12" fill="#333">MoE</text>
+
+        <!-- Stacked Transformer: Complexity 9.0, Accuracy 0.95 -->
+        <circle cx="820" cy="72" r="12" fill="#e67e22"/>
+        <text x="820" y="58" text-anchor="middle" font-size="12" fill="#333">Stacked </text>
+
+    </svg>
+</div>
