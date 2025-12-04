@@ -246,8 +246,9 @@ new Chart(scatterCtx, {{
             tooltip: {{
                 callbacks: {{
                     label: function(context) {{
+                        const modelNames = {json.dumps(model_names)};
                         const index = context.dataIndex;
-                        return `Model: ${{'{json.dumps(model_names)}'[index]}} | Accuracy: ${{context.parsed.y.toFixed(3)}} | Complexity: ${{context.parsed.x.toFixed(1)}}`;
+                        return `Model: ${{modelNames[index]}} | Accuracy: ${{context.parsed.y.toFixed(3)}} | Complexity: ${{context.parsed.x.toFixed(1)}}`;
                     }}
                 }}
             }},

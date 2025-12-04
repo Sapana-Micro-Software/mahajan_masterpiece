@@ -104,27 +104,43 @@ jobs:
       
       - name: Generate visualizations
         run: |
-          python generate_visualizations.py
+          python3 generate_visualizations.py
         continue-on-error: true
       
-      - name: Update index.html with visualizations
+      - name: Update all visualizations in index.html
         run: |
-          # Check if benchmark charts were generated
+          python3 update_all_visualizations.py
+        continue-on-error: true
+      
+      - name: Verify visualizations
+        run: |
           if [ -f "_includes/benchmark_charts.html" ]; then
             echo "✅ Benchmark charts generated"
           else
-            echo "⚠️  Using placeholder charts"
-            # Generate placeholder if needed
-            python generate_visualizations.py
+            echo "⚠️  Generating placeholder charts"
+            python3 generate_visualizations.py
+          fi
+          
+          if [ -f "index.html" ]; then
+            echo "✅ index.html updated"
+          else
+            echo "❌ index.html not found"
+            exit 1
           fi
       
       - name: Commit and push updates
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add _includes/benchmark_charts.html _includes/updated_svg_charts.html benchmark_results.json index.html || true
-          git diff --staged --quiet || git commit -m "Auto-update benchmark visualizations [skip ci]"
-          git push || echo "No changes to commit"
+          git add _includes/benchmark_charts.html _includes/updated_svg_charts.html benchmark_results.json index.html benchmark_comparison.png || true
+          git status
+          if ! git diff --staged --quiet; then
+            git commit -m "Auto-update all benchmark visualizations and graphs [skip ci]"
+            git push
+            echo "✅ Changes committed and pushed"
+          else
+            echo "ℹ️  No changes to commit"
+          fi
         continue-on-error: true
       
       - name: Trigger Pages deployment
