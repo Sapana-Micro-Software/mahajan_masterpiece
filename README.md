@@ -1,6 +1,35 @@
 # ECG Classification Models: A Comprehensive Comparative Study
 
-This repository implements and compares fifteen machine learning architectures for ECG classification, including both deep learning and probabilistic/statistical approaches:
+## 🚀 **NOW WITH 26+ MODELS + PRODUCTION DEPLOYMENT!**
+
+This repository implements and compares **26+ machine learning architectures** for ECG classification, including deep learning, state space models, advanced transformers, neuroevolution, and probabilistic/statistical approaches:
+
+---
+
+## 🆕 **NEWLY ADDED: 11 State-of-the-Art Models**
+
+**Advanced Transformers:**
+1. **Longformer** (Beltagy et al., 2020) - Efficient transformer with O(n) sliding window attention
+2. **Mixture of Experts (MoE)** (Shazeer et al., 2017) - Sparse expert routing with 8 experts
+3. **Big Bird** (Zaheer et al., 2020) - Sparse attention (global+window+random)
+4. **Infinite Transformer** - 3 variants: Memorizing, Infini, Transformer-XL
+5. **Stacked Transformer** - Deep architecture (12-24 layers) with layer scaling
+
+**State Space Models:**
+6. **MAMBA** (Gu & Dao, 2023) - Selective state space model with O(n) complexity
+7. **BAMBA** - Bidirectional MAMBA for enhanced temporal context
+
+**Neuroevolution:**
+8. **HyperNEAT** (Stanley et al., 2009) - CPPN-based evolutionary architecture
+9. **Super-NEAT** - Advanced NEAT with speciation and novelty search
+
+**Differential Equations:**
+10. **Neural ODE** (Chen et al., 2018) - Continuous-depth networks (Euler, RK4, Dopri5)
+11. **Neural PDE** - 3 formulations: Heat, Wave, Reaction-Diffusion
+
+---
+
+## 🎯 **ORIGINAL 15 MODELS**
 
 **Deep Learning Models:**
 1. **Feedforward Neural Network** (Lloyd et al., 2001) - A feedforward neural network from scratch using NumPy
@@ -115,11 +144,35 @@ The feedforward neural network implementation is designed for ECG analysis and h
 - **Feature selection**: Uses causal relationships as features for classification
 - **Interpretability**: Provides insights into causal mechanisms in ECG signals
 
+---
+
+## 🚢 **NEW: Production Deployment Infrastructure**
+
+**Complete deployment stack added:**
+- ✅ **REST API** - FastAPI server with auto-docs, batch predictions, health checks
+- ✅ **Docker** - Multi-stage Dockerfile, Docker Compose, Nginx reverse proxy
+- ✅ **Model Export** - ONNX, TorchScript, quantization for cross-platform deployment
+- ✅ **Comprehensive Metrics** - ROC-AUC, confusion matrices, PR curves, 15+ metrics
+- ✅ **Documentation** - 4 new comprehensive guides
+
+**Quick Links:**
+- 📖 [New Models Guide](NEW_MODELS_README.md) - Complete guide to 11 new models
+- ⚡ [Quick Start](QUICK_START.md) - Get started in 5 minutes
+- 🐳 [Deployment Guide](DEPLOYMENT_GUIDE.md) - Production deployment
+- 📊 [Implementation Summary](IMPLEMENTATION_SUMMARY.md) - Technical details
+
+---
+
 ## Installation
 
 ```bash
 pip install -r requirements.txt
 ```
+
+**New dependencies added:**
+- FastAPI, Uvicorn, Pydantic (for API)
+- ONNX, ONNX Runtime (for model export)
+- SciPy (for statistical tests)
 
 ## Usage
 
@@ -165,69 +218,49 @@ accuracy = nn.compute_accuracy(y_test, predictions)
 
 ### Running Individual Models
 
-#### Feedforward Neural Network
+#### Original Models (15)
 ```bash
-python neural_network.py
+python neural_network.py      # Feedforward NN
+python transformer_ecg.py     # Transformer
+python three_stage_former.py  # 3stageFormer
+python cnn_lstm_ecg.py        # CNN and LSTM
+python hopfield_ecg.py        # Hopfield Network
+python vae_ecg.py             # VAE
+python ltc_ecg.py             # LTC
+python hmm_ecg.py             # HMM
+python dbn_ecg.py             # DBN
+python mdp_ecg.py             # MDP / PO-MDP
+python mrf_ecg.py             # MRF
+python granger_ecg.py         # Granger Causality
 ```
 
-#### Transformer Model
+#### 🚀 New Models (11)
 ```bash
-python transformer_ecg.py
-```
+# Efficient Transformers
+python longformer_ecg.py          # Longformer (O(n) complexity)
+python moe_transformer_ecg.py     # Mixture of Experts
+python bigbird_ecg.py             # Big Bird (sparse attention)
 
-#### Three-Stage Former
-```bash
-python three_stage_former.py
-```
+# State Space Models
+python mamba_ecg.py               # MAMBA (fastest!)
+python bamba_ecg.py               # Bidirectional MAMBA
 
-#### 1D CNN and LSTM
-```bash
-python cnn_lstm_ecg.py
-```
+# Memory-Augmented & Deep
+python infinite_transformer_ecg.py  # Infinite memory (3 variants)
+python stacked_transformer_ecg.py   # Deep transformer (12-24 layers)
 
-#### Hopfield Network
-```bash
-python hopfield_ecg.py
-```
+# Neuroevolution
+python hyperneat_ecg.py           # HyperNEAT
+python superneat_ecg.py           # Super-NEAT
 
-#### Variational Autoencoder (VAE)
-```bash
-python vae_ecg.py
-```
-
-#### Liquid Time-Constant Network (LTC)
-```bash
-python ltc_ecg.py
-```
-
-#### Hidden Markov Model (HMM)
-```bash
-python hmm_ecg.py
-```
-
-#### Dynamic Bayesian Network (DBN)
-```bash
-python dbn_ecg.py
-```
-
-#### Markov Decision Process (MDP) / Partially Observable MDP (PO-MDP)
-```bash
-python mdp_ecg.py
-```
-
-#### Markov Random Field (MRF)
-```bash
-python mrf_ecg.py
-```
-
-#### Granger Causality
-```bash
-python granger_ecg.py
+# Differential Equations
+python neural_ode_ecg.py          # Neural ODE (3 solvers)
+python neural_pde_ecg.py          # Neural PDE (3 formulations)
 ```
 
 ### Running Complete Benchmark
 
-To compare all fifteen models:
+To compare all 26+ models:
 
 ```bash
 python benchmark.py
@@ -235,12 +268,75 @@ python benchmark.py
 
 This will:
 1. Generate a synthetic ECG dataset
-2. Train all fifteen models
-3. Evaluate performance
+2. Train all 26+ models (15 original + 11 new)
+3. Evaluate performance with comprehensive metrics
 4. Generate comparison plots
 5. Save results to `benchmark_results.json`
 
 See [BENCHMARK_README.md](BENCHMARK_README.md) for detailed benchmarking instructions.
+
+---
+
+## 🚀 **NEW: Production Deployment**
+
+### Start API Server (Docker - Recommended)
+```bash
+docker-compose up -d
+
+# API available at http://localhost:8000
+# Docs at http://localhost:8000/docs
+```
+
+### Start API Server (Direct Python)
+```bash
+python api_server.py
+```
+
+### Make Predictions via API
+```python
+import requests
+
+response = requests.post(
+    'http://localhost:8000/predict',
+    json={'signal': ecg_data.tolist(), 'sampling_rate': 250}
+)
+
+result = response.json()
+print(f"Prediction: {result['class_name']}")
+print(f"Confidence: {result['confidence']:.2%}")
+```
+
+### Export Models for Deployment
+```python
+from model_export import export_model_wrapper
+
+# Export to ONNX, TorchScript, Quantized
+export_model_wrapper(
+    model=trained_model,
+    model_name='my_ecg_model',
+    input_shape=(1, 1, 1000),
+    output_dir='./exports'
+)
+```
+
+### Comprehensive Evaluation
+```python
+from evaluation_metrics import ComprehensiveEvaluator
+
+evaluator = ComprehensiveEvaluator(num_classes=5)
+metrics = evaluator.evaluate_model(model, test_loader)
+
+# Generate visualizations
+evaluator.plot_confusion_matrix(save_path='confusion.png')
+evaluator.plot_roc_curves(save_path='roc.png')
+evaluator.plot_metrics_summary(metrics, save_path='summary.png')
+
+# Generate report
+report = evaluator.generate_report(metrics, 'MyModel')
+print(report)
+```
+
+See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for complete deployment instructions.
 
 ## Network Architecture
 
@@ -297,7 +393,9 @@ This implementation is educational and demonstrates neural network fundamentals.
 4. Hyperparameter tuning
 5. Integration with medical imaging/ECG processing libraries
 
-## Model Comparison
+## Model Comparison (All 26+ Models)
+
+### Original 15 Models
 
 | Model | Architecture | Input | Parameters | Training Speed | Best For |
 |-------|-------------|-------|------------|----------------|----------|
@@ -316,6 +414,22 @@ This implementation is educational and demonstrates neural network fundamentals.
 | PO-MDP | Partially Observable MDP | Raw signals | Moderate (8Ks) | Moderate | Hidden state modeling |
 | MRF | Markov Random Field | Raw signals | Moderate (40Ks) | Moderate | Spatial-temporal dependencies |
 | Granger Causality | Causal Analysis | Raw signals | Moderate (30Ks) | Moderate | Causal relationship discovery |
+
+### 🚀 New 11 Models
+
+| Model | Architecture | Input | Parameters | Complexity | Best For |
+|-------|-------------|-------|------------|------------|----------|
+| **Longformer** | Sliding Window Attention | Raw signals | Moderate (500Ks) | **O(n)** Linear | Long sequences, efficiency |
+| **MoE Transformer** | Mixture of 8 Experts | Raw signals | Large (1M+) | O(n²) sparse | Scalability, multi-task |
+| **Big Bird** | Sparse Attention | Raw signals | Moderate (400Ks) | **O(n)** Linear | Memory efficiency |
+| **MAMBA** | Selective SSM | Raw signals | Moderate (300Ks) | **O(n)** Linear | Speed, efficiency |
+| **BAMBA** | Bidirectional SSM | Raw signals | Moderate (600Ks) | **O(n)** Linear | Context modeling |
+| **Infinite Transformer** | Memory-Augmented (3 variants) | Raw signals | Moderate (500Ks) | O(n) | Infinite context |
+| **Stacked Transformer** | Deep (12-24 layers) | Raw signals | Large (2M+) | O(n²) | Maximum accuracy |
+| **HyperNEAT** | CPPN Evolution | Statistical features | Variable | Variable | Architecture search |
+| **Super-NEAT** | Advanced Evolution | Statistical features | Variable | Variable | Topology optimization |
+| **Neural ODE** | Continuous-Depth | Raw signals | Moderate (400Ks) | O(n) | Continuous-time |
+| **Neural PDE** | PDE-based (3 types) | Raw signals | Moderate (300Ks) | O(n) | Physical modeling |
 
 ## Detailed Comparison and Contrast
 
@@ -418,6 +532,60 @@ All eight models share common deep learning foundations:
 - van de Leur, Rutger R., et al. (2022). "Improving explainability of deep neural network-based electrocardiogram interpretation using variational auto-encoders." *European Heart Journal - Digital Health*, 3(3), 2022. DOI: 10.1093/ehjdh/ztac038.
 
 - Hasani, Ramin, et al. (2020). "Liquid Time-Constant Networks." *arXiv preprint arXiv:2006.04439*. [GitHub](https://github.com/raminmh/liquid_time_constant_networks)
+
+---
+
+## 🚀 **NEW FEATURES SUMMARY**
+
+### What's New in This Version
+
+1. **11 State-of-the-Art Models**
+   - Efficient Transformers: Longformer, MoE, Big Bird
+   - State Space Models: MAMBA, BAMBA
+   - Deep Architecture: Stacked Transformer (12-24 layers)
+   - Memory-Augmented: Infinite Transformer (3 variants)
+   - Neuroevolution: HyperNEAT, Super-NEAT
+   - Differential Equations: Neural ODE, Neural PDE
+
+2. **Production Infrastructure**
+   - FastAPI REST server with auto-documentation
+   - Docker deployment (Dockerfile + docker-compose)
+   - Nginx reverse proxy with load balancing
+   - Model export (ONNX, TorchScript, Quantization)
+
+3. **Comprehensive Evaluation**
+   - 15+ metrics (ROC-AUC, confusion matrix, PR curves, etc.)
+   - Statistical significance tests
+   - Computational profiling
+   - Beautiful visualizations
+
+4. **Complete Documentation**
+   - NEW_MODELS_README.md - All 11 new models detailed
+   - QUICK_START.md - Get started in 5 minutes
+   - DEPLOYMENT_GUIDE.md - Production deployment
+   - IMPLEMENTATION_SUMMARY.md - Technical details
+
+### Quick Access
+
+- 📖 **[New Models Guide](NEW_MODELS_README.md)** - Comprehensive model documentation
+- ⚡ **[Quick Start](QUICK_START.md)** - 5-minute setup and usage
+- 🐳 **[Deployment Guide](DEPLOYMENT_GUIDE.md)** - Docker, K8s, Cloud deployment
+- 📊 **[Implementation Summary](IMPLEMENTATION_SUMMARY.md)** - Technical deep dive
+- 🧪 **[Test Report](TEST_REPORT.md)** - Validation results
+
+---
+
+## 📊 Statistics
+
+- **Total Models**: 26+
+- **Model Categories**: 6 (Transformers, SSMs, Evolution, ODEs/PDEs, Probabilistic, Deep Learning)
+- **Lines of Code**: ~20,000+
+- **Documentation Pages**: 18
+- **API Endpoints**: 7
+- **Export Formats**: 3
+- **Deployment Options**: 4+
+
+---
 
 ## License
 

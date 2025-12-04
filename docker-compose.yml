@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # ECG Classification API Service
+  ecg-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecg-classification-api
+    ports:
+      - "8000:8000"
+    environment:
+      - WORKERS=4
+      - PORT=8000
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./models:/app/models:ro  # Mount models as read-only
+      - ./logs:/app/logs          # Mount logs directory
+      - ./exports:/app/exports    # Mount exports directory
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - ecg-network
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+
+  # Optional: Nginx reverse proxy for load balancing
+  nginx:
+    image: nginx:alpine
+    container_name: ecg-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro  # SSL certificates (if available)
+    depends_on:
+      - ecg-api
+    restart: unless-stopped
+    networks:
+      - ecg-network
+
+  # Optional: Redis for caching predictions
+  redis:
+    image: redis:alpine
+    container_name: ecg-redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      - ecg-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+networks:
+  ecg-network:
+    driver: bridge
+
+volumes:
+  models:
+  logs:
+  exports:

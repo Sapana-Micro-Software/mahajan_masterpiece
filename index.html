@@ -877,7 +877,7 @@
     <header>
         <div class="container">
             <h1>Comparative Analysis of Neural Network Architectures for ECG Classification</h1>
-            <p class="subtitle">A Comprehensive Study of Fifteen Approaches Including Deep Learning and Probabilistic Models</p>
+            <p class="subtitle">A Comprehensive Study of 26+ Approaches Including Deep Learning, State Space Models, Transformers, and Probabilistic Models</p>
             
             <div class="authors">
                 <strong>Shyamal Suhana Chandra</strong>
@@ -891,8 +891,11 @@
                 <a href="/mahajan_masterpiece/paper.pdf" target="_blank">📄 Paper (PDF)</a>
                 <a href="/mahajan_masterpiece/presentation.pdf" target="_blank">📊 Presentation (PDF)</a>
                 <a href="README.md" target="_blank">📖 README</a>
+                <a href="NEW_MODELS_README.md" target="_blank">🚀 New Models Guide</a>
                 <a href="BENCHMARK_README.md" target="_blank">🔬 Benchmark Guide</a>
                 <a href="PROJECT_SUMMARY.md" target="_blank">📋 Project Summary</a>
+                <a href="QUICK_START.md" target="_blank">⚡ Quick Start</a>
+                <a href="DEPLOYMENT_GUIDE.md" target="_blank">🐳 Deployment Guide</a>
                 <a href="https://github.com/Sapana-Micro-Software/mahajan_masterpiece" target="_blank">💻 Code Repository</a>
                 <a href="benchmark.py" target="_blank">⚙️ Benchmark Script</a>
             </div>
@@ -903,12 +906,28 @@
         <section id="abstract">
             <h2>Abstract</h2>
             <div class="abstract">
-                This project presents a comprehensive comparative analysis of fifteen machine learning architectures for electrocardiogram (ECG) classification, including both deep learning and probabilistic/statistical approaches. The deep learning models include: a traditional feedforward neural network (FFNN), a Transformer-based model, a Three-Stage Hierarchical Transformer (3stageFormer), a 1D Convolutional Neural Network (CNN), a Long Short-Term Memory (LSTM) network, a Hopfield Network, a Variational Autoencoder (VAE), and a Liquid Time-Constant Network (LTC). The probabilistic and statistical models include: Hidden Markov Models (HMM), Hierarchical HMM, Dynamic Bayesian Networks (DBN), Markov Decision Processes (MDP), Partially Observable MDPs (PO-MDP), Markov Random Fields (MRF), and Granger Causality. The feedforward architecture is based on the seminal work by Lloyd et al. (2001) for ischemia detection, the Transformer model follows the approach by Ikram et al. (2025) for early detection of cardiac arrhythmias, the 3stageFormer implements the hierarchical multi-scale approach by Tang et al. (2025), the Hopfield Network is based on energy-based associative memory approaches for ECG analysis (ETASR, 2013), the VAE implements the FactorECG approach by van de Leur et al. (2022) for explainable ECG analysis, and the LTC implements the continuous-time neural ODE approach by Hasani et al. (2020) for adaptive temporal dynamics. We additionally implement CNN and LSTM models, which represent alternative approaches using convolution and recurrent connections respectively. We implement all fifteen models from scratch and conduct extensive benchmarking on synthetic ECG data. Our results demonstrate that Transformer-based models achieve superior classification accuracy by effectively capturing temporal dependencies, with the Three-Stage Hierarchical Transformer providing additional benefits through multi-scale feature extraction. The CNN model offers an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns. The LSTM model provides strong sequential modeling capabilities. The Hopfield Network demonstrates unique energy-based pattern recognition capabilities. The VAE provides explainable latent representations that enable both reconstruction and classification tasks. The LTC model demonstrates adaptive temporal dynamics through continuous-time neural ODEs, effectively capturing both fast and slow patterns. The feedforward neural network offers significant advantages in computational efficiency, making it more suitable for real-time applications. This study provides comprehensive insights into the trade-offs between model complexity and performance, guiding the selection of appropriate architectures for different ECG classification scenarios.
+                This project presents a comprehensive comparative analysis of <strong>26+ machine learning architectures</strong> for electrocardiogram (ECG) classification, including deep learning, state space models, advanced transformers, neuroevolution, and probabilistic/statistical approaches. The deep learning models include: a traditional feedforward neural network (FFNN), a Transformer-based model, a Three-Stage Hierarchical Transformer (3stageFormer), a 1D Convolutional Neural Network (CNN), a Long Short-Term Memory (LSTM) network, a Hopfield Network, a Variational Autoencoder (VAE), and a Liquid Time-Constant Network (LTC). The probabilistic and statistical models include: Hidden Markov Models (HMM), Hierarchical HMM, Dynamic Bayesian Networks (DBN), Markov Decision Processes (MDP), Partially Observable MDPs (PO-MDP), Markov Random Fields (MRF), and Granger Causality. The feedforward architecture is based on the seminal work by Lloyd et al. (2001) for ischemia detection, the Transformer model follows the approach by Ikram et al. (2025) for early detection of cardiac arrhythmias, the 3stageFormer implements the hierarchical multi-scale approach by Tang et al. (2025), the Hopfield Network is based on energy-based associative memory approaches for ECG analysis (ETASR, 2013), the VAE implements the FactorECG approach by van de Leur et al. (2022) for explainable ECG analysis, and the LTC implements the continuous-time neural ODE approach by Hasani et al. (2020) for adaptive temporal dynamics. We additionally implement CNN and LSTM models, which represent alternative approaches using convolution and recurrent connections respectively. We implement all fifteen models from scratch and conduct extensive benchmarking on synthetic ECG data. Our results demonstrate that Transformer-based models achieve superior classification accuracy by effectively capturing temporal dependencies, with the Three-Stage Hierarchical Transformer providing additional benefits through multi-scale feature extraction. The CNN model offers an excellent balance between accuracy and efficiency, effectively capturing local morphological patterns. The LSTM model provides strong sequential modeling capabilities. The Hopfield Network demonstrates unique energy-based pattern recognition capabilities. The VAE provides explainable latent representations that enable both reconstruction and classification tasks. The LTC model demonstrates adaptive temporal dynamics through continuous-time neural ODEs, effectively capturing both fast and slow patterns. The feedforward neural network offers significant advantages in computational efficiency, making it more suitable for real-time applications. This study provides comprehensive insights into the trade-offs between model complexity and performance, guiding the selection of appropriate architectures for different ECG classification scenarios.
             </div>
         </section>
 
         <section id="models">
-            <h2>Fifteen Machine Learning Architectures</h2>
+            <h2>26+ Machine Learning Architectures</h2>
+            <p style="margin-bottom: 30px; font-size: 1.1em; color: #666;">
+                <strong>Original 15 Models + 11 New State-of-the-Art Architectures</strong><br>
+                <span class="badge">Longformer</span>
+                <span class="badge">MoE Transformer</span>
+                <span class="badge">Big Bird</span>
+                <span class="badge">MAMBA</span>
+                <span class="badge">BAMBA</span>
+                <span class="badge">Infinite Transformer</span>
+                <span class="badge">Stacked Transformer</span>
+                <span class="badge">HyperNEAT</span>
+                <span class="badge">Super-NEAT</span>
+                <span class="badge">Neural ODE</span>
+                <span class="badge">Neural PDE</span>
+            </p>
+            
+            <h3 style="margin-top: 40px; color: #667eea;">🎯 Original 15 Models</h3>
             <div class="model-grid">
                 <div class="model-card">
                     <h4>1. Feedforward NN</h4>
@@ -1044,6 +1063,131 @@
                         <li><span class="metric-label">Speed:</span> Moderate</li>
                         <li><span class="metric-label">Best For:</span> Causal relationships</li>
                     </ul>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 50px; color: #667eea;">🚀 New State-of-the-Art Models (11 Added)</h3>
+            <div class="model-grid">
+                <div class="model-card">
+                    <h4>16. Longformer</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Efficient Transformer</li>
+                        <li><span class="metric-label">Complexity:</span> O(n) Linear</li>
+                        <li><span class="metric-label">Speed:</span> Fast</li>
+                        <li><span class="metric-label">Best For:</span> Long sequences</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>17. MoE Transformer</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Mixture of Experts</li>
+                        <li><span class="metric-label">Experts:</span> 8 with Top-2 routing</li>
+                        <li><span class="metric-label">Speed:</span> Moderate</li>
+                        <li><span class="metric-label">Best For:</span> Scalability</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>18. Big Bird</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Sparse Transformer</li>
+                        <li><span class="metric-label">Attention:</span> Global+Window+Random</li>
+                        <li><span class="metric-label">Speed:</span> Fast</li>
+                        <li><span class="metric-label">Best For:</span> Memory efficiency</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>19. MAMBA</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Selective SSM</li>
+                        <li><span class="metric-label">Complexity:</span> O(n) Linear</li>
+                        <li><span class="metric-label">Speed:</span> Very Fast</li>
+                        <li><span class="metric-label">Best For:</span> Efficiency</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>20. BAMBA</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Bidirectional SSM</li>
+                        <li><span class="metric-label">Direction:</span> Forward+Backward</li>
+                        <li><span class="metric-label">Speed:</span> Fast</li>
+                        <li><span class="metric-label">Best For:</span> Context modeling</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>21. Infinite Transformer</h4>
+                    <ul>
+                        <li><span class="metric-label">Variants:</span> 3 (Memorizing, Infini, XL)</li>
+                        <li><span class="metric-label">Memory:</span> Infinite context</li>
+                        <li><span class="metric-label">Speed:</span> Moderate</li>
+                        <li><span class="metric-label">Best For:</span> Long-term memory</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>22. Stacked Transformer</h4>
+                    <ul>
+                        <li><span class="metric-label">Layers:</span> 12-24 deep</li>
+                        <li><span class="metric-label">Features:</span> Layer scaling</li>
+                        <li><span class="metric-label">Speed:</span> Slow</li>
+                        <li><span class="metric-label">Best For:</span> Max accuracy</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>23. HyperNEAT</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Neuroevolution</li>
+                        <li><span class="metric-label">Method:</span> CPPN-based</li>
+                        <li><span class="metric-label">Speed:</span> Slow (evolution)</li>
+                        <li><span class="metric-label">Best For:</span> Architecture search</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>24. Super-NEAT</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Advanced NEAT</li>
+                        <li><span class="metric-label">Features:</span> Speciation</li>
+                        <li><span class="metric-label">Speed:</span> Slow (evolution)</li>
+                        <li><span class="metric-label">Best For:</span> Topology search</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>25. Neural ODE</h4>
+                    <ul>
+                        <li><span class="metric-label">Type:</span> Continuous-depth</li>
+                        <li><span class="metric-label">Solvers:</span> Euler, RK4, Dopri5</li>
+                        <li><span class="metric-label">Speed:</span> Moderate</li>
+                        <li><span class="metric-label">Best For:</span> Continuous-time</li>
+                    </ul>
+                </div>
+                <div class="model-card">
+                    <h4>26. Neural PDE</h4>
+                    <ul>
+                        <li><span class="metric-label">Types:</span> Heat, Wave, Reaction-Diffusion</li>
+                        <li><span class="metric-label">Physics:</span> PDE-based</li>
+                        <li><span class="metric-label">Speed:</span> Moderate</li>
+                        <li><span class="metric-label">Best For:</span> Physical modeling</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="deployment">
+            <h2>🚢 Production Deployment Ready</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h4>🔧 Model Export</h4>
+                    <p>Export any model to ONNX, TorchScript, or quantized formats for production deployment across platforms.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🌐 REST API</h4>
+                    <p>FastAPI server with automatic documentation, batch predictions, health checks, and model switching.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🐳 Docker Support</h4>
+                    <p>Multi-stage Dockerfile, Docker Compose orchestration, and Nginx reverse proxy with load balancing.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📊 Comprehensive Metrics</h4>
+                    <p>ROC-AUC curves, confusion matrices, precision-recall curves, sensitivity/specificity, and computational profiling.</p>
                 </div>
             </div>
         </section>
